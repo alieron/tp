@@ -48,12 +48,12 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 * Role: Developer
 * Responsibilities: Dev Ops + Threading
 
-### James Doe
+### Kenneth Ong
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/KenOKK.png" width="200px">
 
-[[github](http://github.com/johndoe)]
-[[portfolio](team/johndoe.md)]
+[[github](http://github.com/KenOKK)]
+[[portfolio](team/KenOKK.md)]
 
-* Role: Developer
-* Responsibilities: UI
+* Role: Code Quality Lead
+* Responsibilities: Ensures code quality is met at all stages of coding.
