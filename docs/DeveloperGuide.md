@@ -268,7 +268,7 @@ _{Explain here how the data archiving feature will be implemented}_
 * prefers typing to mouse interactions
 * is reasonably comfortable using CLI apps
 
-**Value proposition**: manage contacts faster than a typical mouse/GUI driven app
+**Value proposition**: manage patient details like chronic conditions, severe allergies, and appointment scheduling faster than a typical mouse/GUI driven app
 
 
 ### User stories
