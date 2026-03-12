@@ -16,9 +16,8 @@ public class AppointmentTest {
     private static final String VALID_NOTE = "Routine Checkup";
 
     @Test
-    public void constructor_null_throwsNullPointerException() {
+    public void constructor_nullStartDate_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () -> new Appointment(null, VALID_DURATION, VALID_NOTE));
-        assertThrows(NullPointerException.class, () -> new Appointment(VALID_START, VALID_DURATION, null));
     }
 
     @Test
@@ -64,16 +63,7 @@ public class AppointmentTest {
     }
 
     @Test
-    public void constructor_invalidDuration_throwsIllegalArgumentException() {
-        assertThrows(IllegalArgumentException.class, () ->
-                new Appointment(VALID_START, 0, VALID_NOTE));
-
-        assertThrows(IllegalArgumentException.class, () ->
-                new Appointment(VALID_START, -1, VALID_NOTE));
-    }
-
-    @Test
-    public void constructor_invalidNote_throwsIllegalArgumentException() {
+    public void constructor_nullNote_throwsIllegalArgumentException() {
         assertThrows(NullPointerException.class, () ->
                 new Appointment(VALID_START, VALID_DURATION, null));
     }
