@@ -146,8 +146,6 @@ public class ParserUtil {
         return new MedicalCondition(trimmedTag);
     }
 
-
-
     /**
      * Parses {@code Collection<String> tags} into a {@code Set<Tag>}.
      */

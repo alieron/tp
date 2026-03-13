@@ -7,9 +7,11 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.model.patient.Patient;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.tag.Allergy;
+import seedu.address.model.tag.MedicalCondition;
 
 /**
- * An UI component that displays information of a {@code Person}.
+ * A UI component that displays information of a {@code Person}.
  */
 public class PersonCard extends UiPart<Region> {
 
@@ -66,9 +68,9 @@ public class PersonCard extends UiPart<Region> {
             Label tagLabel = new Label(tag.tagName);
             tagLabel.getStyleClass().add("tag");
 
-            if (tag instanceof seedu.address.model.tag.Allergy) {
+            if (tag instanceof Allergy) {
                 tagLabel.getStyleClass().add("allergy-tag");
-            } else if (tag instanceof seedu.address.model.tag.MedicalCondition) {
+            } else if (tag instanceof MedicalCondition) {
                 tagLabel.getStyleClass().add("condition-tag");
             } else {
                 tagLabel.getStyleClass().add("general-tag");
@@ -87,10 +89,10 @@ public class PersonCard extends UiPart<Region> {
         );
     }
     private int getPriority(Tag tag) {
-        if (tag instanceof seedu.address.model.tag.Allergy) {
+        if (tag instanceof Allergy) {
             return 0;
         }
-        if (tag instanceof seedu.address.model.tag.MedicalCondition) {
+        if (tag instanceof MedicalCondition) {
             return 1;
         }
         return 2;
