@@ -11,7 +11,6 @@ import seedu.address.model.patient.Name;
 import seedu.address.model.patient.Patient;
 import seedu.address.model.patient.Phone;
 import seedu.address.model.tag.Allergy;
-import seedu.address.model.tag.GeneralTag;
 import seedu.address.model.tag.MedicalCondition;
 import seedu.address.model.tag.Tag;
 
@@ -41,9 +40,6 @@ public class EditPersonDescriptorBuilder {
         descriptor.setAddress(patient.getAddress());
 
         Set<Tag> existingTags = patient.getTags();
-        Set<Tag> generalTags = existingTags.stream()
-                .filter(t -> t instanceof GeneralTag)
-                .collect(Collectors.toSet());
         Set<Tag> allergies = existingTags.stream()
                 .filter(t -> t instanceof Allergy)
                 .collect(Collectors.toSet());
@@ -51,7 +47,6 @@ public class EditPersonDescriptorBuilder {
                 .filter(t -> t instanceof MedicalCondition)
                 .collect(Collectors.toSet());
 
-        descriptor.setGeneralTags(generalTags);
         descriptor.setAllergies(allergies);
         descriptor.setMedicalConditions(medicalConditions);
     }
@@ -85,16 +80,6 @@ public class EditPersonDescriptorBuilder {
      */
     public EditPersonDescriptorBuilder withAddress(String address) {
         descriptor.setAddress(new Address(address));
-        return this;
-    }
-
-    /**
-     * Parses the {@code tags} into a {@code Set<GeneralTag>} and sets it to the {@code EditPersonDescriptor}
-     * that we are building.
-     */
-    public EditPersonDescriptorBuilder withTags(String... tags) {
-        Set<Tag> tagSet = Stream.of(tags).map(GeneralTag::new).collect(Collectors.toSet());
-        descriptor.setGeneralTags(tagSet);
         return this;
     }
 

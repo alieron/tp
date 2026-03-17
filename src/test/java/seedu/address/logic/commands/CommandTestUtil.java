@@ -11,7 +11,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MEDICALCONDITION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.testutil.Assert.assertThrows;
 
 import java.util.ArrayList;
@@ -50,20 +49,17 @@ public class CommandTestUtil {
     public static final String EMAIL_DESC_BOB = " " + PREFIX_EMAIL + VALID_EMAIL_BOB;
     public static final String ADDRESS_DESC_AMY = " " + PREFIX_ADDRESS + VALID_ADDRESS_AMY;
     public static final String ADDRESS_DESC_BOB = " " + PREFIX_ADDRESS + VALID_ADDRESS_BOB;
-    public static final String TAG_DESC_FRIEND = " " + PREFIX_TAG + VALID_TAG_FRIEND;
-    public static final String TAG_DESC_HUSBAND = " " + PREFIX_TAG + VALID_TAG_HUSBAND;
 
     public static final String INVALID_NAME_DESC = " " + PREFIX_NAME + "James&"; // '&' not allowed in names
     public static final String INVALID_PHONE_DESC = " " + PREFIX_PHONE + "911a"; // 'a' not allowed in phones
     public static final String INVALID_EMAIL_DESC = " " + PREFIX_EMAIL + "bob!yahoo"; // missing '@' symbol
     public static final String INVALID_ADDRESS_DESC = " " + PREFIX_ADDRESS; // empty string not allowed for addresses
-    public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
 
     public static final String VALID_ALLERGY_DUST = "dust";
     public static final String VALID_ALLERGY_POLLEN = "pollen";
     public static final String VALID_MEDICALCONDITION_DIABETES = "diabetes";
-    public static final String VALID_MEDICALCONDITION_ASTHMA = "asthma";
-
+    public static final String ALLERGY_DESC_FRIEND = " " + PREFIX_ALLERGY + VALID_TAG_FRIEND;
+    public static final String ALLERGY_DESC_HUSBAND = " " + PREFIX_ALLERGY + VALID_TAG_HUSBAND;
     public static final String ALLERGY_DESC_DUST = " " + PREFIX_ALLERGY + VALID_ALLERGY_DUST;
     public static final String ALLERGY_DESC_POLLEN = " " + PREFIX_ALLERGY + VALID_ALLERGY_POLLEN;
     public static final String MEDICALCONDITION_DESC_DIABETES = " " + PREFIX_MEDICALCONDITION
@@ -100,10 +96,10 @@ public class CommandTestUtil {
     static {
         DESC_AMY = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
                 .withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
-                .withTags(VALID_TAG_FRIEND).build();
+                .withAllergies(VALID_TAG_FRIEND).build();
         DESC_BOB = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB)
                 .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
-                .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
+                .withAllergies(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
     }
 
     /**

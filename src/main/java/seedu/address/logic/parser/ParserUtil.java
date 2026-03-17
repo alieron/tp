@@ -14,7 +14,6 @@ import seedu.address.model.patient.Email;
 import seedu.address.model.patient.Name;
 import seedu.address.model.patient.Phone;
 import seedu.address.model.tag.Allergy;
-import seedu.address.model.tag.GeneralTag;
 import seedu.address.model.tag.MedicalCondition;
 import seedu.address.model.tag.Tag;
 
@@ -111,7 +110,7 @@ public class ParserUtil {
         requireNonNull(tags);
         final Set<Tag> tagSet = new HashSet<>();
         for (String tagName : tags) {
-            tagSet.add(new Allergy(parseTag(tagName).tagName));
+            tagSet.add(parseAllergy(tagName));
         }
         return tagSet;
     }
@@ -152,36 +151,9 @@ public class ParserUtil {
         requireNonNull(tags);
         final Set<Tag> tagSet = new HashSet<>();
         for (String tagName : tags) {
-            tagSet.add(new MedicalCondition(parseTag(tagName).tagName));
+            tagSet.add(parseMedicalCondition(tagName));
         }
         return tagSet;
-    }
-
-    /**
-     * Parses {@code Collection<String> tags} into a {@code Set<Tag>}.
-     *
-     * @throws ParseException if any given {@code tag} is invalid.
-     */
-    public static Set<Tag> parseTags(Collection<String> tags) throws ParseException {
-        requireNonNull(tags);
-        final Set<Tag> tagSet = new HashSet<>();
-        for (String tagName : tags) {
-            tagSet.add(parseTag(tagName));
-        }
-        return tagSet;
-    }
-
-    /**
-     * Parses a {@code String tag} into a {@code Tag}
-     * @throws ParseException if the given {@code tag} is invalid.
-     */
-    public static Tag parseTag(String tag) throws ParseException {
-        requireNonNull(tag);
-        String trimmedTag = tag.trim();
-        if (!Tag.isValidTagName(trimmedTag)) {
-            throw new ParseException(Tag.MESSAGE_CONSTRAINTS);
-        }
-        return new GeneralTag(trimmedTag);
     }
 
     /**

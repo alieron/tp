@@ -7,7 +7,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MEDICALCONDITION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.Collections;
@@ -30,7 +29,6 @@ import seedu.address.model.patient.Name;
 import seedu.address.model.patient.Patient;
 import seedu.address.model.patient.Phone;
 import seedu.address.model.tag.Allergy;
-import seedu.address.model.tag.GeneralTag;
 import seedu.address.model.tag.MedicalCondition;
 import seedu.address.model.tag.Tag;
 
@@ -49,7 +47,6 @@ public class EditCommand extends Command {
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
-            + "[" + PREFIX_TAG + "TAG]..."
             + "[" + PREFIX_ALLERGY + "ALLERGY]..."
             + "[" + PREFIX_MEDICALCONDITION + "MEDICALCONDITION]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
@@ -111,9 +108,6 @@ public class EditCommand extends Command {
         Set<Tag> existingTags = patientToEdit.getTags();
 
         //Keep the existing tags of each type unless that specific type is being replaced
-        Set<Tag> existingGeneralTags = existingTags.stream()
-                .filter(t -> t instanceof GeneralTag)
-                .collect(Collectors.toSet());
         Set<Tag> existingAllergies = existingTags.stream()
                 .filter(t -> t instanceof Allergy)
                 .collect(Collectors.toSet());
@@ -121,12 +115,10 @@ public class EditCommand extends Command {
                 .filter(t -> t instanceof MedicalCondition)
                 .collect(Collectors.toSet());
 
-        Set<Tag> finalGeneralTags = editPersonDescriptor.getGeneralTags().orElse(existingGeneralTags);
         Set<Tag> finalAllergies = editPersonDescriptor.getAllergies().orElse(existingAllergies);
         Set<Tag> finalMedicalConditions = editPersonDescriptor.getMedicalConditions().orElse(existingMedicalConditions);
 
         Set<Tag> updatedTags = new HashSet<>();
-        updatedTags.addAll(finalGeneralTags);
         updatedTags.addAll(finalAllergies);
         updatedTags.addAll(finalMedicalConditions);
 
@@ -167,7 +159,6 @@ public class EditCommand extends Command {
         private Phone phone;
         private Email email;
         private Address address;
-        private Set<Tag> generalTags;
         private Set<Tag> allergies;
         private Set<Tag> medicalConditions;
 
@@ -182,7 +173,6 @@ public class EditCommand extends Command {
             setPhone(toCopy.phone);
             setEmail(toCopy.email);
             setAddress(toCopy.address);
-            setGeneralTags(toCopy.generalTags);
             setAllergies(toCopy.allergies);
             setMedicalConditions(toCopy.medicalConditions);
         }
@@ -191,8 +181,7 @@ public class EditCommand extends Command {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, phone, email, address,
-                    generalTags, allergies, medicalConditions);
+            return CollectionUtil.isAnyNonNull(name, phone, email, address, allergies, medicalConditions);
         }
 
         public void setName(Name name) {
@@ -225,23 +214,6 @@ public class EditCommand extends Command {
 
         public Optional<Address> getAddress() {
             return Optional.ofNullable(address);
-        }
-
-        /**
-         * Sets {@code generalTags} to this object's {@code generalTags}.
-         * A defensive copy of {@code generalTags} is used internally.
-         */
-        public void setGeneralTags(Set<Tag> generalTags) {
-            this.generalTags = (generalTags != null) ? new HashSet<>(generalTags) : null;
-        }
-
-        /**
-         * Returns an unmodifiable tag set, which throws {@code UnsupportedOperationException}
-         * if modification is attempted.
-         * Returns {@code Optional#empty()} if {@code generalTags} is null.
-         */
-        public Optional<Set<Tag>> getGeneralTags() {
-            return (generalTags != null) ? Optional.of(Collections.unmodifiableSet(generalTags)) : Optional.empty();
         }
 
         /**
@@ -295,7 +267,6 @@ public class EditCommand extends Command {
                     && Objects.equals(phone, otherEditPersonDescriptor.phone)
                     && Objects.equals(email, otherEditPersonDescriptor.email)
                     && Objects.equals(address, otherEditPersonDescriptor.address)
-                    && Objects.equals(generalTags, otherEditPersonDescriptor.generalTags)
                     && Objects.equals(allergies, otherEditPersonDescriptor.allergies)
                     && Objects.equals(medicalConditions, otherEditPersonDescriptor.medicalConditions);
         }
@@ -307,7 +278,6 @@ public class EditCommand extends Command {
                     .add("phone", phone)
                     .add("email", email)
                     .add("address", address)
-                    .add("generalTags", generalTags)
                     .add("allergies", allergies)
                     .add("medicalConditions", medicalConditions)
                     .toString();

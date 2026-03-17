@@ -10,8 +10,9 @@ import seedu.address.model.patient.Email;
 import seedu.address.model.patient.Name;
 import seedu.address.model.patient.Patient;
 import seedu.address.model.patient.Phone;
+import seedu.address.model.tag.Allergy;
+import seedu.address.model.tag.MedicalCondition;
 import seedu.address.model.tag.Tag;
-import seedu.address.model.util.SampleDataUtil;
 
 /**
  * A utility class to help with building Patient objects.
@@ -66,14 +67,6 @@ public class PatientBuilder {
     }
 
     /**
-     * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code Patient} that we are building.
-     */
-    public PatientBuilder withTags(String ... tags) {
-        this.tags = SampleDataUtil.getTagSet(tags);
-        return this;
-    }
-
-    /**
      * Sets the {@code Address} of the {@code Patient} that we are building.
      */
     public PatientBuilder withAddress(String address) {
@@ -109,6 +102,7 @@ public class PatientBuilder {
      * Parses the {@code allergies} into a {@code Set<Allergy>}
      */
     public PatientBuilder withAllergies(String... allergies) {
+        this.tags.removeIf(t -> t instanceof Allergy);
         Set<Tag> allergySet = Arrays.stream(allergies)
                 .map(seedu.address.model.tag.Allergy::new)
                 .collect(java.util.stream.Collectors.toSet());
@@ -120,6 +114,7 @@ public class PatientBuilder {
      * Parses the {@code conditions} into a {@code Set<MedicalCondition>}
      */
     public PatientBuilder withMedicalConditions(String... conditions) {
+        this.tags.removeIf(t -> t instanceof MedicalCondition);
         Set<Tag> conditionSet = Arrays.stream(conditions)
                 .map(seedu.address.model.tag.MedicalCondition::new)
                 .collect(java.util.stream.Collectors.toSet());

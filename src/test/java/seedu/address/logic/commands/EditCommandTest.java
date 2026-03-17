@@ -56,10 +56,10 @@ public class EditCommandTest {
 
         PatientBuilder personInList = new PatientBuilder(lastPatient);
         Patient editedPatient = personInList.withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
-                .withTags(VALID_TAG_HUSBAND).build();
+                .withAllergies(VALID_TAG_HUSBAND).build();
 
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB)
-                .withPhone(VALID_PHONE_BOB).withTags(VALID_TAG_HUSBAND).build();
+                .withPhone(VALID_PHONE_BOB).withAllergies(VALID_TAG_HUSBAND).build();
         EditCommand editCommand = new EditCommand(indexLastPerson, descriptor);
 
         String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPatient));
@@ -147,30 +147,11 @@ public class EditCommandTest {
     }
 
     @Test
-    public void execute_editGeneralTagOnly_keepsOtherTags() {
-        Patient patientToEdit = new PatientBuilder().withTags("friend")
-                .withAllergies("dust").withMedicalConditions("diabetes").build();
-        model.addPerson(patientToEdit);
-        Index lastIndex = Index.fromOneBased(model.getFilteredPersonList().size());
-
-        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withTags("colleague").build();
-        EditCommand editCommand = new EditCommand(lastIndex, descriptor);
-
-        Patient expectedPatient = new PatientBuilder().withTags("colleague")
-                .withAllergies("dust").withMedicalConditions("diabetes").build();
-        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS,
-                Messages.format(expectedPatient));
-
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-        expectedModel.setPerson(patientToEdit, expectedPatient);
-
-        assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
-    }
-
-    @Test
     public void execute_editAllergyOnly_keepsOtherTags() {
-        Patient patientToEdit = new PatientBuilder().withTags("friend")
-                .withAllergies("dust").withMedicalConditions("diabetes").build();
+        Patient patientToEdit = new PatientBuilder()
+                .withAllergies("friend", "dust")
+                .withMedicalConditions("diabetes")
+                .build();
         model.addPerson(patientToEdit);
         Index lastIndex = Index.fromOneBased(model.getFilteredPersonList().size());
 
@@ -178,9 +159,11 @@ public class EditCommandTest {
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withAllergies("pollen").build();
         EditCommand editCommand = new EditCommand(lastIndex, descriptor);
 
-        // only allergies change, rest of tags stay
-        Patient expectedPatient = new PatientBuilder().withTags("friend")
-                .withAllergies("pollen").withMedicalConditions("diabetes").build();
+        // only allergies change, medical conditions stay
+        Patient expectedPatient = new PatientBuilder()
+                .withAllergies("pollen")
+                .withMedicalConditions("diabetes")
+                .build();
         String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS,
                 Messages.format(expectedPatient));
 
@@ -192,8 +175,8 @@ public class EditCommandTest {
 
     @Test
     public void execute_editMedicalConditionOnly_keepsOtherTags() {
-        Patient patientToEdit = new PatientBuilder().withTags("friend")
-                .withAllergies("dust").withMedicalConditions("diabetes").build();
+        Patient patientToEdit = new PatientBuilder().withAllergies("friend", "dust").withMedicalConditions("diabetes")
+                .build();
         model.addPerson(patientToEdit);
         Index lastIndex = Index.fromOneBased(model.getFilteredPersonList().size());
 
@@ -203,8 +186,8 @@ public class EditCommandTest {
         EditCommand editCommand = new EditCommand(lastIndex, descriptor);
 
         // only mc change, rest of tags stay
-        Patient expectedPatient = new PatientBuilder().withTags("friend")
-                .withAllergies("dust").withMedicalConditions("asthma").build();
+        Patient expectedPatient = new PatientBuilder().withAllergies("friend", "dust").withMedicalConditions("asthma")
+                .build();
         String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS,
                 Messages.format(expectedPatient));
 

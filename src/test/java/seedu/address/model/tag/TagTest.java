@@ -8,13 +8,13 @@ public class TagTest {
 
     @Test
     public void constructor_null_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> new GeneralTag(null));
+        assertThrows(NullPointerException.class, () -> new Allergy(null));
     }
 
     @Test
     public void constructor_invalidTagName_throwsIllegalArgumentException() {
         String invalidTagName = "";
-        assertThrows(IllegalArgumentException.class, () -> new GeneralTag(invalidTagName));
+        assertThrows(IllegalArgumentException.class, () -> new Allergy(invalidTagName));
     }
 
     @Test

@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonValue;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.tag.Allergy;
-import seedu.address.model.tag.GeneralTag;
 import seedu.address.model.tag.MedicalCondition;
 import seedu.address.model.tag.Tag;
 
@@ -76,7 +75,8 @@ class JsonAdaptedTag {
         case "condition":
             return new MedicalCondition(name);
         default:
-            return new GeneralTag(name);
+            throw new IllegalValueException("Unknown tag type: " + type
+                    + ". Tags must be prefixed with 'allergy:' or 'condition:'");
         }
     }
 }

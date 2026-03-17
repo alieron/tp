@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 
 import seedu.address.model.tag.Allergy;
-import seedu.address.model.tag.GeneralTag;
 import seedu.address.model.tag.MedicalCondition;
 import seedu.address.model.tag.Tag;
 
@@ -25,14 +24,6 @@ public class JsonAdaptedTagTest {
         Tag modelTag = adaptedTag.toModelType();
 
         assertEquals(MedicalCondition.class, modelTag.getClass());
-    }
-
-    @Test
-    public void toModelType_validGeneralTag_returnsGeneralTag() throws Exception {
-        JsonAdaptedTag adaptedTag = new JsonAdaptedTag("friends");
-        Tag modelTag = adaptedTag.toModelType();
-
-        assertEquals(GeneralTag.class, modelTag.getClass());
     }
 
     @Test
@@ -68,12 +59,4 @@ public class JsonAdaptedTagTest {
         JsonAdaptedTag adaptedTag = new JsonAdaptedTag(allergy);
         assertEquals("allergy:peanut", adaptedTag.toJson());
     }
-
-    @Test
-    public void toJson_generalTag_returnsNameOnly() throws Exception {
-        Tag general = new GeneralTag("friends");
-        JsonAdaptedTag adaptedTag = new JsonAdaptedTag(general);
-        assertEquals("friends", adaptedTag.toJson());
-    }
-
 }
