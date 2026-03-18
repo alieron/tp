@@ -1,6 +1,7 @@
 package seedu.address.storage;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static seedu.address.testutil.Assert.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
@@ -34,6 +35,22 @@ public class JsonAdaptedTagTest {
                 seedu.address.commons.exceptions.IllegalValueException.class,
                 adaptedTag::toModelType
         );
+    }
+
+    @Test
+    public void toModelType_unknownPrefix_throwsException() {
+        JsonAdaptedTag adaptedTag = new JsonAdaptedTag("unknown:sometag");
+
+        assertThrows(
+            seedu.address.commons.exceptions.IllegalValueException.class,
+            adaptedTag::toModelType
+        );
+    }
+
+    @Test
+    public void toJson_jsonCreatorConstructor_returnsTagNameOnly() throws Exception {
+        JsonAdaptedTag adaptedTag = new JsonAdaptedTag("peanut");
+        assertEquals("peanut", adaptedTag.toJson());
     }
 
     @Test
