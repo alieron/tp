@@ -57,7 +57,7 @@ class JsonAdaptedPerson {
     }
 
     /**
-     * Converts a given {@code Person} into this class for Jackson use.
+     * Converts a given {@code Patient} into this class for Jackson use.
      */
     public JsonAdaptedPerson(Patient source) {
         name = source.getName().fullName;
@@ -77,7 +77,7 @@ class JsonAdaptedPerson {
     }
 
     /**
-     * Converts this Jackson-friendly adapted patient object into the model's {@code Person} object.
+     * Converts this Jackson-friendly adapted patient object into the model's {@code Patient} object.
      *
      * @throws IllegalValueException if there were any data constraints violated in the adapted patient.
      */
@@ -122,14 +122,19 @@ class JsonAdaptedPerson {
         final Set<Tag> modelTags = new HashSet<>(personTags);
 
         Appointment modelAppointment = null;
+
         if (appointmentStart != null && appointmentDuration != null && appointmentNote != null) {
             if (!Appointment.isValidDateTime(appointmentStart)) {
-                throw new IllegalValueException(Appointment.MESSAGE_CONSTRAINTS);
+                throw new IllegalValueException(Appointment.STARTTIME_CONSTRAINTS);
             }
             if (!Appointment.isValidDuration(appointmentDuration)) {
                 throw new IllegalValueException(Appointment.DURATION_CONSTRAINTS);
             }
-            // Note is allowed to be blank based on your previous requirement
+
+            if (!Appointment.isValidNote(appointmentNote)) {
+                throw new IllegalValueException(Appointment.NOTE_CONSTRAINTS);
+            }
+
             modelAppointment = new Appointment(appointmentStart, appointmentDuration, appointmentNote);
         }
 
