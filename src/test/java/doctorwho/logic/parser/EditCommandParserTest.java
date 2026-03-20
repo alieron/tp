@@ -117,11 +117,12 @@ public class EditCommandParserTest {
     public void parse_allFieldsSpecified_success() {
         Index targetIndex = INDEX_SECOND_PERSON;
         String userInput = targetIndex.getOneBased() + PHONE_DESC_BOB + ALLERGY_DESC_IBUPROFEN
-                + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + NAME_DESC_AMY + ALLERGY_DESC_ASPIRIN;
+                + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + NAME_DESC_AMY + ALLERGY_DESC_ASPIRIN + CONDITION_DESC_DIABETES;;
 
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
                 .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
-                .withAllergies(VALID_ALLERGY_IBUPROFEN, VALID_ALLERGY_ASPIRIN).build();
+                .withAllergies(VALID_ALLERGY_IBUPROFEN, VALID_ALLERGY_ASPIRIN).
+            withConditions(VALID_CONDITION_DIABETES).build();
         EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
 
         assertParseSuccess(parser, userInput, expectedCommand);
@@ -166,9 +167,15 @@ public class EditCommandParserTest {
         expectedCommand = new EditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
 
-        // tags
+        // allergy
         userInput = targetIndex.getOneBased() + ALLERGY_DESC_ASPIRIN;
         descriptor = new EditPersonDescriptorBuilder().withAllergies(VALID_ALLERGY_ASPIRIN).build();
+        expectedCommand = new EditCommand(targetIndex, descriptor);
+        assertParseSuccess(parser, userInput, expectedCommand);
+
+        //condition
+        userInput = targetIndex.getOneBased() + CONDITION_DESC_DIABETES;
+        descriptor = new EditPersonDescriptorBuilder().withConditions(VALID_CONDITION_DIABETES).build();
         expectedCommand = new EditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
     }
@@ -189,7 +196,7 @@ public class EditCommandParserTest {
 
         assertParseFailure(parser, userInput, Messages.getErrorMessageForDuplicatePrefixes(PREFIX_PHONE));
 
-        // mulltiple valid fields repeated
+        // multiple valid fields repeated
         userInput = targetIndex.getOneBased() + PHONE_DESC_AMY + ADDRESS_DESC_AMY + EMAIL_DESC_AMY
                 + ALLERGY_DESC_ASPIRIN + PHONE_DESC_AMY + ADDRESS_DESC_AMY + EMAIL_DESC_AMY + ALLERGY_DESC_ASPIRIN
                 + PHONE_DESC_BOB + ADDRESS_DESC_BOB + EMAIL_DESC_BOB + VALID_ALLERGY_IBUPROFEN;
@@ -274,7 +281,7 @@ public class EditCommandParserTest {
     }
 
     @Test
-    public void parse_resetconditions_success() {
+    public void parse_resetConditions_success() {
         Index targetIndex = INDEX_THIRD_PERSON;
         String userInput = targetIndex.getOneBased() + " " + PREFIX_CONDITION;
 
@@ -285,7 +292,7 @@ public class EditCommandParserTest {
     }
 
     @Test
-    public void parse_multipleconditionsSpecified_success() {
+    public void parse_multipleConditionsSpecified_success() {
         Index targetIndex = INDEX_FIRST_PERSON;
         String userInput = targetIndex.getOneBased() + CONDITION_DESC_DIABETES + CONDITION_DESC_HYPERTENSION;
 
@@ -297,7 +304,7 @@ public class EditCommandParserTest {
     }
 
     @Test
-    public void parse_allergyAndconditionspecified_success() {
+    public void parse_allergyAndConditionSpecified_success() {
         Index targetIndex = INDEX_FIRST_PERSON;
         String userInput = targetIndex.getOneBased() + ALLERGY_DESC_ASPIRIN + CONDITION_DESC_DIABETES;
 
