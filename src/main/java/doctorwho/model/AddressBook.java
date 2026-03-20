@@ -6,7 +6,7 @@ import java.util.List;
 
 import doctorwho.commons.util.ToStringBuilder;
 import doctorwho.model.patient.Patient;
-import doctorwho.model.patient.UniquePersonList;
+import doctorwho.model.patient.UniquePatientList;
 import javafx.collections.ObservableList;
 
 /**
@@ -15,7 +15,7 @@ import javafx.collections.ObservableList;
  */
 public class AddressBook implements ReadOnlyAddressBook {
 
-    private final UniquePersonList persons;
+    private final UniquePatientList persons;
 
     /*
      * The 'unusual' code block below is a non-static initialization block, sometimes used to avoid duplication
@@ -25,7 +25,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      *   among constructors.
      */
     {
-        persons = new UniquePersonList();
+        persons = new UniquePatientList();
     }
 
     public AddressBook() {
@@ -46,7 +46,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      * {@code patients} must not contain duplicate patients.
      */
     public void setPersons(List<Patient> patients) {
-        this.persons.setPersons(patients);
+        this.persons.setPatients(patients);
     }
 
     /**
@@ -85,7 +85,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void setPerson(Patient target, Patient editedPatient) {
         requireNonNull(editedPatient);
 
-        persons.setPerson(target, editedPatient);
+        persons.setPatient(target, editedPatient);
     }
 
     /**
