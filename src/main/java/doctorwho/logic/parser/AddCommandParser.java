@@ -8,7 +8,6 @@ import static doctorwho.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static doctorwho.logic.parser.CliSyntax.PREFIX_NAME;
 import static doctorwho.logic.parser.CliSyntax.PREFIX_PHONE;
 
-import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Stream;
 

@@ -9,13 +9,13 @@ import static doctorwho.logic.parser.CliSyntax.PREFIX_NAME;
 import static doctorwho.logic.parser.CliSyntax.PREFIX_PHONE;
 import static java.util.Objects.requireNonNull;
 
+import java.util.Collection;
+import java.util.Collections;
+
 import doctorwho.commons.core.index.Index;
 import doctorwho.logic.commands.EditCommand;
 import doctorwho.logic.commands.EditCommand.EditPersonDescriptor;
 import doctorwho.logic.parser.exceptions.ParseException;
-
-import java.util.Collection;
-import java.util.Collections;
 
 /**
  * Parses input arguments and creates a new EditCommand object

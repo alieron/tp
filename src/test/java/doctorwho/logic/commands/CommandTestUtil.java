@@ -56,14 +56,12 @@ public class CommandTestUtil {
     public static final String INVALID_ADDRESS_DESC = " " + PREFIX_ADDRESS; // empty string not allowed for addresses
 
     public static final String VALID_ALLERGY_SULFONAMIDES = "Sulfonamides";
-    public static final String VALID_ALLERGY_PENICILLIN = "Penicillin";
     public static final String VALID_CONDITION_DIABETES = "Diabetes";
     public static final String VALID_CONDITION_HYPERTENSION = "Hypertension";
     public static final String VALID_CONDITION_ASTHMA = "Asthma";
 
     public static final String ALLERGY_DESC_ASPIRIN = " " + PREFIX_ALLERGY + VALID_ALLERGY_ASPIRIN;
     public static final String ALLERGY_DESC_IBUPROFEN = " " + PREFIX_ALLERGY + VALID_ALLERGY_IBUPROFEN;
-    public static final String ALLERGY_DESC_PENICILLIN = " " + PREFIX_ALLERGY + VALID_ALLERGY_PENICILLIN;
     public static final String ALLERGY_DESC_SULFONAMIDES = " " + PREFIX_ALLERGY + VALID_ALLERGY_SULFONAMIDES;
 
     public static final String CONDITION_DESC_DIABETES = " " + PREFIX_CONDITION + VALID_CONDITION_DIABETES;

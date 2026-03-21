@@ -139,6 +139,9 @@ public class EditCommandTest {
         assertCommandFailure(editCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
 
+    /**
+     * Tests that editing allergies only keeps existing conditions unchanged.
+     */
     @Test
     public void execute_editAllergyOnly_keepsOtherTags() {
         Patient patientToEdit = new PatientBuilder()
@@ -166,6 +169,9 @@ public class EditCommandTest {
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
     }
 
+    /**
+     * Tests that editing conditions only keeps existing allergies unchanged.
+     */
     @Test
     public void execute_editConditionOnly_keepsOtherTags() {
         Patient patientToEdit = new PatientBuilder().withAllergies("ibuprofen", VALID_ALLERGY_ASPIRIN)
@@ -190,6 +196,9 @@ public class EditCommandTest {
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
     }
 
+    /**
+     * Tests that multiple conditions can be edited at once.
+     */
     @Test
     public void execute_editMultipleConditions_success() {
         Patient patientToEdit = new PatientBuilder()
@@ -216,6 +225,9 @@ public class EditCommandTest {
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
     }
 
+    /**
+     * Tests that editing both allergies and conditions changes both.
+     */
     @Test
     public void execute_editAllergyAndCondition_bothChange() {
         Patient patientToEdit = new PatientBuilder()
@@ -243,6 +255,9 @@ public class EditCommandTest {
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
     }
 
+    /**
+     * Tests that providing an empty allergy prefix clears all existing allergies.
+     */
     @Test
     public void execute_resetAllergies_success() {
         Patient patientToEdit = new PatientBuilder()
@@ -270,6 +285,9 @@ public class EditCommandTest {
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
     }
 
+    /**
+     * Tests that providing an empty condition prefix clears all existing conditions.
+     */
     @Test
     public void execute_resetConditions_success() {
         Patient patientToEdit = new PatientBuilder()
@@ -297,6 +315,9 @@ public class EditCommandTest {
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
     }
 
+    /**
+     * Tests that allergies can be added to a patient who has none.
+     */
     @Test
     public void execute_addAllergiesToPatientWithNone_success() {
         Patient patientToEdit = new PatientBuilder()
@@ -324,6 +345,9 @@ public class EditCommandTest {
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
     }
 
+    /**
+     * Tests that conditions can be added to a patient who has none.
+     */
     @Test
     public void execute_addConditionsToPatientWithNone_success() {
         Patient patientToEdit = new PatientBuilder()

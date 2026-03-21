@@ -33,6 +33,9 @@ public class AddCommandTest {
         assertThrows(NullPointerException.class, () -> new AddCommand(null));
     }
 
+    /**
+     * Tests that a valid patient is successfully added to the model.
+     */
     @Test
     public void execute_personAcceptedByModel_addSuccessful() throws Exception {
         ModelStubAcceptingPersonAdded modelStub = new ModelStubAcceptingPersonAdded();
@@ -45,6 +48,9 @@ public class AddCommandTest {
         assertEquals(Arrays.asList(validPatient), modelStub.personsAdded);
     }
 
+    /**
+     * Tests that a patient with multiple allergies is successfully added to the model.
+     */
     @Test
     public void execute_personWithMultipleAllergies_addSuccessful() throws Exception {
         ModelStubAcceptingPersonAdded modelStub = new ModelStubAcceptingPersonAdded();
@@ -59,6 +65,9 @@ public class AddCommandTest {
         assertEquals(Arrays.asList(validPatient), modelStub.personsAdded);
     }
 
+    /**
+     * Tests that a patient with both allergies and conditions is successfully added to the model.
+     */
     @Test
     public void execute_personWithAllergiesAndConditions_addSuccessful() throws Exception {
         ModelStubAcceptingPersonAdded modelStub = new ModelStubAcceptingPersonAdded();
@@ -72,6 +81,9 @@ public class AddCommandTest {
         assertEquals(Arrays.asList(validPatient), modelStub.personsAdded);
     }
 
+    /**
+     * Tests that a patient with allergies but no conditions is successfully added to the model.
+     */
     @Test
     public void execute_personWithAllergiesNoConditions_addSuccessful() throws Exception {
         ModelStubAcceptingPersonAdded modelStub = new ModelStubAcceptingPersonAdded();
@@ -87,6 +99,9 @@ public class AddCommandTest {
         assertEquals(Arrays.asList(validPatient), modelStub.personsAdded);
     }
 
+    /**
+     * Tests that a patient with conditions but no allergies is successfully added to the model.
+     */
     @Test
     public void execute_personWithConditionsNoAllergies_addSuccessful() throws Exception {
         ModelStubAcceptingPersonAdded modelStub = new ModelStubAcceptingPersonAdded();

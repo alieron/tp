@@ -4,7 +4,6 @@ import static doctorwho.logic.commands.CommandTestUtil.VALID_ADDRESS_AMY;
 import static doctorwho.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
 import static doctorwho.logic.commands.CommandTestUtil.VALID_ALLERGY_ASPIRIN;
 import static doctorwho.logic.commands.CommandTestUtil.VALID_ALLERGY_IBUPROFEN;
-import static doctorwho.logic.commands.CommandTestUtil.VALID_ALLERGY_PENICILLIN;
 import static doctorwho.logic.commands.CommandTestUtil.VALID_CONDITION_ASTHMA;
 import static doctorwho.logic.commands.CommandTestUtil.VALID_CONDITION_DIABETES;
 import static doctorwho.logic.commands.CommandTestUtil.VALID_CONDITION_HYPERTENSION;
@@ -44,7 +43,7 @@ public class TypicalPersons {
         .withEmail("werner@example.com").withAddress("michegan ave").build();
     public static final Patient FIONA = new PatientBuilder().withName("Fiona Kunz").withPhone("9482427")
         .withEmail("lydia@example.com").withAddress("little tokyo")
-        .withAllergies(VALID_ALLERGY_ASPIRIN, VALID_ALLERGY_PENICILLIN).withConditions(VALID_CONDITION_HYPERTENSION)
+        .withAllergies(VALID_ALLERGY_ASPIRIN, VALID_ALLERGY_IBUPROFEN).withConditions(VALID_CONDITION_HYPERTENSION)
         .build();
     public static final Patient GEORGE = new PatientBuilder().withName("George Best").withPhone("9482442")
         .withEmail("anna@example.com").withAddress("4th street").build();
