@@ -12,7 +12,7 @@ import static doctorwho.logic.parser.CliSyntax.PREFIX_APPOINTMENT_NOTE;
 import static doctorwho.logic.parser.CliSyntax.PREFIX_APPOINTMENT_STARTTIME;
 import static doctorwho.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static doctorwho.logic.parser.CommandParserTestUtil.assertParseSuccess;
-import static doctorwho.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static doctorwho.testutil.TypicalIndexes.INDEX_FIRST_PATIENT;
 
 import org.junit.jupiter.api.Test;
 
@@ -26,7 +26,7 @@ public class AddAppointmentCommandParserTest {
 
     @Test
     public void parse_allFieldsPresent_success() {
-        Index targetIndex = INDEX_FIRST_PERSON;
+        Index targetIndex = INDEX_FIRST_PATIENT;
 
         String userInput = targetIndex.getOneBased()
                 + APPOINTMENT_STARTTIME_DESC_VALID
@@ -47,7 +47,7 @@ public class AddAppointmentCommandParserTest {
 
     @Test
     public void parse_optionalNoteMissing_success() {
-        Index targetIndex = INDEX_FIRST_PERSON;
+        Index targetIndex = INDEX_FIRST_PATIENT;
 
         String userInput = targetIndex.getOneBased()
                 + APPOINTMENT_STARTTIME_DESC_VALID
@@ -67,7 +67,7 @@ public class AddAppointmentCommandParserTest {
 
     @Test
     public void parse_missingStartTime_failure() {
-        String userInput = INDEX_FIRST_PERSON.getOneBased()
+        String userInput = INDEX_FIRST_PATIENT.getOneBased()
                 + APPOINTMENT_DURATION_DESC_VALID;
 
         assertParseFailure(parser, userInput,
@@ -76,7 +76,7 @@ public class AddAppointmentCommandParserTest {
 
     @Test
     public void parse_missingDuration_failure() {
-        String userInput = INDEX_FIRST_PERSON.getOneBased()
+        String userInput = INDEX_FIRST_PATIENT.getOneBased()
                 + APPOINTMENT_STARTTIME_DESC_VALID;
 
         assertParseFailure(parser, userInput,
@@ -94,7 +94,7 @@ public class AddAppointmentCommandParserTest {
 
     @Test
     public void parse_invalidStartTime_failure() {
-        String userInput = INDEX_FIRST_PERSON.getOneBased()
+        String userInput = INDEX_FIRST_PATIENT.getOneBased()
                 + INVALID_APPOINTMENT_STARTTIME_DESC
                 + APPOINTMENT_DURATION_DESC_VALID;
 
@@ -104,7 +104,7 @@ public class AddAppointmentCommandParserTest {
 
     @Test
     public void parse_invalidDuration_failure() {
-        String userInput = INDEX_FIRST_PERSON.getOneBased()
+        String userInput = INDEX_FIRST_PATIENT.getOneBased()
                 + APPOINTMENT_STARTTIME_DESC_VALID
                 + INVALID_APPOINTMENT_DURATION_DESC;
 
@@ -114,7 +114,7 @@ public class AddAppointmentCommandParserTest {
 
     @Test
     public void parse_duplicatePrefixes_failure() {
-        String userInput = INDEX_FIRST_PERSON.getOneBased()
+        String userInput = INDEX_FIRST_PATIENT.getOneBased()
                 + APPOINTMENT_STARTTIME_DESC_VALID
                 + APPOINTMENT_STARTTIME_DESC_VALID
                 + APPOINTMENT_DURATION_DESC_VALID;
@@ -127,7 +127,7 @@ public class AddAppointmentCommandParserTest {
 
     @Test
     public void parse_duplicateDuration_failure() {
-        String userInput = INDEX_FIRST_PERSON.getOneBased()
+        String userInput = INDEX_FIRST_PATIENT.getOneBased()
                 + APPOINTMENT_STARTTIME_DESC_VALID
                 + APPOINTMENT_DURATION_DESC_VALID
                 + APPOINTMENT_DURATION_DESC_VALID;
@@ -140,7 +140,7 @@ public class AddAppointmentCommandParserTest {
 
     @Test
     public void parse_duplicateNote_failure() {
-        String userInput = INDEX_FIRST_PERSON.getOneBased()
+        String userInput = INDEX_FIRST_PATIENT.getOneBased()
                 + APPOINTMENT_STARTTIME_DESC_VALID
                 + APPOINTMENT_DURATION_DESC_VALID
                 + APPOINTMENT_NOTE_DESC_VALID

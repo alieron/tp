@@ -3,7 +3,7 @@ package doctorwho.logic.parser;
 import static doctorwho.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static doctorwho.logic.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static doctorwho.testutil.Assert.assertThrows;
-import static doctorwho.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static doctorwho.testutil.TypicalIndexes.INDEX_FIRST_PATIENT;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -17,7 +17,7 @@ import doctorwho.logic.commands.AddCommand;
 import doctorwho.logic.commands.ClearCommand;
 import doctorwho.logic.commands.DeleteCommand;
 import doctorwho.logic.commands.EditCommand;
-import doctorwho.logic.commands.EditCommand.EditPersonDescriptor;
+import doctorwho.logic.commands.EditCommand.EditPatientDescriptor;
 import doctorwho.logic.commands.ExitCommand;
 import doctorwho.logic.commands.FindCommand;
 import doctorwho.logic.commands.HelpCommand;
@@ -25,9 +25,9 @@ import doctorwho.logic.commands.ListCommand;
 import doctorwho.logic.parser.exceptions.ParseException;
 import doctorwho.model.patient.NameContainsKeywordsPredicate;
 import doctorwho.model.patient.Patient;
-import doctorwho.testutil.EditPersonDescriptorBuilder;
+import doctorwho.testutil.EditPatientDescriptorBuilder;
 import doctorwho.testutil.PatientBuilder;
-import doctorwho.testutil.PersonUtil;
+import doctorwho.testutil.PatientUtil;
 
 public class AddressBookParserTest {
 
@@ -36,7 +36,7 @@ public class AddressBookParserTest {
     @Test
     public void parseCommand_add() throws Exception {
         Patient patient = new PatientBuilder().build();
-        AddCommand command = (AddCommand) parser.parseCommand(PersonUtil.getAddCommand(patient));
+        AddCommand command = (AddCommand) parser.parseCommand(PatientUtil.getAddCommand(patient));
         assertEquals(new AddCommand(patient), command);
     }
 
@@ -49,17 +49,17 @@ public class AddressBookParserTest {
     @Test
     public void parseCommand_delete() throws Exception {
         DeleteCommand command = (DeleteCommand) parser.parseCommand(
-                DeleteCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
-        assertEquals(new DeleteCommand(INDEX_FIRST_PERSON), command);
+                DeleteCommand.COMMAND_WORD + " " + INDEX_FIRST_PATIENT.getOneBased());
+        assertEquals(new DeleteCommand(INDEX_FIRST_PATIENT), command);
     }
 
     @Test
     public void parseCommand_edit() throws Exception {
         Patient patient = new PatientBuilder().build();
-        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(patient).build();
+        EditPatientDescriptor descriptor = new EditPatientDescriptorBuilder(patient).build();
         EditCommand command = (EditCommand) parser.parseCommand(EditCommand.COMMAND_WORD + " "
-                + INDEX_FIRST_PERSON.getOneBased() + " " + PersonUtil.getEditPersonDescriptorDetails(descriptor));
-        assertEquals(new EditCommand(INDEX_FIRST_PERSON, descriptor), command);
+                + INDEX_FIRST_PATIENT.getOneBased() + " " + PatientUtil.getEditPatientDescriptorDetails(descriptor));
+        assertEquals(new EditCommand(INDEX_FIRST_PATIENT, descriptor), command);
     }
 
     @Test

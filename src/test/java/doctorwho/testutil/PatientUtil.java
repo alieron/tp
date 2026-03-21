@@ -9,14 +9,14 @@ import static doctorwho.logic.parser.CliSyntax.PREFIX_TAG;
 import java.util.Set;
 
 import doctorwho.logic.commands.AddCommand;
-import doctorwho.logic.commands.EditCommand.EditPersonDescriptor;
+import doctorwho.logic.commands.EditCommand.EditPatientDescriptor;
 import doctorwho.model.patient.Patient;
 import doctorwho.model.tag.Tag;
 
 /**
  * A utility class for Patient.
  */
-public class PersonUtil {
+public class PatientUtil {
 
     /**
      * Returns an add command string for adding the {@code Patient}.
@@ -43,7 +43,7 @@ public class PersonUtil {
     /**
      * Returns the part of command string for the given {@code EditPersonDescriptor}'s details.
      */
-    public static String getEditPersonDescriptorDetails(EditPersonDescriptor descriptor) {
+    public static String getEditPatientDescriptorDetails(EditPatientDescriptor descriptor) {
         StringBuilder sb = new StringBuilder();
         descriptor.getName().ifPresent(name -> sb.append(PREFIX_NAME).append(name.fullName).append(" "));
         descriptor.getPhone().ifPresent(phone -> sb.append(PREFIX_PHONE).append(phone.value).append(" "));
