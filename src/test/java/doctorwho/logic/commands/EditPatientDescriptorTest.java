@@ -93,14 +93,14 @@ public class EditPatientDescriptorTest {
 
     @Test
     public void toStringMethod() {
-        EditPatientDescriptor EditPatientDescriptor = new EditPatientDescriptor();
+        EditPatientDescriptor editPatientDescriptor = new EditPatientDescriptor();
         String expected = EditPatientDescriptor.class.getCanonicalName() + "{name="
-                + EditPatientDescriptor.getName().orElse(null) + ", phone="
-                + EditPatientDescriptor.getPhone().orElse(null) + ", email="
-                + EditPatientDescriptor.getEmail().orElse(null) + ", address="
-                + EditPatientDescriptor.getAddress().orElse(null) + ", allergies="
-                + EditPatientDescriptor.getAllergies().orElse(null) + ", conditions="
-                + EditPatientDescriptor.getConditions().orElse(null) + "}";
-        assertEquals(expected, EditPatientDescriptor.toString());
+            + editPatientDescriptor.getName().orElse(null) + ", phone="
+            + editPatientDescriptor.getPhone().orElse(null) + ", email="
+            + editPatientDescriptor.getEmail().orElse(null) + ", address="
+            + editPatientDescriptor.getAddress().orElse(null) + ", allergies="
+            + editPatientDescriptor.getAllergies().orElse(null) + ", conditions="
+            + editPatientDescriptor.getConditions().orElse(null) + "}";
+        assertEquals(expected, editPatientDescriptor.toString());
     }
 }

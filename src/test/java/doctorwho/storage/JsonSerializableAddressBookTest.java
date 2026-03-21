@@ -21,12 +21,12 @@ public class JsonSerializableAddressBookTest {
     private static final Path DUPLICATE_Patient_FILE = TEST_DATA_FOLDER.resolve("duplicatePatientAddressBook.json");
 
     @Test
-    public void toModelType_TypicalPatientsFile_success() throws Exception {
+    public void toModelType_typicalPatientsFile_success() throws Exception {
         JsonSerializableAddressBook dataFromFile = JsonUtil.readJsonFile(TYPICAL_patients_FILE,
                 JsonSerializableAddressBook.class).get();
         AddressBook addressBookFromFile = dataFromFile.toModelType();
-        AddressBook TypicalPatientsAddressBook = TypicalPatients.getTypicalAddressBook();
-        assertEquals(addressBookFromFile, TypicalPatientsAddressBook);
+        AddressBook typicalPatientsAddressBook = TypicalPatients.getTypicalAddressBook();
+        assertEquals(addressBookFromFile, typicalPatientsAddressBook);
     }
 
     @Test

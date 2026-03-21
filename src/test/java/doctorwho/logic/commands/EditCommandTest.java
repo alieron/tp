@@ -13,7 +13,6 @@ import static doctorwho.logic.commands.CommandTestUtil.showPatientAtIndex;
 import static doctorwho.testutil.TypicalIndexes.INDEX_FIRST_PATIENT;
 import static doctorwho.testutil.TypicalIndexes.INDEX_SECOND_PATIENT;
 import static doctorwho.testutil.TypicalPatients.getTypicalAddressBook;
-import static doctorwho.testutil.TypicalPatients.getTypicalAddressBook;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -44,7 +43,8 @@ public class EditCommandTest {
         EditPatientDescriptor descriptor = new EditPatientDescriptorBuilder(editedPatient).build();
         EditCommand editCommand = new EditCommand(INDEX_FIRST_PATIENT, descriptor);
 
-        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PATIENT_SUCCESS, Messages.format(editedPatient));
+        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PATIENT_SUCCESS,
+            Messages.format(editedPatient));
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.setPatient(model.getFilteredPatientList().get(0), editedPatient);
@@ -65,7 +65,8 @@ public class EditCommandTest {
                 .withPhone(VALID_PHONE_BOB).withAllergies(VALID_ALLERGY_IBUPROFEN).build();
         EditCommand editCommand = new EditCommand(indexLastPatient, descriptor);
 
-        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PATIENT_SUCCESS, Messages.format(editedPatient));
+        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PATIENT_SUCCESS,
+            Messages.format(editedPatient));
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.setPatient(lastPatient, editedPatient);
@@ -78,7 +79,8 @@ public class EditCommandTest {
         EditCommand editCommand = new EditCommand(INDEX_FIRST_PATIENT, new EditPatientDescriptor());
         Patient editedPatient = model.getFilteredPatientList().get(INDEX_FIRST_PATIENT.getZeroBased());
 
-        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PATIENT_SUCCESS, Messages.format(editedPatient));
+        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PATIENT_SUCCESS,
+            Messages.format(editedPatient));
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
 
@@ -94,7 +96,8 @@ public class EditCommandTest {
         EditCommand editCommand = new EditCommand(INDEX_FIRST_PATIENT,
                 new EditPatientDescriptorBuilder().withName(VALID_NAME_BOB).build());
 
-        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PATIENT_SUCCESS, Messages.format(editedPatient));
+        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PATIENT_SUCCESS,
+            Messages.format(editedPatient));
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.setPatient(model.getFilteredPatientList().get(0), editedPatient);
@@ -413,10 +416,10 @@ public class EditCommandTest {
     @Test
     public void toStringMethod() {
         Index index = Index.fromOneBased(1);
-        EditPatientDescriptor EditPatientDescriptor = new EditPatientDescriptor();
-        EditCommand editCommand = new EditCommand(index, EditPatientDescriptor);
+        EditPatientDescriptor editPatientDescriptor = new EditPatientDescriptor();
+        EditCommand editCommand = new EditCommand(index, editPatientDescriptor);
         String expected = EditCommand.class.getCanonicalName() + "{index=" + index + ", EditPatientDescriptor="
-                + EditPatientDescriptor + "}";
+                + editPatientDescriptor + "}";
         assertEquals(expected, editCommand.toString());
     }
 }

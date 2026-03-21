@@ -27,7 +27,6 @@ import doctorwho.logic.parser.exceptions.ParseException;
 import doctorwho.model.patient.NameContainsKeywordsPredicate;
 import doctorwho.model.patient.Patient;
 import doctorwho.testutil.EditPatientDescriptorBuilder;
-import doctorwho.testutil.EditPatientDescriptorBuilder;
 import doctorwho.testutil.PatientBuilder;
 import doctorwho.testutil.PatientUtil;
 

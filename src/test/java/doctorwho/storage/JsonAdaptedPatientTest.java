@@ -40,106 +40,106 @@ public class JsonAdaptedPatientTest {
 
     @Test
     public void toModelType_validPatientDetails_returnsPatient() throws Exception {
-        JsonAdaptedPatient Patient = new JsonAdaptedPatient(BENSON);
-        assertEquals(BENSON, Patient.toModelType());
+        JsonAdaptedPatient patient = new JsonAdaptedPatient(BENSON);
+        assertEquals(BENSON, patient.toModelType());
     }
 
     @Test
     public void toModelType_invalidName_throwsIllegalValueException() {
-        JsonAdaptedPatient Patient = new JsonAdaptedPatient(INVALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS,
+        JsonAdaptedPatient patient = new JsonAdaptedPatient(INVALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS,
                 VALID_TAGS, VALID_APPT_START, VALID_APPT_DURATION, VALID_APPT_NOTE);
         String expectedMessage = Name.MESSAGE_CONSTRAINTS;
-        assertThrows(IllegalValueException.class, expectedMessage, Patient::toModelType);
+        assertThrows(IllegalValueException.class, expectedMessage, patient::toModelType);
     }
 
     @Test
     public void toModelType_nullName_throwsIllegalValueException() {
-        JsonAdaptedPatient Patient = new JsonAdaptedPatient(null, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS,
+        JsonAdaptedPatient patient = new JsonAdaptedPatient(null, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS,
                 VALID_TAGS, VALID_APPT_START, VALID_APPT_DURATION, VALID_APPT_NOTE);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Name.class.getSimpleName());
-        assertThrows(IllegalValueException.class, expectedMessage, Patient::toModelType);
+        assertThrows(IllegalValueException.class, expectedMessage, patient::toModelType);
     }
 
     @Test
     public void toModelType_invalidPhone_throwsIllegalValueException() {
-        JsonAdaptedPatient Patient = new JsonAdaptedPatient(VALID_NAME, INVALID_PHONE, VALID_EMAIL, VALID_ADDRESS,
+        JsonAdaptedPatient patient = new JsonAdaptedPatient(VALID_NAME, INVALID_PHONE, VALID_EMAIL, VALID_ADDRESS,
                 VALID_TAGS, VALID_APPT_START, VALID_APPT_DURATION, VALID_APPT_NOTE);
         String expectedMessage = Phone.MESSAGE_CONSTRAINTS;
-        assertThrows(IllegalValueException.class, expectedMessage, Patient::toModelType);
+        assertThrows(IllegalValueException.class, expectedMessage, patient::toModelType);
     }
 
     @Test
     public void toModelType_nullPhone_throwsIllegalValueException() {
-        JsonAdaptedPatient Patient = new JsonAdaptedPatient(VALID_NAME, null, VALID_EMAIL, VALID_ADDRESS,
+        JsonAdaptedPatient patient = new JsonAdaptedPatient(VALID_NAME, null, VALID_EMAIL, VALID_ADDRESS,
                 VALID_TAGS, VALID_APPT_START, VALID_APPT_DURATION, VALID_APPT_NOTE);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Phone.class.getSimpleName());
-        assertThrows(IllegalValueException.class, expectedMessage, Patient::toModelType);
+        assertThrows(IllegalValueException.class, expectedMessage, patient::toModelType);
     }
 
     @Test
     public void toModelType_invalidEmail_throwsIllegalValueException() {
-        JsonAdaptedPatient Patient = new JsonAdaptedPatient(VALID_NAME, VALID_PHONE, INVALID_EMAIL, VALID_ADDRESS,
+        JsonAdaptedPatient patient = new JsonAdaptedPatient(VALID_NAME, VALID_PHONE, INVALID_EMAIL, VALID_ADDRESS,
                 VALID_TAGS, VALID_APPT_START, VALID_APPT_DURATION, VALID_APPT_NOTE);
         String expectedMessage = Email.MESSAGE_CONSTRAINTS;
-        assertThrows(IllegalValueException.class, expectedMessage, Patient::toModelType);
+        assertThrows(IllegalValueException.class, expectedMessage, patient::toModelType);
     }
 
     @Test
     public void toModelType_nullEmail_throwsIllegalValueException() {
-        JsonAdaptedPatient Patient = new JsonAdaptedPatient(VALID_NAME, VALID_PHONE, null, VALID_ADDRESS,
+        JsonAdaptedPatient patient = new JsonAdaptedPatient(VALID_NAME, VALID_PHONE, null, VALID_ADDRESS,
                 VALID_TAGS, VALID_APPT_START, VALID_APPT_DURATION, VALID_APPT_NOTE);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Email.class.getSimpleName());
-        assertThrows(IllegalValueException.class, expectedMessage, Patient::toModelType);
+        assertThrows(IllegalValueException.class, expectedMessage, patient::toModelType);
     }
 
     @Test
     public void toModelType_invalidAddress_throwsIllegalValueException() {
-        JsonAdaptedPatient Patient = new JsonAdaptedPatient(VALID_NAME, VALID_PHONE, VALID_EMAIL, INVALID_ADDRESS,
+        JsonAdaptedPatient patient = new JsonAdaptedPatient(VALID_NAME, VALID_PHONE, VALID_EMAIL, INVALID_ADDRESS,
                 VALID_TAGS, VALID_APPT_START, VALID_APPT_DURATION, VALID_APPT_NOTE);
         String expectedMessage = Address.MESSAGE_CONSTRAINTS;
-        assertThrows(IllegalValueException.class, expectedMessage, Patient::toModelType);
+        assertThrows(IllegalValueException.class, expectedMessage, patient::toModelType);
     }
 
     @Test
     public void toModelType_nullAddress_throwsIllegalValueException() {
-        JsonAdaptedPatient Patient = new JsonAdaptedPatient(VALID_NAME, VALID_PHONE, VALID_EMAIL, null,
+        JsonAdaptedPatient patient = new JsonAdaptedPatient(VALID_NAME, VALID_PHONE, VALID_EMAIL, null,
                 VALID_TAGS, VALID_APPT_START, VALID_APPT_DURATION, VALID_APPT_NOTE);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Address.class.getSimpleName());
-        assertThrows(IllegalValueException.class, expectedMessage, Patient::toModelType);
+        assertThrows(IllegalValueException.class, expectedMessage, patient::toModelType);
     }
 
     @Test
     public void toModelType_invalidTags_throwsIllegalValueException() {
         List<JsonAdaptedTag> invalidTags = new ArrayList<>(VALID_TAGS);
         invalidTags.add(new JsonAdaptedTag(INVALID_TAG));
-        JsonAdaptedPatient Patient = new JsonAdaptedPatient(VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS,
+        JsonAdaptedPatient patient = new JsonAdaptedPatient(VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS,
                 invalidTags, VALID_APPT_START, VALID_APPT_DURATION, VALID_APPT_NOTE);
-        assertThrows(IllegalValueException.class, Patient::toModelType);
+        assertThrows(IllegalValueException.class, patient::toModelType);
     }
 
     @Test
     public void toModelType_invalidAppointmentFormat_throwsIllegalValueException() {
-        JsonAdaptedPatient Patient =
+        JsonAdaptedPatient patient =
                 new JsonAdaptedPatient(VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS,
                         VALID_TAGS, INVALID_APPT_START, VALID_APPT_DURATION, VALID_APPT_NOTE);
         String expectedMessage = Appointment.STARTTIME_CONSTRAINTS;
-        assertThrows(IllegalValueException.class, expectedMessage, Patient::toModelType);
+        assertThrows(IllegalValueException.class, expectedMessage, patient::toModelType);
     }
 
     @Test
     public void toModelType_invalidAppointmentDuration_throwsIllegalValueException() {
-        JsonAdaptedPatient Patient =
+        JsonAdaptedPatient patient =
                 new JsonAdaptedPatient(VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS,
                         VALID_TAGS, VALID_APPT_START, INVALID_APPT_DURATION, VALID_APPT_NOTE);
         String expectedMessage = Appointment.DURATION_CONSTRAINTS;
-        assertThrows(IllegalValueException.class, expectedMessage, Patient::toModelType);
+        assertThrows(IllegalValueException.class, expectedMessage, patient::toModelType);
     }
 
     @Test
     public void toModelType_nullAppointment_returnsPatient() throws Exception {
         // Patients without appointments should load successfully
-        JsonAdaptedPatient Patient = new JsonAdaptedPatient(VALID_NAME, VALID_PHONE, VALID_EMAIL,
+        JsonAdaptedPatient patient = new JsonAdaptedPatient(VALID_NAME, VALID_PHONE, VALID_EMAIL,
                 VALID_ADDRESS, VALID_TAGS, null, null, null);
-        assertEquals(false, Patient.toModelType().getAppointment().isPresent());
+        assertEquals(false, patient.toModelType().getAppointment().isPresent());
     }
 }

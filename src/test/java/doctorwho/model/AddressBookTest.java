@@ -61,18 +61,18 @@ public class AddressBookTest {
     }
 
     @Test
-    public void hasPatient_PatientNotInAddressBook_returnsFalse() {
+    public void hasPatient_patientNotInAddressBook_returnsFalse() {
         assertFalse(addressBook.hasPatient(ALICE));
     }
 
     @Test
-    public void hasPatient_PatientInAddressBook_returnsTrue() {
+    public void hasPatient_patientInAddressBook_returnsTrue() {
         addressBook.addPatient(ALICE);
         assertTrue(addressBook.hasPatient(ALICE));
     }
 
     @Test
-    public void hasPatient_PatientWithSameIdentityFieldsInAddressBook_returnsTrue() {
+    public void hasPatient_patientWithSameIdentityFieldsInAddressBook_returnsTrue() {
         addressBook.addPatient(ALICE);
         Patient editedAlice = new PatientBuilder(ALICE).withAddress(VALID_ADDRESS_BOB)
                 .withAllergies(VALID_ALLERGY_IBUPROFEN)

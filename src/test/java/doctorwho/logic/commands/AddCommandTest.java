@@ -54,7 +54,7 @@ public class AddCommandTest {
      * Tests that a patient with multiple allergies is successfully added to the model.
      */
     @Test
-    public void execute_PatientWithMultipleAllergies_addSuccessful() throws Exception {
+    public void execute_patientWithMultipleAllergies_addSuccessful() throws Exception {
         ModelStubAcceptingPatientAdded modelStub = new ModelStubAcceptingPatientAdded();
         Patient validPatient = new PatientBuilder()
             .withAllergies(VALID_ALLERGY_ASPIRIN, VALID_ALLERGY_IBUPROFEN)
@@ -71,7 +71,7 @@ public class AddCommandTest {
      * Tests that a patient with both allergies and conditions is successfully added to the model.
      */
     @Test
-    public void execute_PatientWithAllergiesAndConditions_addSuccessful() throws Exception {
+    public void execute_patientWithAllergiesAndConditions_addSuccessful() throws Exception {
         ModelStubAcceptingPatientAdded modelStub = new ModelStubAcceptingPatientAdded();
         Patient validPatient = new PatientBuilder().withAllergies(VALID_ALLERGY_ASPIRIN)
             .withConditions(VALID_CONDITION_DIABETES).build();
@@ -87,7 +87,7 @@ public class AddCommandTest {
      * Tests that a patient with allergies but no conditions is successfully added to the model.
      */
     @Test
-    public void execute_PatientWithAllergiesNoConditions_addSuccessful() throws Exception {
+    public void execute_patientWithAllergiesNoConditions_addSuccessful() throws Exception {
         ModelStubAcceptingPatientAdded modelStub = new ModelStubAcceptingPatientAdded();
         Patient validPatient = new PatientBuilder()
             .withAllergies(VALID_ALLERGY_ASPIRIN)
@@ -105,7 +105,7 @@ public class AddCommandTest {
      * Tests that a patient with conditions but no allergies is successfully added to the model.
      */
     @Test
-    public void execute_PatientWithConditionsNoAllergies_addSuccessful() throws Exception {
+    public void execute_patientWithConditionsNoAllergies_addSuccessful() throws Exception {
         ModelStubAcceptingPatientAdded modelStub = new ModelStubAcceptingPatientAdded();
         Patient validPatient = new PatientBuilder()
             .withAllergies()
