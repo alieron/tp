@@ -7,7 +7,7 @@ import static doctorwho.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
 import static doctorwho.logic.commands.CommandTestUtil.NAME_DESC_AMY;
 import static doctorwho.logic.commands.CommandTestUtil.PHONE_DESC_AMY;
 import static doctorwho.testutil.Assert.assertThrows;
-import static doctorwho.testutil.TypicalPersons.AMY;
+import static doctorwho.testutil.TypicalPatients.AMY;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.IOException;
@@ -46,7 +46,7 @@ public class LogicManagerTest {
     @BeforeEach
     public void setUp() {
         JsonAddressBookStorage addressBookStorage =
-                new JsonAddressBookStorage(temporaryFolder.resolve("addressBook.json"));
+                new JsonAddressBookStorage(temporaryFolder.resolve("doctorwho.json"));
         JsonUserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(temporaryFolder.resolve("userPrefs.json"));
         StorageManager storage = new StorageManager(addressBookStorage, userPrefsStorage);
         logic = new LogicManager(model, storage);
@@ -172,7 +172,7 @@ public class LogicManagerTest {
         // Triggers the saveAddressBook method by executing an add command
         String addCommand = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY
                 + EMAIL_DESC_AMY + ADDRESS_DESC_AMY;
-        Patient expectedPatient = new PatientBuilder(AMY).withTags().build();
+        Patient expectedPatient = new PatientBuilder(AMY).withAllergies().withConditions().build();
         ModelManager expectedModel = new ModelManager();
         expectedModel.addPatient(expectedPatient);
         assertCommandFailure(addCommand, CommandException.class, expectedMessage, expectedModel);

@@ -86,6 +86,7 @@ public class AddAppointmentCommand extends Command {
         Email email = patientToEdit.getEmail();
         Address address = patientToEdit.getAddress();
         Set<Tag> tags = patientToEdit.getTags();
+        Appointment appointment = appointmentToAdd;
 
         return new Patient(name, phone, email, address, tags, appointmentToAdd);
     }

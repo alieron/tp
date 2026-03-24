@@ -2,8 +2,8 @@ package doctorwho.model;
 
 import static doctorwho.model.Model.PREDICATE_SHOW_ALL_PATIENTS;
 import static doctorwho.testutil.Assert.assertThrows;
-import static doctorwho.testutil.TypicalPersons.ALICE;
-import static doctorwho.testutil.TypicalPersons.BENSON;
+import static doctorwho.testutil.TypicalPatients.ALICE;
+import static doctorwho.testutil.TypicalPatients.BENSON;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -73,17 +73,17 @@ public class ModelManagerTest {
     }
 
     @Test
-    public void hasPerson_nullPatient_throwsNullPointerException() {
+    public void hasPatient_nullPatient_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () -> modelManager.hasPatient(null));
     }
 
     @Test
-    public void hasPerson_patientNotInAddressBook_returnsFalse() {
+    public void hasPatient_patientNotInAddressBook_returnsFalse() {
         assertFalse(modelManager.hasPatient(ALICE));
     }
 
     @Test
-    public void hasPerson_patientInAddressBook_returnsTrue() {
+    public void hasPatient_patientInAddressBook_returnsTrue() {
         modelManager.addPatient(ALICE);
         assertTrue(modelManager.hasPatient(ALICE));
     }
@@ -95,7 +95,7 @@ public class ModelManagerTest {
 
     @Test
     public void equals() {
-        AddressBook addressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build();
+        AddressBook addressBook = new AddressBookBuilder().withPatient(ALICE).withPatient(BENSON).build();
         AddressBook differentAddressBook = new AddressBook();
         UserPrefs userPrefs = new UserPrefs();
 

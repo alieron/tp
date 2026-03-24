@@ -1,7 +1,10 @@
 package doctorwho.logic.commands;
 
+import static doctorwho.logic.commands.CommandTestUtil.VALID_ALLERGY_ASPIRIN;
+import static doctorwho.logic.commands.CommandTestUtil.VALID_ALLERGY_IBUPROFEN;
+import static doctorwho.logic.commands.CommandTestUtil.VALID_CONDITION_DIABETES;
 import static doctorwho.testutil.Assert.assertThrows;
-import static doctorwho.testutil.TypicalPersons.ALICE;
+import static doctorwho.testutil.TypicalPatients.ALICE;
 import static java.util.Objects.requireNonNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -32,6 +35,9 @@ public class AddCommandTest {
         assertThrows(NullPointerException.class, () -> new AddCommand(null));
     }
 
+    /**
+     * Tests that a valid patient is successfully added to the model.
+     */
     @Test
     public void execute_patientAcceptedByModel_addSuccessful() throws Exception {
         ModelStubAcceptingPatientAdded modelStub = new ModelStubAcceptingPatientAdded();
@@ -41,6 +47,75 @@ public class AddCommandTest {
 
         assertEquals(String.format(AddCommand.MESSAGE_SUCCESS, Messages.format(validPatient)),
                 commandResult.getFeedbackToUser());
+        assertEquals(Arrays.asList(validPatient), modelStub.patientsAdded);
+    }
+
+    /**
+     * Tests that a patient with multiple allergies is successfully added to the model.
+     */
+    @Test
+    public void execute_patientWithMultipleAllergies_addSuccessful() throws Exception {
+        ModelStubAcceptingPatientAdded modelStub = new ModelStubAcceptingPatientAdded();
+        Patient validPatient = new PatientBuilder()
+            .withAllergies(VALID_ALLERGY_ASPIRIN, VALID_ALLERGY_IBUPROFEN)
+            .build();
+
+        CommandResult commandResult = new AddCommand(validPatient).execute(modelStub);
+
+        assertEquals(String.format(AddCommand.MESSAGE_SUCCESS, Messages.format(validPatient)),
+            commandResult.getFeedbackToUser());
+        assertEquals(Arrays.asList(validPatient), modelStub.patientsAdded);
+    }
+
+    /**
+     * Tests that a patient with both allergies and conditions is successfully added to the model.
+     */
+    @Test
+    public void execute_patientWithAllergiesAndConditions_addSuccessful() throws Exception {
+        ModelStubAcceptingPatientAdded modelStub = new ModelStubAcceptingPatientAdded();
+        Patient validPatient = new PatientBuilder().withAllergies(VALID_ALLERGY_ASPIRIN)
+            .withConditions(VALID_CONDITION_DIABETES).build();
+
+        CommandResult commandResult = new AddCommand(validPatient).execute(modelStub);
+
+        assertEquals(String.format(AddCommand.MESSAGE_SUCCESS, Messages.format(validPatient)),
+            commandResult.getFeedbackToUser());
+        assertEquals(Arrays.asList(validPatient), modelStub.patientsAdded);
+    }
+
+    /**
+     * Tests that a patient with allergies but no conditions is successfully added to the model.
+     */
+    @Test
+    public void execute_patientWithAllergiesNoConditions_addSuccessful() throws Exception {
+        ModelStubAcceptingPatientAdded modelStub = new ModelStubAcceptingPatientAdded();
+        Patient validPatient = new PatientBuilder()
+            .withAllergies(VALID_ALLERGY_ASPIRIN)
+            .withConditions()
+            .build();
+
+        CommandResult commandResult = new AddCommand(validPatient).execute(modelStub);
+
+        assertEquals(String.format(AddCommand.MESSAGE_SUCCESS, Messages.format(validPatient)),
+            commandResult.getFeedbackToUser());
+        assertEquals(Arrays.asList(validPatient), modelStub.patientsAdded);
+    }
+
+    /**
+     * Tests that a patient with conditions but no allergies is successfully added to the model.
+     */
+    @Test
+    public void execute_patientWithConditionsNoAllergies_addSuccessful() throws Exception {
+        ModelStubAcceptingPatientAdded modelStub = new ModelStubAcceptingPatientAdded();
+        Patient validPatient = new PatientBuilder()
+            .withAllergies()
+            .withConditions(VALID_CONDITION_DIABETES)
+            .build();
+
+        CommandResult commandResult = new AddCommand(validPatient).execute(modelStub);
+
+        assertEquals(String.format(AddCommand.MESSAGE_SUCCESS, Messages.format(validPatient)),
+            commandResult.getFeedbackToUser());
         assertEquals(Arrays.asList(validPatient), modelStub.patientsAdded);
     }
 

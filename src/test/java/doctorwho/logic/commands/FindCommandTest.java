@@ -2,10 +2,10 @@ package doctorwho.logic.commands;
 
 import static doctorwho.logic.Messages.MESSAGE_PATIENTS_LISTED_OVERVIEW;
 import static doctorwho.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static doctorwho.testutil.TypicalPersons.CARL;
-import static doctorwho.testutil.TypicalPersons.ELLE;
-import static doctorwho.testutil.TypicalPersons.FIONA;
-import static doctorwho.testutil.TypicalPersons.getTypicalAddressBook;
+import static doctorwho.testutil.TypicalPatients.CARL;
+import static doctorwho.testutil.TypicalPatients.ELLE;
+import static doctorwho.testutil.TypicalPatients.FIONA;
+import static doctorwho.testutil.TypicalPatients.getTypicalAddressBook;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;

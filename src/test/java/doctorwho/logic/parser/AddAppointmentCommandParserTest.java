@@ -17,6 +17,7 @@ import static doctorwho.testutil.TypicalIndexes.INDEX_FIRST_PATIENT;
 import org.junit.jupiter.api.Test;
 
 import doctorwho.commons.core.index.Index;
+import doctorwho.logic.Messages;
 import doctorwho.logic.commands.AddAppointmentCommand;
 import doctorwho.model.patient.Appointment;
 
@@ -121,7 +122,7 @@ public class AddAppointmentCommandParserTest {
 
         assertParseFailure(parser,
                 userInput,
-                doctorwho.logic.Messages.getErrorMessageForDuplicatePrefixes(
+                Messages.getErrorMessageForDuplicatePrefixes(
                         PREFIX_APPOINTMENT_STARTTIME));
     }
 
@@ -134,7 +135,7 @@ public class AddAppointmentCommandParserTest {
 
         assertParseFailure(parser,
                 userInput,
-                doctorwho.logic.Messages.getErrorMessageForDuplicatePrefixes(
+                Messages.getErrorMessageForDuplicatePrefixes(
                         PREFIX_APPOINTMENT_DURATION));
     }
 
@@ -148,7 +149,7 @@ public class AddAppointmentCommandParserTest {
 
         assertParseFailure(parser,
                 userInput,
-                doctorwho.logic.Messages.getErrorMessageForDuplicatePrefixes(
+                Messages.getErrorMessageForDuplicatePrefixes(
                         PREFIX_APPOINTMENT_NOTE));
     }
 }

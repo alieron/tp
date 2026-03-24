@@ -43,8 +43,10 @@ public class Messages {
                 .append(patient.getEmail())
                 .append("; Address: ")
                 .append(patient.getAddress())
-                .append("; Tags: ");
-        patient.getTags().forEach(builder::append);
+                .append("; Allergies: ");
+        patient.getAllergies().forEach(builder::append);
+        builder.append("; Conditions: ");
+        patient.getConditions().forEach(builder::append);
         return builder.toString();
     }
 

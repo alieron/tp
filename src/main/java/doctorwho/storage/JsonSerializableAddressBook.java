@@ -27,11 +27,9 @@ class JsonSerializableAddressBook {
      * Constructs a {@code JsonSerializableAddressBook} with the given patients.
      */
     @JsonCreator
-    public JsonSerializableAddressBook(@JsonProperty("patients") List<JsonAdaptedPatient> patients,
-                                       @JsonProperty("persons") List<JsonAdaptedPatient> legacyPersons) {
-        List<JsonAdaptedPatient> patientsToLoad = patients != null ? patients : legacyPersons;
-        if (patientsToLoad != null) {
-            this.patients.addAll(patientsToLoad);
+    public JsonSerializableAddressBook(@JsonProperty("patients") List<JsonAdaptedPatient> patients) {
+        if (patients != null) {
+            this.patients.addAll(patients);
         }
     }
 
@@ -60,5 +58,4 @@ class JsonSerializableAddressBook {
         }
         return addressBook;
     }
-
 }

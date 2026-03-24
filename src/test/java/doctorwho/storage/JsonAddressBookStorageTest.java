@@ -1,10 +1,10 @@
 package doctorwho.storage;
 
 import static doctorwho.testutil.Assert.assertThrows;
-import static doctorwho.testutil.TypicalPersons.ALICE;
-import static doctorwho.testutil.TypicalPersons.HOON;
-import static doctorwho.testutil.TypicalPersons.IDA;
-import static doctorwho.testutil.TypicalPersons.getTypicalAddressBook;
+import static doctorwho.testutil.TypicalPatients.ALICE;
+import static doctorwho.testutil.TypicalPatients.HOON;
+import static doctorwho.testutil.TypicalPatients.IDA;
+import static doctorwho.testutil.TypicalPatients.getTypicalAddressBook;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
@@ -51,13 +51,13 @@ public class JsonAddressBookStorageTest {
     }
 
     @Test
-    public void readAddressBook_invalidPersonAddressBook_throwDataLoadingException() {
-        assertThrows(DataLoadingException.class, () -> readAddressBook("invalidPersonAddressBook.json"));
+    public void readAddressBook_invalidPatientAddressBook_throwDataLoadingException() {
+        assertThrows(DataLoadingException.class, () -> readAddressBook("invalidPatientAddressBook.json"));
     }
 
     @Test
-    public void readAddressBook_invalidAndValidPersonAddressBook_throwDataLoadingException() {
-        assertThrows(DataLoadingException.class, () -> readAddressBook("invalidAndValidPersonAddressBook.json"));
+    public void readAddressBook_invalidAndValidPatientAddressBook_throwDataLoadingException() {
+        assertThrows(DataLoadingException.class, () -> readAddressBook("invalidAndValidPatientAddressBook.json"));
     }
 
     @Test

@@ -2,22 +2,20 @@ package doctorwho.logic.parser;
 
 import static doctorwho.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static doctorwho.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static doctorwho.logic.parser.CliSyntax.PREFIX_ALLERGY;
+import static doctorwho.logic.parser.CliSyntax.PREFIX_CONDITION;
 import static doctorwho.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static doctorwho.logic.parser.CliSyntax.PREFIX_NAME;
 import static doctorwho.logic.parser.CliSyntax.PREFIX_PHONE;
-import static doctorwho.logic.parser.CliSyntax.PREFIX_TAG;
 import static java.util.Objects.requireNonNull;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Optional;
-import java.util.Set;
 
 import doctorwho.commons.core.index.Index;
 import doctorwho.logic.commands.EditCommand;
 import doctorwho.logic.commands.EditCommand.EditPatientDescriptor;
 import doctorwho.logic.parser.exceptions.ParseException;
-import doctorwho.model.tag.Tag;
 
 /**
  * Parses input arguments and creates a new EditCommand object
@@ -33,7 +31,8 @@ public class EditCommandParser implements Parser<EditCommand> {
     public EditCommand parse(String args) throws ParseException {
         requireNonNull(args);
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG);
+            ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS,
+                PREFIX_ALLERGY, PREFIX_CONDITION);
 
         Index index;
 
@@ -45,42 +44,39 @@ public class EditCommandParser implements Parser<EditCommand> {
 
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS);
 
-        EditCommand.EditPatientDescriptor editPatientDescriptor = new EditPatientDescriptor();
+        EditPatientDescriptor EditPatientDescriptor = new EditPatientDescriptor();
 
         if (argMultimap.getValue(PREFIX_NAME).isPresent()) {
-            editPatientDescriptor.setName(ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get()));
+            EditPatientDescriptor.setName(ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get()));
         }
         if (argMultimap.getValue(PREFIX_PHONE).isPresent()) {
-            editPatientDescriptor.setPhone(ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get()));
+            EditPatientDescriptor.setPhone(ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get()));
         }
         if (argMultimap.getValue(PREFIX_EMAIL).isPresent()) {
-            editPatientDescriptor.setEmail(ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get()));
+            EditPatientDescriptor.setEmail(ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get()));
         }
         if (argMultimap.getValue(PREFIX_ADDRESS).isPresent()) {
-            editPatientDescriptor.setAddress(ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get()));
+            EditPatientDescriptor.setAddress(ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get()));
         }
-        parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPatientDescriptor::setTags);
 
-        if (!editPatientDescriptor.isAnyFieldEdited()) {
+        if (argMultimap.getValue(PREFIX_ALLERGY).isPresent()) {
+            Collection<String> allergies = argMultimap.getAllValues(PREFIX_ALLERGY);
+            Collection<String> allergySet = allergies.size() == 1 && allergies.contains("")
+                ? Collections.emptySet() : allergies;
+            EditPatientDescriptor.setAllergies(ParserUtil.parseAllergies(allergySet));
+        }
+        if (argMultimap.getValue(PREFIX_CONDITION).isPresent()) {
+            Collection<String> conditions = argMultimap.getAllValues(PREFIX_CONDITION);
+            Collection<String> conditionSet = conditions.size() == 1 && conditions.contains("")
+                ? Collections.emptySet() : conditions;
+            EditPatientDescriptor.setConditions(ParserUtil.parseConditions(conditionSet));
+        }
+
+        if (!EditPatientDescriptor.isAnyFieldEdited()) {
             throw new ParseException(EditCommand.MESSAGE_NOT_EDITED);
         }
 
-        return new EditCommand(index, editPatientDescriptor);
-    }
-
-    /**
-     * Parses {@code Collection<String> tags} into a {@code Set<Tag>} if {@code tags} is non-empty.
-     * If {@code tags} contain only one element which is an empty string, it will be parsed into a
-     * {@code Set<Tag>} containing zero tags.
-     */
-    private Optional<Set<Tag>> parseTagsForEdit(Collection<String> tags) throws ParseException {
-        assert tags != null;
-
-        if (tags.isEmpty()) {
-            return Optional.empty();
-        }
-        Collection<String> tagSet = tags.size() == 1 && tags.contains("") ? Collections.emptySet() : tags;
-        return Optional.of(ParserUtil.parseTags(tagSet));
+        return new EditCommand(index, EditPatientDescriptor);
     }
 
 }

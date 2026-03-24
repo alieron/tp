@@ -2,6 +2,7 @@ package doctorwho.logic.parser;
 
 import static doctorwho.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static doctorwho.logic.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static doctorwho.logic.commands.CommandTestUtil.VALID_NAME_AMY;
 import static doctorwho.testutil.Assert.assertThrows;
 import static doctorwho.testutil.TypicalIndexes.INDEX_FIRST_PATIENT;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -55,8 +56,7 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_edit() throws Exception {
-        Patient patient = new PatientBuilder().build();
-        EditPatientDescriptor descriptor = new EditPatientDescriptorBuilder(patient).build();
+        EditPatientDescriptor descriptor = new EditPatientDescriptorBuilder().withName(VALID_NAME_AMY).build();
         EditCommand command = (EditCommand) parser.parseCommand(EditCommand.COMMAND_WORD + " "
                 + INDEX_FIRST_PATIENT.getOneBased() + " " + PatientUtil.getEditPatientDescriptorDetails(descriptor));
         assertEquals(new EditCommand(INDEX_FIRST_PATIENT, descriptor), command);

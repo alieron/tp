@@ -4,44 +4,55 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import doctorwho.logic.commands.EditCommand;
 import doctorwho.logic.commands.EditCommand.EditPatientDescriptor;
 import doctorwho.model.patient.Address;
 import doctorwho.model.patient.Email;
 import doctorwho.model.patient.Name;
 import doctorwho.model.patient.Patient;
 import doctorwho.model.patient.Phone;
+import doctorwho.model.tag.Allergy;
+import doctorwho.model.tag.Condition;
 import doctorwho.model.tag.Tag;
 
 /**
- * A utility class to help with building EditPersonDescriptor objects.
+ * A utility class to help with building EditPatientDescriptor objects.
  */
 public class EditPatientDescriptorBuilder {
 
-    private EditCommand.EditPatientDescriptor descriptor;
+    private EditPatientDescriptor descriptor;
 
     public EditPatientDescriptorBuilder() {
         descriptor = new EditPatientDescriptor();
     }
 
-    public EditPatientDescriptorBuilder(EditCommand.EditPatientDescriptor descriptor) {
+    public EditPatientDescriptorBuilder(EditPatientDescriptor descriptor) {
         this.descriptor = new EditPatientDescriptor(descriptor);
     }
 
     /**
-     * Returns an {@code EditPersonDescriptor} with fields containing {@code patient}'s details
+     * Returns an {@code EditPatientDescriptor} with fields containing {@code patient}'s details
      */
     public EditPatientDescriptorBuilder(Patient patient) {
-        descriptor = new EditCommand.EditPatientDescriptor();
+        descriptor = new EditPatientDescriptor();
         descriptor.setName(patient.getName());
         descriptor.setPhone(patient.getPhone());
         descriptor.setEmail(patient.getEmail());
         descriptor.setAddress(patient.getAddress());
-        descriptor.setTags(patient.getTags());
+
+        Set<Tag> existingTags = patient.getTags();
+        Set<Tag> allergies = existingTags.stream()
+                .filter(t -> t instanceof Allergy)
+                .collect(Collectors.toSet());
+        Set<Tag> conditions = existingTags.stream()
+                .filter(t -> t instanceof Condition)
+                .collect(Collectors.toSet());
+
+        descriptor.setAllergies(allergies);
+        descriptor.setConditions(conditions);
     }
 
     /**
-     * Sets the {@code Name} of the {@code EditPersonDescriptor} that we are building.
+     * Sets the {@code Name} of the {@code EditPatientDescriptor} that we are building.
      */
     public EditPatientDescriptorBuilder withName(String name) {
         descriptor.setName(new Name(name));
@@ -49,7 +60,7 @@ public class EditPatientDescriptorBuilder {
     }
 
     /**
-     * Sets the {@code Phone} of the {@code EditPersonDescriptor} that we are building.
+     * Sets the {@code Phone} of the {@code EditPatientDescriptor} that we are building.
      */
     public EditPatientDescriptorBuilder withPhone(String phone) {
         descriptor.setPhone(new Phone(phone));
@@ -57,7 +68,7 @@ public class EditPatientDescriptorBuilder {
     }
 
     /**
-     * Sets the {@code Email} of the {@code EditPersonDescriptor} that we are building.
+     * Sets the {@code Email} of the {@code EditPatientDescriptor} that we are building.
      */
     public EditPatientDescriptorBuilder withEmail(String email) {
         descriptor.setEmail(new Email(email));
@@ -65,7 +76,7 @@ public class EditPatientDescriptorBuilder {
     }
 
     /**
-     * Sets the {@code Address} of the {@code EditPersonDescriptor} that we are building.
+     * Sets the {@code Address} of the {@code EditPatientDescriptor} that we are building.
      */
     public EditPatientDescriptorBuilder withAddress(String address) {
         descriptor.setAddress(new Address(address));
@@ -73,16 +84,26 @@ public class EditPatientDescriptorBuilder {
     }
 
     /**
-     * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code EditPersonDescriptor}
+     * Parses the {@code allergies} into a {@code Set<Allergy>} and sets it to the {@code EditPatientDescriptor}
      * that we are building.
      */
-    public EditPatientDescriptorBuilder withTags(String... tags) {
-        Set<Tag> tagSet = Stream.of(tags).map(Tag::new).collect(Collectors.toSet());
-        descriptor.setTags(tagSet);
+    public EditPatientDescriptorBuilder withAllergies(String... allergies) {
+        Set<Tag> allergySet = Stream.of(allergies).map(Allergy::new).collect(Collectors.toSet());
+        descriptor.setAllergies(allergySet);
         return this;
     }
 
-    public EditCommand.EditPatientDescriptor build() {
+    /**
+     * Parses the {@code conditions} into a {@code Set<Condition>} and sets it to the
+     * {@code EditPatientDescriptor} that we are building.
+     */
+    public EditPatientDescriptorBuilder withConditions(String... conditions) {
+        Set<Tag> conditionSet = Stream.of(conditions).map(Condition::new).collect(Collectors.toSet());
+        descriptor.setConditions(conditionSet);
+        return this;
+    }
+
+    public EditPatientDescriptor build() {
         return descriptor;
     }
 }

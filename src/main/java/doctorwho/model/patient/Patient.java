@@ -7,8 +7,11 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import doctorwho.commons.util.ToStringBuilder;
+import doctorwho.model.tag.Allergy;
+import doctorwho.model.tag.Condition;
 import doctorwho.model.tag.Tag;
 
 /**
@@ -66,6 +69,26 @@ public class Patient {
      */
     public Set<Tag> getTags() {
         return Collections.unmodifiableSet(tags);
+    }
+
+    /**
+     * Returns an immutable set of allergies, which throws {@code UnsupportedOperationException}
+     * if modification is attempted.
+     */
+    public Set<Tag> getAllergies() {
+        return Collections.unmodifiableSet(tags.stream()
+            .filter(t -> t instanceof Allergy)
+            .collect(Collectors.toSet()));
+    }
+
+    /**
+     * Returns an immutable set of conditions, which throws {@code UnsupportedOperationException}
+     * if modification is attempted.
+     */
+    public Set<Tag> getConditions() {
+        return Collections.unmodifiableSet(tags.stream()
+            .filter(t -> t instanceof Condition)
+            .collect(Collectors.toSet()));
     }
 
     public Optional<Appointment> getAppointment() {

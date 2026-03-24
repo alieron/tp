@@ -1,13 +1,15 @@
 package doctorwho.model.patient;
 
 import static doctorwho.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
+import static doctorwho.logic.commands.CommandTestUtil.VALID_ALLERGY_IBUPROFEN;
+import static doctorwho.logic.commands.CommandTestUtil.VALID_CONDITION_DIABETES;
+import static doctorwho.logic.commands.CommandTestUtil.VALID_CONDITION_HYPERTENSION;
 import static doctorwho.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
 import static doctorwho.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static doctorwho.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
-import static doctorwho.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static doctorwho.testutil.Assert.assertThrows;
-import static doctorwho.testutil.TypicalPersons.ALICE;
-import static doctorwho.testutil.TypicalPersons.BOB;
+import static doctorwho.testutil.TypicalPatients.ALICE;
+import static doctorwho.testutil.TypicalPatients.BOB;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -34,7 +36,7 @@ public class PatientTest {
 
         // same name, all other attributes different -> returns true
         Patient editedAlice = new PatientBuilder(ALICE).withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB)
-                .withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND).build();
+                .withAddress(VALID_ADDRESS_BOB).withAllergies(VALID_ALLERGY_IBUPROFEN).build();
         assertTrue(ALICE.isSamePatient(editedAlice));
 
         // different name, all other attributes same -> returns false
@@ -85,8 +87,29 @@ public class PatientTest {
         editedAlice = new PatientBuilder(ALICE).withAddress(VALID_ADDRESS_BOB).build();
         assertFalse(ALICE.equals(editedAlice));
 
-        // different tags -> returns false
-        editedAlice = new PatientBuilder(ALICE).withTags(VALID_TAG_HUSBAND).build();
+        // different allergies -> returns false
+        editedAlice = new PatientBuilder(ALICE).withAllergies(VALID_ALLERGY_IBUPROFEN).build();
+        assertFalse(ALICE.equals(editedAlice));
+
+        // same allergies -> returns true
+        Patient patientWithAllergies = new PatientBuilder(ALICE).withAllergies(VALID_ALLERGY_IBUPROFEN).build();
+        Patient patientWithSameAllergies = new PatientBuilder(ALICE).withAllergies(VALID_ALLERGY_IBUPROFEN).build();
+        assertTrue(patientWithAllergies.equals(patientWithSameAllergies));
+
+        // same conditions -> returns true
+        Patient patientWithConditions = new PatientBuilder(ALICE).withConditions(VALID_CONDITION_DIABETES).build();
+        Patient patientWithSameConditions = new PatientBuilder(ALICE).withConditions(VALID_CONDITION_DIABETES).build();
+        assertTrue(patientWithConditions.equals(patientWithSameConditions));
+
+        // same allergies and conditions -> returns true
+        Patient patientWithBoth = new PatientBuilder(ALICE).withAllergies(VALID_ALLERGY_IBUPROFEN)
+            .withConditions(VALID_CONDITION_DIABETES).build();
+        Patient patientWithSameBoth = new PatientBuilder(ALICE).withAllergies(VALID_ALLERGY_IBUPROFEN)
+            .withConditions(VALID_CONDITION_DIABETES).build();
+        assertTrue(patientWithBoth.equals(patientWithSameBoth));
+
+        // different conditions -> returns false
+        editedAlice = new PatientBuilder(ALICE).withConditions(VALID_CONDITION_HYPERTENSION).build();
         assertFalse(ALICE.equals(editedAlice));
     }
 

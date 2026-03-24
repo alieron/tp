@@ -12,7 +12,7 @@ import doctorwho.model.Model;
 import doctorwho.model.patient.Patient;
 
 /**
- * Deletes the appointment of the patient identified by the displayed index from the address book.
+ * Deletes the appointment of the patient identified by the displayed index from DoctorWho.
  */
 public class DeleteAppointmentCommand extends Command {
 

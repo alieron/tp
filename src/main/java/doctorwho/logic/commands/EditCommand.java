@@ -1,10 +1,11 @@
 package doctorwho.logic.commands;
 
 import static doctorwho.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static doctorwho.logic.parser.CliSyntax.PREFIX_ALLERGY;
+import static doctorwho.logic.parser.CliSyntax.PREFIX_CONDITION;
 import static doctorwho.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static doctorwho.logic.parser.CliSyntax.PREFIX_NAME;
 import static doctorwho.logic.parser.CliSyntax.PREFIX_PHONE;
-import static doctorwho.logic.parser.CliSyntax.PREFIX_TAG;
 import static doctorwho.model.Model.PREDICATE_SHOW_ALL_PATIENTS;
 import static java.util.Objects.requireNonNull;
 
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import doctorwho.commons.core.index.Index;
 import doctorwho.commons.util.CollectionUtil;
@@ -26,6 +28,8 @@ import doctorwho.model.patient.Email;
 import doctorwho.model.patient.Name;
 import doctorwho.model.patient.Patient;
 import doctorwho.model.patient.Phone;
+import doctorwho.model.tag.Allergy;
+import doctorwho.model.tag.Condition;
 import doctorwho.model.tag.Tag;
 
 /**
@@ -43,7 +47,8 @@ public class EditCommand extends Command {
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
-            + "[" + PREFIX_TAG + "TAG]...\n"
+            + "[" + PREFIX_ALLERGY + "ALLERGY]..."
+            + "[" + PREFIX_CONDITION + "CONDITION]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_PHONE + "91234567 "
             + PREFIX_EMAIL + "johndoe@example.com";
@@ -53,18 +58,18 @@ public class EditCommand extends Command {
     public static final String MESSAGE_DUPLICATE_PATIENT = "This patient already exists in the address book.";
 
     private final Index index;
-    private final EditPatientDescriptor editPatientDescriptor;
+    private final EditPatientDescriptor EditPatientDescriptor;
 
     /**
      * @param index                of the patient in the filtered patient list to edit
-     * @param editPatientDescriptor details to edit the patient with
+     * @param EditPatientDescriptor details to edit the patient with
      */
-    public EditCommand(Index index, EditPatientDescriptor editPatientDescriptor) {
+    public EditCommand(Index index, EditPatientDescriptor EditPatientDescriptor) {
         requireNonNull(index);
-        requireNonNull(editPatientDescriptor);
+        requireNonNull(EditPatientDescriptor);
 
         this.index = index;
-        this.editPatientDescriptor = new EditPatientDescriptor(editPatientDescriptor);
+        this.EditPatientDescriptor = new EditPatientDescriptor(EditPatientDescriptor);
     }
 
     @Override
@@ -77,7 +82,7 @@ public class EditCommand extends Command {
         }
 
         Patient patientToEdit = lastShownList.get(index.getZeroBased());
-        Patient editedPatient = createEditedPatient(patientToEdit, editPatientDescriptor);
+        Patient editedPatient = createEditedPatient(patientToEdit, EditPatientDescriptor);
 
         if (!patientToEdit.isSamePatient(editedPatient) && model.hasPatient(editedPatient)) {
             throw new CommandException(MESSAGE_DUPLICATE_PATIENT);
@@ -89,19 +94,36 @@ public class EditCommand extends Command {
     }
 
     /**
-     * Creates and returns a {@code Patient} with the details of {@code patientToEdit}
-     * edited with {@code editPatientDescriptor}.
+     * Creates and returns a {@code Patient} with the details of {@code PatientToEdit}
+     * edited with {@code EditPatientDescriptor}.
      */
-    private static Patient createEditedPatient(Patient patientToEdit, EditPatientDescriptor editPatientDescriptor) {
+    private static Patient createEditedPatient(Patient patientToEdit, EditPatientDescriptor EditPatientDescriptor) {
         assert patientToEdit != null;
 
-        Name updatedName = editPatientDescriptor.getName().orElse(patientToEdit.getName());
-        Phone updatedPhone = editPatientDescriptor.getPhone().orElse(patientToEdit.getPhone());
-        Email updatedEmail = editPatientDescriptor.getEmail().orElse(patientToEdit.getEmail());
-        Address updatedAddress = editPatientDescriptor.getAddress().orElse(patientToEdit.getAddress());
-        Set<Tag> updatedTags = editPatientDescriptor.getTags().orElse(patientToEdit.getTags());
+        Name updatedName = EditPatientDescriptor.getName().orElse(patientToEdit.getName());
+        Phone updatedPhone = EditPatientDescriptor.getPhone().orElse(patientToEdit.getPhone());
+        Email updatedEmail = EditPatientDescriptor.getEmail().orElse(patientToEdit.getEmail());
+        Address updatedAddress = EditPatientDescriptor.getAddress().orElse(patientToEdit.getAddress());
 
-        return new Patient(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags);
+        Set<Tag> existingTags = patientToEdit.getTags();
+
+        //Keep the existing tags of each type unless that specific type is being replaced
+        Set<Tag> existingAllergies = existingTags.stream()
+                .filter(t -> t instanceof Allergy)
+                .collect(Collectors.toSet());
+        Set<Tag> existingConditions = existingTags.stream()
+                .filter(t -> t instanceof Condition)
+                .collect(Collectors.toSet());
+
+        Set<Tag> finalAllergies = EditPatientDescriptor.getAllergies().orElse(existingAllergies);
+        Set<Tag> finalConditions = EditPatientDescriptor.getConditions().orElse(existingConditions);
+
+        Set<Tag> updatedTags = new HashSet<>();
+        updatedTags.addAll(finalAllergies);
+        updatedTags.addAll(finalConditions);
+
+        return new Patient(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags,
+                patientToEdit.getAppointment().orElse(null));
     }
 
     @Override
@@ -117,14 +139,14 @@ public class EditCommand extends Command {
 
         EditCommand otherEditCommand = (EditCommand) other;
         return index.equals(otherEditCommand.index)
-                && editPatientDescriptor.equals(otherEditCommand.editPatientDescriptor);
+                && EditPatientDescriptor.equals(otherEditCommand.EditPatientDescriptor);
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this)
                 .add("index", index)
-                .add("editPatientDescriptor", editPatientDescriptor)
+                .add("EditPatientDescriptor", EditPatientDescriptor)
                 .toString();
     }
 
@@ -137,7 +159,8 @@ public class EditCommand extends Command {
         private Phone phone;
         private Email email;
         private Address address;
-        private Set<Tag> tags;
+        private Set<Tag> allergies;
+        private Set<Tag> conditions;
 
         public EditPatientDescriptor() {
         }
@@ -151,14 +174,15 @@ public class EditCommand extends Command {
             setPhone(toCopy.phone);
             setEmail(toCopy.email);
             setAddress(toCopy.address);
-            setTags(toCopy.tags);
+            setAllergies(toCopy.allergies);
+            setConditions(toCopy.conditions);
         }
 
         /**
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, phone, email, address, tags);
+            return CollectionUtil.isAnyNonNull(name, phone, email, address, allergies, conditions);
         }
 
         public void setName(Name name) {
@@ -194,20 +218,38 @@ public class EditCommand extends Command {
         }
 
         /**
-         * Sets {@code tags} to this object's {@code tags}.
-         * A defensive copy of {@code tags} is used internally.
+         * Sets {@code allergies} to this object's {@code allergies}.
+         * A defensive copy of {@code allergies} is used internally.
          */
-        public void setTags(Set<Tag> tags) {
-            this.tags = (tags != null) ? new HashSet<>(tags) : null;
+        public void setAllergies(Set<Tag> allergies) {
+            this.allergies = (allergies != null) ? new HashSet<>(allergies) : null;
         }
 
         /**
-         * Returns an unmodifiable tag set, which throws {@code UnsupportedOperationException}
+         * Returns an unmodifiable allergy set, which throws {@code UnsupportedOperationException}
          * if modification is attempted.
-         * Returns {@code Optional#empty()} if {@code tags} is null.
+         * Returns {@code Optional#empty()} if {@code allergies} is null.
          */
-        public Optional<Set<Tag>> getTags() {
-            return (tags != null) ? Optional.of(Collections.unmodifiableSet(tags)) : Optional.empty();
+        public Optional<Set<Tag>> getAllergies() {
+            return (allergies != null) ? Optional.of(Collections.unmodifiableSet(allergies)) : Optional.empty();
+        }
+
+        /**
+         * Sets {@code conditions} to this object's {@code conditions}.
+         * A defensive copy of {@code conditions} is used internally.
+         */
+        public void setConditions(Set<Tag> conditions) {
+            this.conditions = (conditions != null) ? new HashSet<>(conditions) : null;
+        }
+
+        /**
+         * Returns an unmodifiable medical condition set, which throws {@code UnsupportedOperationException}
+         * if modification is attempted.
+         * Returns {@code Optional#empty()} if {@code conditions} is null.
+         */
+        public Optional<Set<Tag>> getConditions() {
+            return (conditions != null)
+                    ? Optional.of(Collections.unmodifiableSet(conditions)) : Optional.empty();
         }
 
         @Override
@@ -226,7 +268,8 @@ public class EditCommand extends Command {
                     && Objects.equals(phone, otherEditPatientDescriptor.phone)
                     && Objects.equals(email, otherEditPatientDescriptor.email)
                     && Objects.equals(address, otherEditPatientDescriptor.address)
-                    && Objects.equals(tags, otherEditPatientDescriptor.tags);
+                    && Objects.equals(allergies, otherEditPatientDescriptor.allergies)
+                    && Objects.equals(conditions, otherEditPatientDescriptor.conditions);
         }
 
         @Override
@@ -236,7 +279,8 @@ public class EditCommand extends Command {
                     .add("phone", phone)
                     .add("email", email)
                     .add("address", address)
-                    .add("tags", tags)
+                    .add("allergies", allergies)
+                    .add("conditions", conditions)
                     .toString();
         }
     }

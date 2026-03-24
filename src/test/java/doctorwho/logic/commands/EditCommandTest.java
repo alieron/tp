@@ -2,15 +2,17 @@ package doctorwho.logic.commands;
 
 import static doctorwho.logic.commands.CommandTestUtil.DESC_AMY;
 import static doctorwho.logic.commands.CommandTestUtil.DESC_BOB;
+import static doctorwho.logic.commands.CommandTestUtil.VALID_ALLERGY_ASPIRIN;
+import static doctorwho.logic.commands.CommandTestUtil.VALID_ALLERGY_IBUPROFEN;
+import static doctorwho.logic.commands.CommandTestUtil.VALID_CONDITION_DIABETES;
 import static doctorwho.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static doctorwho.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
-import static doctorwho.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static doctorwho.logic.commands.CommandTestUtil.assertCommandFailure;
 import static doctorwho.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static doctorwho.logic.commands.CommandTestUtil.showPatientAtIndex;
 import static doctorwho.testutil.TypicalIndexes.INDEX_FIRST_PATIENT;
 import static doctorwho.testutil.TypicalIndexes.INDEX_SECOND_PATIENT;
-import static doctorwho.testutil.TypicalPersons.getTypicalAddressBook;
+import static doctorwho.testutil.TypicalPatients.getTypicalAddressBook;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -41,8 +43,8 @@ public class EditCommandTest {
         EditPatientDescriptor descriptor = new EditPatientDescriptorBuilder(editedPatient).build();
         EditCommand editCommand = new EditCommand(INDEX_FIRST_PATIENT, descriptor);
 
-        String expectedMessage = String.format(
-            EditCommand.MESSAGE_EDIT_PATIENT_SUCCESS, Messages.format(editedPatient));
+        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PATIENT_SUCCESS,
+            Messages.format(editedPatient));
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.setPatient(model.getFilteredPatientList().get(0), editedPatient);
@@ -57,14 +59,14 @@ public class EditCommandTest {
 
         PatientBuilder patientInList = new PatientBuilder(lastPatient);
         Patient editedPatient = patientInList.withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
-                .withTags(VALID_TAG_HUSBAND).build();
+                .withAllergies(VALID_ALLERGY_IBUPROFEN).build();
 
         EditPatientDescriptor descriptor = new EditPatientDescriptorBuilder().withName(VALID_NAME_BOB)
-                .withPhone(VALID_PHONE_BOB).withTags(VALID_TAG_HUSBAND).build();
+                .withPhone(VALID_PHONE_BOB).withAllergies(VALID_ALLERGY_IBUPROFEN).build();
         EditCommand editCommand = new EditCommand(indexLastPatient, descriptor);
 
-        String expectedMessage = String.format(
-            EditCommand.MESSAGE_EDIT_PATIENT_SUCCESS, Messages.format(editedPatient));
+        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PATIENT_SUCCESS,
+            Messages.format(editedPatient));
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.setPatient(lastPatient, editedPatient);
@@ -77,8 +79,8 @@ public class EditCommandTest {
         EditCommand editCommand = new EditCommand(INDEX_FIRST_PATIENT, new EditPatientDescriptor());
         Patient editedPatient = model.getFilteredPatientList().get(INDEX_FIRST_PATIENT.getZeroBased());
 
-        String expectedMessage = String.format(
-            EditCommand.MESSAGE_EDIT_PATIENT_SUCCESS, Messages.format(editedPatient));
+        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PATIENT_SUCCESS,
+            Messages.format(editedPatient));
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
 
@@ -94,8 +96,8 @@ public class EditCommandTest {
         EditCommand editCommand = new EditCommand(INDEX_FIRST_PATIENT,
                 new EditPatientDescriptorBuilder().withName(VALID_NAME_BOB).build());
 
-        String expectedMessage = String.format(
-            EditCommand.MESSAGE_EDIT_PATIENT_SUCCESS, Messages.format(editedPatient));
+        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PATIENT_SUCCESS,
+            Messages.format(editedPatient));
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.setPatient(model.getFilteredPatientList().get(0), editedPatient);
@@ -127,8 +129,7 @@ public class EditCommandTest {
     @Test
     public void execute_invalidPatientIndexUnfilteredList_failure() {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPatientList().size() + 1);
-        EditCommand.EditPatientDescriptor descriptor = new EditPatientDescriptorBuilder()
-            .withName(VALID_NAME_BOB).build();
+        EditPatientDescriptor descriptor = new EditPatientDescriptorBuilder().withName(VALID_NAME_BOB).build();
         EditCommand editCommand = new EditCommand(outOfBoundIndex, descriptor);
 
         assertCommandFailure(editCommand, model, Messages.MESSAGE_INVALID_PATIENT_DISPLAYED_INDEX);
@@ -149,6 +150,242 @@ public class EditCommandTest {
                 new EditPatientDescriptorBuilder().withName(VALID_NAME_BOB).build());
 
         assertCommandFailure(editCommand, model, Messages.MESSAGE_INVALID_PATIENT_DISPLAYED_INDEX);
+    }
+
+    /**
+     * Tests that editing allergies only keeps existing conditions unchanged.
+     */
+    @Test
+    public void execute_editAllergyOnly_keepsOtherTags() {
+        Patient patientToEdit = new PatientBuilder()
+                .withAllergies(VALID_ALLERGY_ASPIRIN, "penicillin")
+                .withConditions("diabetes")
+                .build();
+        model.addPatient(patientToEdit);
+        Index lastIndex = Index.fromOneBased(model.getFilteredPatientList().size());
+
+        // edit allergies only
+        EditPatientDescriptor descriptor = new EditPatientDescriptorBuilder().withAllergies("sulfonamide").build();
+        EditCommand editCommand = new EditCommand(lastIndex, descriptor);
+
+        // only allergies change, conditions stay
+        Patient expectedPatient = new PatientBuilder()
+                .withAllergies("sulfonamide")
+                .withConditions("diabetes")
+                .build();
+        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PATIENT_SUCCESS,
+                Messages.format(expectedPatient));
+
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        expectedModel.setPatient(patientToEdit, expectedPatient);
+
+        assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
+    }
+
+    /**
+     * Tests that editing conditions only keeps existing allergies unchanged.
+     */
+    @Test
+    public void execute_editConditionOnly_keepsOtherTags() {
+        Patient patientToEdit = new PatientBuilder().withAllergies("ibuprofen", VALID_ALLERGY_ASPIRIN)
+                .withConditions("diabetes")
+                .build();
+        model.addPatient(patientToEdit);
+        Index lastIndex = Index.fromOneBased(model.getFilteredPatientList().size());
+
+        EditPatientDescriptor descriptor = new EditPatientDescriptorBuilder()
+                .withConditions("asthma").build();
+        EditCommand editCommand = new EditCommand(lastIndex, descriptor);
+
+        Patient expectedPatient = new PatientBuilder().withAllergies("ibuprofen", VALID_ALLERGY_ASPIRIN)
+                .withConditions("asthma")
+                .build();
+        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PATIENT_SUCCESS,
+                Messages.format(expectedPatient));
+
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        expectedModel.setPatient(patientToEdit, expectedPatient);
+
+        assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
+    }
+
+    /**
+     * Tests that multiple conditions can be edited at once.
+     */
+    @Test
+    public void execute_editMultipleConditions_success() {
+        Patient patientToEdit = new PatientBuilder()
+                .withAllergies(VALID_ALLERGY_ASPIRIN)
+                .withConditions("diabetes", "hypertension")
+                .build();
+        model.addPatient(patientToEdit);
+        Index lastIndex = Index.fromOneBased(model.getFilteredPatientList().size());
+
+        EditPatientDescriptor descriptor = new EditPatientDescriptorBuilder()
+                .withConditions("asthma", "hypertension").build();
+        EditCommand editCommand = new EditCommand(lastIndex, descriptor);
+
+        Patient expectedPatient = new PatientBuilder()
+                .withAllergies(VALID_ALLERGY_ASPIRIN)
+                .withConditions("asthma", "hypertension")
+                .build();
+        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PATIENT_SUCCESS,
+                Messages.format(expectedPatient));
+
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        expectedModel.setPatient(patientToEdit, expectedPatient);
+
+        assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
+    }
+
+    /**
+     * Tests that editing both allergies and conditions changes both.
+     */
+    @Test
+    public void execute_editAllergyAndCondition_bothChange() {
+        Patient patientToEdit = new PatientBuilder()
+                .withAllergies(VALID_ALLERGY_ASPIRIN)
+                .withConditions("diabetes")
+                .build();
+        model.addPatient(patientToEdit);
+        Index lastIndex = Index.fromOneBased(model.getFilteredPatientList().size());
+
+        EditPatientDescriptor descriptor = new EditPatientDescriptorBuilder()
+                .withAllergies("penicillin")
+                .withConditions("asthma").build();
+        EditCommand editCommand = new EditCommand(lastIndex, descriptor);
+
+        Patient expectedPatient = new PatientBuilder()
+                .withAllergies("penicillin")
+                .withConditions("asthma")
+                .build();
+        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PATIENT_SUCCESS,
+                Messages.format(expectedPatient));
+
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        expectedModel.setPatient(patientToEdit, expectedPatient);
+
+        assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
+    }
+
+    /**
+     * Tests that providing an empty allergy prefix clears all existing allergies.
+     */
+    @Test
+    public void execute_resetAllergies_success() {
+        Patient patientToEdit = new PatientBuilder()
+            .withAllergies(VALID_ALLERGY_ASPIRIN)
+            .withConditions(VALID_CONDITION_DIABETES)
+            .build();
+        model.addPatient(patientToEdit);
+        Index lastIndex = Index.fromOneBased(model.getFilteredPatientList().size());
+
+        EditPatientDescriptor descriptor = new EditPatientDescriptorBuilder()
+            .withAllergies()
+            .build();
+        EditCommand editCommand = new EditCommand(lastIndex, descriptor);
+
+        Patient expectedPatient = new PatientBuilder()
+            .withAllergies()
+            .withConditions(VALID_CONDITION_DIABETES)
+            .build();
+        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PATIENT_SUCCESS,
+            Messages.format(expectedPatient));
+
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        expectedModel.setPatient(patientToEdit, expectedPatient);
+
+        assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
+    }
+
+    /**
+     * Tests that providing an empty condition prefix clears all existing conditions.
+     */
+    @Test
+    public void execute_resetConditions_success() {
+        Patient patientToEdit = new PatientBuilder()
+            .withAllergies(VALID_ALLERGY_ASPIRIN)
+            .withConditions(VALID_CONDITION_DIABETES)
+            .build();
+        model.addPatient(patientToEdit);
+        Index lastIndex = Index.fromOneBased(model.getFilteredPatientList().size());
+
+        EditPatientDescriptor descriptor = new EditPatientDescriptorBuilder()
+            .withConditions()
+            .build();
+        EditCommand editCommand = new EditCommand(lastIndex, descriptor);
+
+        Patient expectedPatient = new PatientBuilder()
+            .withAllergies(VALID_ALLERGY_ASPIRIN)
+            .withConditions()
+            .build();
+        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PATIENT_SUCCESS,
+            Messages.format(expectedPatient));
+
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        expectedModel.setPatient(patientToEdit, expectedPatient);
+
+        assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
+    }
+
+    /**
+     * Tests that allergies can be added to a patient who has none.
+     */
+    @Test
+    public void execute_addAllergiesToPatientWithNone_success() {
+        Patient patientToEdit = new PatientBuilder()
+            .withAllergies()
+            .withConditions(VALID_CONDITION_DIABETES)
+            .build();
+        model.addPatient(patientToEdit);
+        Index lastIndex = Index.fromOneBased(model.getFilteredPatientList().size());
+
+        EditPatientDescriptor descriptor = new EditPatientDescriptorBuilder()
+            .withAllergies(VALID_ALLERGY_ASPIRIN)
+            .build();
+        EditCommand editCommand = new EditCommand(lastIndex, descriptor);
+
+        Patient expectedPatient = new PatientBuilder()
+            .withAllergies(VALID_ALLERGY_ASPIRIN)
+            .withConditions(VALID_CONDITION_DIABETES)
+            .build();
+        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PATIENT_SUCCESS,
+            Messages.format(expectedPatient));
+
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        expectedModel.setPatient(patientToEdit, expectedPatient);
+
+        assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
+    }
+
+    /**
+     * Tests that conditions can be added to a patient who has none.
+     */
+    @Test
+    public void execute_addConditionsToPatientWithNone_success() {
+        Patient patientToEdit = new PatientBuilder()
+            .withAllergies(VALID_ALLERGY_ASPIRIN)
+            .withConditions()
+            .build();
+        model.addPatient(patientToEdit);
+        Index lastIndex = Index.fromOneBased(model.getFilteredPatientList().size());
+
+        EditPatientDescriptor descriptor = new EditPatientDescriptorBuilder()
+            .withConditions(VALID_CONDITION_DIABETES)
+            .build();
+        EditCommand editCommand = new EditCommand(lastIndex, descriptor);
+
+        Patient expectedPatient = new PatientBuilder()
+            .withAllergies(VALID_ALLERGY_ASPIRIN)
+            .withConditions(VALID_CONDITION_DIABETES)
+            .build();
+        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PATIENT_SUCCESS,
+            Messages.format(expectedPatient));
+
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        expectedModel.setPatient(patientToEdit, expectedPatient);
+
+        assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
     }
 
     @Test
@@ -179,11 +416,10 @@ public class EditCommandTest {
     @Test
     public void toStringMethod() {
         Index index = Index.fromOneBased(1);
-        EditCommand.EditPatientDescriptor editPatientDescriptor = new EditCommand.EditPatientDescriptor();
+        EditPatientDescriptor editPatientDescriptor = new EditPatientDescriptor();
         EditCommand editCommand = new EditCommand(index, editPatientDescriptor);
-        String expected = EditCommand.class.getCanonicalName() + "{index=" + index + ", editPatientDescriptor="
+        String expected = EditCommand.class.getCanonicalName() + "{index=" + index + ", EditPatientDescriptor="
                 + editPatientDescriptor + "}";
         assertEquals(expected, editCommand.toString());
     }
-
 }
