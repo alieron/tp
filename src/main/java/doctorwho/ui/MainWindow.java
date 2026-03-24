@@ -8,6 +8,8 @@ import doctorwho.logic.Logic;
 import doctorwho.logic.commands.CommandResult;
 import doctorwho.logic.commands.exceptions.CommandException;
 import doctorwho.logic.parser.exceptions.ParseException;
+import doctorwho.model.patient.Patient;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
@@ -34,6 +36,7 @@ public class MainWindow extends UiPart<Stage> {
     private PatientListPanel patientListPanel;
     private ResultDisplay resultDisplay;
     private HelpWindow helpWindow;
+    private StatusBarFooter statusBarFooter;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -111,14 +114,20 @@ public class MainWindow extends UiPart<Stage> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        patientListPanel = new PatientListPanel(logic.getFilteredPatientList());
+        ObservableList<Patient> lst = logic.getFilteredPatientList();
+        patientListPanel = new PatientListPanel(lst);
         patientListPanelPlaceholder.getChildren().add(patientListPanel.getRoot());
 
         resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
-        StatusBarFooter statusBarFooter = new StatusBarFooter(logic.getAddressBookFilePath());
+        statusBarFooter = new StatusBarFooter(logic.getAddressBookFilePath(), lst.size());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
+
+        logic.getFilteredPatientList().addListener((
+                javafx.collections.ListChangeListener.Change<? extends Patient> change) -> {
+            statusBarFooter.setTotalPatients(logic.getFilteredPatientList().size());
+        });
 
         CommandBox commandBox = new CommandBox(this::executeCommand);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
