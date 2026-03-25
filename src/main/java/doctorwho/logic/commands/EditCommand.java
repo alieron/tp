@@ -21,7 +21,6 @@ import doctorwho.commons.core.index.Index;
 import doctorwho.commons.util.CollectionUtil;
 import doctorwho.commons.util.ToStringBuilder;
 import doctorwho.logic.Messages;
-import doctorwho.logic.commands.EditCommand.EditPatientDescriptor;
 import doctorwho.logic.commands.exceptions.CommandException;
 import doctorwho.model.Model;
 import doctorwho.model.patient.Address;
@@ -83,7 +82,7 @@ public class EditCommand extends Command {
         }
 
         Patient patientToEdit = lastShownList.get(index.getZeroBased());
-        Patient editedPatient = createEditedPatient(patientToEdit, EditPatientDescriptor);
+        Patient editedPatient = createEditedPatient(patientToEdit, editPatientDescriptor);
 
         if (!patientToEdit.isSamePatient(editedPatient) && model.hasPatient(editedPatient)) {
             throw new CommandException(MESSAGE_DUPLICATE_PATIENT);
@@ -140,14 +139,14 @@ public class EditCommand extends Command {
 
         EditCommand otherEditCommand = (EditCommand) other;
         return index.equals(otherEditCommand.index)
-                && EditPatientDescriptor.equals(otherEditCommand.EditPatientDescriptor);
+                && editPatientDescriptor.equals(otherEditCommand.editPatientDescriptor);
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this)
                 .add("index", index)
-                .add("EditPatientDescriptor", EditPatientDescriptor)
+                .add("EditPatientDescriptor", editPatientDescriptor)
                 .toString();
     }
 
