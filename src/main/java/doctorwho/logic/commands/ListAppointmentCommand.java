@@ -3,11 +3,15 @@ package doctorwho.logic.commands;
 import static java.util.Objects.requireNonNull;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.Optional;
+import java.util.function.Predicate;
 
 import doctorwho.commons.util.ToStringBuilder;
-import doctorwho.logic.commands.exceptions.CommandException;
 import doctorwho.model.Model;
+import doctorwho.model.patient.Appointment;
+import doctorwho.model.patient.Patient;
 
 /**
  * Lists appointments, optionally filtering by a specific appointment date.
@@ -20,6 +24,8 @@ public class ListAppointmentCommand extends Command {
             + ": Lists appointments in ascending date-time order.\n"
             + "Parameters: [dt/DATE] (DATE in dd-MM-yyyy format)\n"
             + "Example: " + COMMAND_WORD + " dt/12-03-2026";
+
+    public static final String MESSAGE_SUCCESS = "%1$d appointment(s) listed.";
 
     private final Optional<LocalDate> appointmentDate;
 
@@ -43,8 +49,33 @@ public class ListAppointmentCommand extends Command {
     }
 
     @Override
-    public CommandResult execute(Model model) throws CommandException {
-        throw new CommandException("List appointment command execution is implemented in a later commit.");
+    public CommandResult execute(Model model) {
+        requireNonNull(model);
+
+        Predicate<Patient> appointmentPredicate = createAppointmentPredicate();
+        model.updateFilteredPatientList(appointmentPredicate);
+        model.updatePatientListComparator(Comparator.comparing(ListAppointmentCommand::getAppointmentStartTime));
+
+        int listedCount = model.getFilteredPatientList().size();
+        return new CommandResult(String.format(MESSAGE_SUCCESS, listedCount));
+    }
+
+    private Predicate<Patient> createAppointmentPredicate() {
+        return patient -> patient.getAppointment()
+                .filter(appointment -> isMatchingDateFilter(appointment, appointmentDate))
+                .isPresent();
+    }
+
+    private static boolean isMatchingDateFilter(Appointment appointment, Optional<LocalDate> appointmentDate) {
+        return appointmentDate
+                .map(date -> appointment.getStartTime().toLocalDate().equals(date))
+                .orElse(true);
+    }
+
+    private static LocalDateTime getAppointmentStartTime(Patient patient) {
+        return patient.getAppointment()
+                .map(Appointment::getStartTime)
+                .orElseThrow(IllegalStateException::new);
     }
 
     @Override
