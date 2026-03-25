@@ -11,6 +11,8 @@ import static doctorwho.logic.commands.CommandTestUtil.CONDITION_DESC_HYPERTENSI
 import static doctorwho.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
 import static doctorwho.logic.commands.CommandTestUtil.EMAIL_DESC_BOB;
 import static doctorwho.logic.commands.CommandTestUtil.INVALID_ADDRESS_DESC;
+import static doctorwho.logic.commands.CommandTestUtil.INVALID_ALLERGY_DESC;
+import static doctorwho.logic.commands.CommandTestUtil.INVALID_CONDITION_DESC;
 import static doctorwho.logic.commands.CommandTestUtil.INVALID_EMAIL_DESC;
 import static doctorwho.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
 import static doctorwho.logic.commands.CommandTestUtil.INVALID_PHONE_DESC;
@@ -49,7 +51,6 @@ import doctorwho.model.patient.Patient;
 import doctorwho.model.patient.Phone;
 import doctorwho.model.tag.Allergy;
 import doctorwho.model.tag.Condition;
-import doctorwho.model.tag.Tag;
 import doctorwho.testutil.PatientBuilder;
 
 public class AddCommandParserTest {
@@ -237,8 +238,17 @@ public class AddCommandParserTest {
         assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB
                 + " al/!!!", Allergy.MESSAGE_CONSTRAINTS);
 
+        // invalid allergy using named constant
+        assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB
+            + INVALID_ALLERGY_DESC, Allergy.MESSAGE_CONSTRAINTS);
+
         // invalid condition
         assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB
                 + " c/!!!", Condition.MESSAGE_CONSTRAINTS);
+
+        // invalid condition using named constant
+        assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB
+            + INVALID_CONDITION_DESC, Condition.MESSAGE_CONSTRAINTS);
+
     }
 }

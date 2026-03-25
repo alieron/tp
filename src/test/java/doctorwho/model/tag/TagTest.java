@@ -8,18 +8,18 @@ import org.junit.jupiter.api.Test;
 public class TagTest {
 
     @Test
-    public void equals_sameName_sameType_returnsTrue() {
+    public void equals_sameType_returnsTrue() {
         assertEquals(new Allergy("ibuprofen"), new Allergy("ibuprofen"));
         assertEquals(new Condition("diabetes"), new Condition("diabetes"));
     }
 
     @Test
-    public void equals_sameName_differentType_returnsFalse() {
+    public void equals_differentType_returnsFalse() {
         assertNotEquals(new Allergy("ibuprofen"), new Condition("ibuprofen"));
     }
 
     @Test
-    public void hashCode_sameName_sameType_equal() {
+    public void hashCode_sameTag_equal() {
         assertEquals(new Allergy("ibuprofen").hashCode(), new Allergy("ibuprofen").hashCode());
     }
 

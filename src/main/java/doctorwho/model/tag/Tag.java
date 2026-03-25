@@ -41,7 +41,8 @@ public abstract class Tag {
         }
 
         Tag otherTag = (Tag) other;
-        return tagName.equals(otherTag.tagName);
+        return tagName.equals(otherTag.tagName)
+            && this.getClass().equals(otherTag.getClass());
     }
 
     @Override

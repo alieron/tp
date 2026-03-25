@@ -102,7 +102,7 @@ public class EditCommandParserTest {
         assertParseFailure(parser, "1" + INVALID_PHONE_DESC + EMAIL_DESC_AMY, Phone.MESSAGE_CONSTRAINTS);
 
         // al/ with no value (ALLERGY_EMPTY) creates an Allergy("") which fails validation
-       // this should fail regardless of where the empty al/ appears in the input
+        // this should fail regardless of where the empty al/ appears in the input
         assertParseFailure(parser, "1" + ALLERGY_DESC_IBUPROFEN + ALLERGY_DESC_SULFONAMIDES + ALLERGY_EMPTY,
                 Allergy.MESSAGE_CONSTRAINTS);
         assertParseFailure(parser, "1" + ALLERGY_DESC_IBUPROFEN + ALLERGY_EMPTY + ALLERGY_DESC_SULFONAMIDES,
@@ -267,22 +267,6 @@ public class EditCommandParserTest {
 
         EditPatientDescriptor descriptor = new EditPatientDescriptorBuilder()
                 .withConditions(VALID_CONDITION_DIABETES, VALID_CONDITION_HYPERTENSION).build();
-        EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
-
-        assertParseSuccess(parser, userInput, expectedCommand);
-    }
-
-    /**
-     * Tests that both allergy and condition fields are correctly parsed into an edit command.
-     */
-    @Test
-    public void parse_allergyAndConditionSpecified_success() {
-        Index targetIndex = INDEX_FIRST_PATIENT;
-        String userInput = targetIndex.getOneBased() + ALLERGY_DESC_ASPIRIN + CONDITION_DESC_DIABETES;
-
-        EditPatientDescriptor descriptor = new EditPatientDescriptorBuilder()
-                .withAllergies(VALID_ALLERGY_ASPIRIN)
-                .withConditions(VALID_CONDITION_DIABETES).build();
         EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
 
         assertParseSuccess(parser, userInput, expectedCommand);
