@@ -24,9 +24,6 @@ public class PatientBuilder {
     public static final String DEFAULT_PHONE = "85355255";
     public static final String DEFAULT_EMAIL = "amy@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
-    public static final String DEFAULT_STARTTIME = "12-03-2026 14:00";
-    public static final String DEFAULT_DURATION = "30";
-    public static final String DEFAULT_NOTE = "Routine Checkup";
 
     private Name name;
     private Phone phone;
@@ -44,7 +41,6 @@ public class PatientBuilder {
         email = new Email(DEFAULT_EMAIL);
         address = new Address(DEFAULT_ADDRESS);
         tags = new HashSet<>();
-        appointment = new Appointment(DEFAULT_STARTTIME, Integer.parseInt(DEFAULT_DURATION), DEFAULT_NOTE);
     }
 
     /**
@@ -106,8 +102,8 @@ public class PatientBuilder {
     public PatientBuilder withAllergies(String... allergies) {
         this.tags.removeIf(t -> t instanceof Allergy);
         Set<Tag> allergySet = Arrays.stream(allergies)
-            .map(Allergy::new)
-            .collect(Collectors.toSet());
+                .map(Allergy::new)
+                .collect(Collectors.toSet());
         this.tags.addAll(allergySet);
         return this;
     }
@@ -119,8 +115,8 @@ public class PatientBuilder {
     public PatientBuilder withConditions(String... conditions) {
         this.tags.removeIf(t -> t instanceof Condition);
         Set<Tag> conditionSet = Arrays.stream(conditions)
-            .map(Condition::new)
-            .collect(Collectors.toSet());
+                .map(Condition::new)
+                .collect(Collectors.toSet());
         this.tags.addAll(conditionSet);
         return this;
     }

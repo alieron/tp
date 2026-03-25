@@ -1,5 +1,14 @@
 package doctorwho.logic.commands;
 
+import static doctorwho.logic.commands.CommandTestUtil.VALID_APPOINTMENT_DURATION;
+import static doctorwho.logic.commands.CommandTestUtil.VALID_APPOINTMENT_DURATION_NON_OVERLAPPING;
+import static doctorwho.logic.commands.CommandTestUtil.VALID_APPOINTMENT_DURATION_OVERLAPPING;
+import static doctorwho.logic.commands.CommandTestUtil.VALID_APPOINTMENT_NOTE;
+import static doctorwho.logic.commands.CommandTestUtil.VALID_APPOINTMENT_NOTE_NON_OVERLAPPING;
+import static doctorwho.logic.commands.CommandTestUtil.VALID_APPOINTMENT_NOTE_OVERLAPPING;
+import static doctorwho.logic.commands.CommandTestUtil.VALID_APPOINTMENT_STARTTIME;
+import static doctorwho.logic.commands.CommandTestUtil.VALID_APPOINTMENT_STARTTIME_NON_OVERLAPPING;
+import static doctorwho.logic.commands.CommandTestUtil.VALID_APPOINTMENT_STARTTIME_OVERLAPPING;
 import static doctorwho.logic.commands.CommandTestUtil.assertCommandFailure;
 import static doctorwho.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static doctorwho.logic.commands.CommandTestUtil.showPatientAtIndex;
@@ -30,19 +39,33 @@ public class AddAppointmentCommandTest {
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
-    private Appointment appointment =
-            new Appointment("12-03-2026 14:00", 30, "Routine Checkup");
+    private final Appointment appointment = new Appointment(
+            VALID_APPOINTMENT_STARTTIME,
+            VALID_APPOINTMENT_DURATION,
+            VALID_APPOINTMENT_NOTE);
+
+    // starts at 14:15, overlaps the 14:00–14:30 window
+    private final Appointment overlappingAppointment = new Appointment(
+            VALID_APPOINTMENT_STARTTIME_OVERLAPPING,
+            VALID_APPOINTMENT_DURATION_OVERLAPPING,
+            VALID_APPOINTMENT_NOTE_OVERLAPPING);
+
+    // starts at 15:00, fully outside the 14:00–14:30 window
+    private final Appointment nonOverlappingAppointment = new Appointment(
+            VALID_APPOINTMENT_STARTTIME_NON_OVERLAPPING,
+            VALID_APPOINTMENT_DURATION_NON_OVERLAPPING,
+            VALID_APPOINTMENT_NOTE_NON_OVERLAPPING);
 
     @Test
     public void execute_addAppointmentUnfilteredList_success() {
         Patient patientToEdit = model.getFilteredPatientList().get(INDEX_FIRST_PATIENT.getZeroBased());
 
         Patient editedPatient = new PatientBuilder(patientToEdit)
-                .withAppointment(appointment)
+                .withAppointment(nonOverlappingAppointment)
                 .build();
 
         AddAppointmentCommand addAppointmentCommand =
-                new AddAppointmentCommand(INDEX_FIRST_PATIENT, appointment);
+                new AddAppointmentCommand(INDEX_FIRST_PATIENT, nonOverlappingAppointment);
 
         String expectedMessage = String.format(
                 AddAppointmentCommand.MESSAGE_EDIT_PATIENT_SUCCESS,
@@ -50,7 +73,6 @@ public class AddAppointmentCommandTest {
 
         Model expectedModel = new ModelManager(
                 new AddressBook(model.getAddressBook()), new UserPrefs());
-
         expectedModel.setPatient(patientToEdit, editedPatient);
 
         assertCommandSuccess(addAppointmentCommand, model, expectedMessage, expectedModel);
@@ -64,6 +86,81 @@ public class AddAppointmentCommandTest {
                 model.getFilteredPatientList().get(INDEX_FIRST_PATIENT.getZeroBased());
 
         Patient editedPatient = new PatientBuilder(patientInFilteredList)
+                .withAppointment(nonOverlappingAppointment)
+                .build();
+
+        AddAppointmentCommand command =
+                new AddAppointmentCommand(INDEX_FIRST_PATIENT, nonOverlappingAppointment);
+
+        String expectedMessage = String.format(
+                AddAppointmentCommand.MESSAGE_EDIT_PATIENT_SUCCESS,
+                Messages.format(editedPatient));
+
+        Model expectedModel =
+                new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        expectedModel.setPatient(model.getFilteredPatientList().get(0), editedPatient);
+
+        assertCommandSuccess(command, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_replaceWithOverlappingAppointment_failure() {
+        // First, give patient 1 the base appointment
+        Patient patientToEdit = model.getFilteredPatientList().get(INDEX_FIRST_PATIENT.getZeroBased());
+        Patient patientWithAppointment = new PatientBuilder(patientToEdit)
+                .withAppointment(appointment)
+                .build();
+        model.setPatient(patientToEdit, patientWithAppointment);
+
+        // Now try to give patient 2 an overlapping appointment
+        AddAppointmentCommand command =
+                new AddAppointmentCommand(INDEX_SECOND_PATIENT, overlappingAppointment);
+
+        assertCommandFailure(command, model, AddAppointmentCommand.MESSAGE_HAS_OVERLAPPING_APPOINTMENT);
+    }
+
+    @Test
+    public void execute_replaceWithNonOverlappingAppointment_success() {
+        // Give patient 1 the base appointment (14:00–14:30)
+        Patient firstPatient = model.getFilteredPatientList().get(INDEX_FIRST_PATIENT.getZeroBased());
+        Patient firstWithAppointment = new PatientBuilder(firstPatient)
+                .withAppointment(appointment)
+                .build();
+        model.setPatient(firstPatient, firstWithAppointment);
+
+        // Patient 2 gets a non-overlapping slot (15:00–15:30) — should succeed
+        Patient secondPatient = model.getFilteredPatientList().get(INDEX_SECOND_PATIENT.getZeroBased());
+        Patient secondEdited = new PatientBuilder(secondPatient)
+                .withAppointment(nonOverlappingAppointment)
+                .build();
+
+        AddAppointmentCommand command =
+                new AddAppointmentCommand(INDEX_SECOND_PATIENT, nonOverlappingAppointment);
+
+        String expectedMessage = String.format(
+                AddAppointmentCommand.MESSAGE_EDIT_PATIENT_SUCCESS,
+                Messages.format(secondEdited));
+
+        Model expectedModel = new ModelManager(
+                new AddressBook(model.getAddressBook()), new UserPrefs());
+        expectedModel.setPatient(firstPatient, firstWithAppointment);
+        expectedModel.setPatient(secondPatient, secondEdited);
+
+        assertCommandSuccess(command, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_replaceWithOriginalAppointment_success() {
+        // Give patient 1 an appointment first
+        Patient patientToEdit = model.getFilteredPatientList().get(INDEX_FIRST_PATIENT.getZeroBased());
+        Patient patientWithAppointment = new PatientBuilder(patientToEdit)
+                .withAppointment(appointment)
+                .build();
+        model.setPatient(patientToEdit, patientWithAppointment);
+
+        // Re-assign the same appointment to the same patient.
+        // hasOverlappingAppointmentInList filters by isSamePatient, so this must succeed.
+        Patient editedPatient = new PatientBuilder(patientWithAppointment)
                 .withAppointment(appointment)
                 .build();
 
@@ -74,10 +171,37 @@ public class AddAppointmentCommandTest {
                 AddAppointmentCommand.MESSAGE_EDIT_PATIENT_SUCCESS,
                 Messages.format(editedPatient));
 
-        Model expectedModel =
-                new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        Model expectedModel = new ModelManager(
+                new AddressBook(model.getAddressBook()), new UserPrefs());
+        expectedModel.setPatient(patientWithAppointment, editedPatient);
 
-        expectedModel.setPatient(model.getFilteredPatientList().get(0), editedPatient);
+        assertCommandSuccess(command, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_replaceAppointmentWithOverlap_success() {
+        // Re-assigning the same patient's appointment should not flag overlap with itself
+        Patient patientToEdit = model.getFilteredPatientList().get(INDEX_FIRST_PATIENT.getZeroBased());
+        Patient patientWithAppointment = new PatientBuilder(patientToEdit)
+                .withAppointment(appointment)
+                .build();
+        model.setPatient(patientToEdit, patientWithAppointment);
+
+        // Re-add the same appointment to the same patient - isSamePatient filters it out
+        AddAppointmentCommand command =
+                new AddAppointmentCommand(INDEX_FIRST_PATIENT, overlappingAppointment);
+
+        Patient editedPatient = new PatientBuilder(patientWithAppointment)
+                .withAppointment(overlappingAppointment)
+                .build();
+
+        String expectedMessage = String.format(
+                AddAppointmentCommand.MESSAGE_EDIT_PATIENT_SUCCESS,
+                Messages.format(editedPatient));
+
+        Model expectedModel = new ModelManager(
+                new AddressBook(model.getAddressBook()), new UserPrefs());
+        expectedModel.setPatient(patientWithAppointment, editedPatient);
 
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
     }
