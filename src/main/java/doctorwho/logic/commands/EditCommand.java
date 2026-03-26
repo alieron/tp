@@ -95,7 +95,7 @@ public class EditCommand extends Command {
 
     /**
      * Creates and returns a {@code Patient} with the details of {@code PatientToEdit}
-     * edited with {@code EditPatientDescriptor}.
+     * edited with {@code editPatientDescriptor}.
      */
     private static Patient createEditedPatient(Patient patientToEdit, EditPatientDescriptor editPatientDescriptor) {
         assert patientToEdit != null;
@@ -139,7 +139,7 @@ public class EditCommand extends Command {
 
         EditCommand otherEditCommand = (EditCommand) other;
         return index.equals(otherEditCommand.index)
-            && editPatientDescriptor.equals(otherEditCommand.editPatientDescriptor);
+                && editPatientDescriptor.equals(otherEditCommand.editPatientDescriptor);
     }
 
     @Override

@@ -31,8 +31,8 @@ public class EditCommandParser implements Parser<EditCommand> {
     public EditCommand parse(String args) throws ParseException {
         requireNonNull(args);
         ArgumentMultimap argMultimap =
-            ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS,
-                PREFIX_ALLERGY, PREFIX_CONDITION);
+                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS,
+                        PREFIX_ALLERGY, PREFIX_CONDITION);
 
         Index index;
 
@@ -62,13 +62,13 @@ public class EditCommandParser implements Parser<EditCommand> {
         if (argMultimap.getValue(PREFIX_ALLERGY).isPresent()) {
             Collection<String> allergies = argMultimap.getAllValues(PREFIX_ALLERGY);
             Collection<String> allergySet = allergies.size() == 1 && allergies.contains("")
-                ? Collections.emptySet() : allergies;
+                    ? Collections.emptySet() : allergies;
             editPatientDescriptor.setAllergies(ParserUtil.parseAllergies(allergySet));
         }
         if (argMultimap.getValue(PREFIX_CONDITION).isPresent()) {
             Collection<String> conditions = argMultimap.getAllValues(PREFIX_CONDITION);
             Collection<String> conditionSet = conditions.size() == 1 && conditions.contains("")
-                ? Collections.emptySet() : conditions;
+                    ? Collections.emptySet() : conditions;
             editPatientDescriptor.setConditions(ParserUtil.parseConditions(conditionSet));
         }
 

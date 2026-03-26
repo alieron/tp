@@ -83,6 +83,11 @@ public interface Model {
     void setPatient(Patient target, Patient editedPatient);
 
     /**
+     * Returns an unmodifiable view of the full patient list
+     */
+    ObservableList<Patient> getFullPatientList();
+
+    /**
      * Returns an unmodifiable view of the filtered patient list
      */
     ObservableList<Patient> getFilteredPatientList();

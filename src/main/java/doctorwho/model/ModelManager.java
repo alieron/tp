@@ -115,6 +115,11 @@ public class ModelManager implements Model {
         addressBook.setPatient(target, editedPatient);
     }
 
+    @Override
+    public ObservableList<Patient> getFullPatientList() {
+        return this.addressBook.getPatientList();
+    }
+
     //=========== Filtered Patient List Accessors =============================================================
 
     /**
