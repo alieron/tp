@@ -9,7 +9,7 @@ public class Condition extends Tag {
         "Condition names should be alphanumeric, hyphens/spaces allowed, max 50 characters";
 
     private static final String VALIDATION_REGEX =
-        "(?=.{1,50}$)\\p{Alnum}+(-\\p{Alnum}+)*([ ]\\p{Alnum}+(-\\p{Alnum}+)*)*";
+        "^(?=.{1,50}$)\\p{Alnum}+(-\\p{Alnum}+)*([ ]\\p{Alnum}+(-\\p{Alnum}+)*)*$";
 
     public Condition(String tagName) {
         super(tagName);
