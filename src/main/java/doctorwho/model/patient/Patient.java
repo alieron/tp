@@ -4,6 +4,7 @@ import static doctorwho.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -77,8 +78,8 @@ public class Patient {
      */
     public Set<Tag> getAllergies() {
         return Collections.unmodifiableSet(tags.stream()
-            .filter(t -> t instanceof Allergy)
-            .collect(Collectors.toSet()));
+                .filter(t -> t instanceof Allergy)
+                .collect(Collectors.toSet()));
     }
 
     /**
@@ -87,12 +88,29 @@ public class Patient {
      */
     public Set<Tag> getConditions() {
         return Collections.unmodifiableSet(tags.stream()
-            .filter(t -> t instanceof Condition)
-            .collect(Collectors.toSet()));
+                .filter(t -> t instanceof Condition)
+                .collect(Collectors.toSet()));
     }
 
     public Optional<Appointment> getAppointment() {
         return Optional.ofNullable(appointment);
+    }
+
+    public boolean hasOverlappingAppointment(Patient patient) {
+        return patient.appointment != null && appointment.isOverlapping(patient.appointment);
+    }
+
+    /**
+     * Returns true if any of the patients in a list of {@code Patients}, not counting the same patient,
+     * has a clashing appointment.
+     *
+     * @param patients The list of patients to check against
+     * @return the boolean
+     */
+    public boolean hasOverlappingAppointmentInList(List<Patient> patients) {
+        return patients.stream()
+                .filter(p -> !this.isSamePatient(p))
+                .anyMatch(this::hasOverlappingAppointment);
     }
 
     /**
@@ -147,5 +165,4 @@ public class Patient {
                 .add("tags", tags)
                 .toString();
     }
-
 }
