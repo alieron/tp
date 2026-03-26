@@ -336,22 +336,6 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
   * 4b1. DoctorWho shows an error message.
   <br>Use case resumes at step 3.
 
-**Use case: Add an allergy to a patient**
-
-**MSS**
-
-1. Doctor requests to list all patients. 
-2. DoctorWho shows the list of patients. 
-3. Doctor identifies the patient and uses the command to add a new allergy tag. 
-4. DoctorWho updates the patient record and displays a success message.
-<br>Use case ends.
-
-Extensions
-
-* 3a. The patient already has the specified allergy listed. 
-  * 3a1. DoctorWho shows an error message: "Patient already has the allergy."
-  <br>Use case resumes at step 3.
-
 **Use case: Delete a patient**
 
 **MSS**
@@ -367,6 +351,51 @@ Extensions
 * 3a. The specified INDEX is invalid.
     * 3a1.DoctorWho displays an error message indicating that the index is invalid.
       <br>Use case ends.
+
+**Use Case: Edit a Patient's Information**
+
+**Preconditions:**
+* User has launched the DoctorWho application
+* User is at the command prompt
+* At least one patient exists in the list
+
+**Main Success Scenario:**
+1. User requests to list patients (UC02)
+2. User requests to edit a specific patient's information using the index
+3. DoctorWho updates the patient's information
+4. DoctorWho shows a success message with the updated details
+
+   Use case ends.
+
+**Extensions:**
+
+* 2a. Invalid, missing or out of bounds index
+    * 2a1. DoctorWho shows an error message
+
+      Use case ends.
+
+* 2b. No fields provided to edit
+    * 2b1. DoctorWho shows an error message
+
+      Use case ends.
+
+* 2c. Invalid field values 
+    * 2c1. DoctorWho shows an error message
+
+      Use case ends.
+
+* 2d. Edited details result in a duplicate patient
+    * 2d1. DoctorWho shows an error message
+
+      Use case ends.
+
+* 2e. User provides allergies or conditions field with no value
+    * 2e1. DoctorWho clears all existing conditions or allergies respectively
+
+      Use case resumes from step 3.
+
+**Post conditions:**
+* Patient's information is updated in the system
 
 ### Non-Functional Requirements
 
