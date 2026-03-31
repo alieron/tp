@@ -77,6 +77,7 @@ can be found in [Features](#features).
 | **Find**                | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`                                                                                                                                      |
 | **Add appointments**    | `apt PATIENT_NUMBER d/DATETIME dur/DURATION [note/NOTE]`<br> e.g., `apt 2 d/01-04-2026 09:00 dur/60 note/Follow-up for diabetes review `                                                        |
 | **Delete appointments** | `dapt PATIENT_NUMBER`<br> e.g., `dapt 1`                                                                                                                                                        |
+| **List appointments**   | `lsapt [d/DATE]`<br> e.g., `lsapt`, `lsapt d/14-03-2026`                                                                                                                                        |
 | **Help**                | `help`                                                                                                                                                                                          |
 
 ## Features
@@ -223,6 +224,21 @@ Format: `dapt PATIENT_NUMBER`
 Examples:
 
 * `list` followed by `dapt 2` deletes the appointment for the 2nd patient in the displayed patient list.
+
+### Listing all appointments : `lsapt`
+
+Shows all appointments across all patients, sorted by date-time in ascending order, to give a daily schedule view.
+
+Format: `lsapt [d/DATE]`
+
+* Lists all scheduled appointments when no date is provided.
+* If `d/DATE` is provided, only appointments on that date will be shown, and listed from earliest to latest.
+* `DATE` must be in the format `dd-MM-yyyy` e.g., `14-03-2026` refers to 14th March 2026.
+
+Examples:
+
+* `lsapt` returns all appointments across all patients, sorted by date-time ascending.
+* `lsapt d/14-03-2026` returns all appointments on 14th March 2026.
 
 ### Clearing all entries : `clear`
 
