@@ -36,6 +36,8 @@ public class PatientCard extends UiPart<Region> {
     @FXML
     private Label nric;
     @FXML
+    private Label sex;
+    @FXML
     private Label phone;
     @FXML
     private Label address;
@@ -55,6 +57,7 @@ public class PatientCard extends UiPart<Region> {
         id.setText(displayedIndex + ". ");
         name.setText(patient.getName().fullName);
         nric.setText(patient.getNric().value);
+        sex.setText(patient.getSex().value);
         phone.setText(patient.getPhone().value);
         address.setText(patient.getAddress().value);
         email.setText(patient.getEmail().value);
