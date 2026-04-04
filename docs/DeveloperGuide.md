@@ -9,7 +9,14 @@ title: Developer Guide
 
 ## **Acknowledgements**
 
-* {list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well}
+* AddressBook-Level3 (AB3): The original source code for this application was adapted from the
+[AddressBook-Level3](https://github.com/se-edu/addressbook-level3)
+ project created by the SE-EDU initiative. 
+* NRIC Checksum: Introduce documentation for NRIC checksum. [Link](https://userapps.support.sap.com/sap/support/knowledge/en/2572734)
+* JavaFX: Used for the Graphical User Interface (GUI). [Link](https://openjfx.io/)
+* JUnit5: Used for the unit testing framework. [Link](https://junit.org/junit5/)
+* PlantUML: Used to generate the diagrams in this documentation. [Link](https://plantuml.com/)
+* Icons: PNG Icons from [ICONPACKS](https://www.iconpacks.net/)
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -36,7 +43,11 @@ Given below is a quick overview of main components and how they interact with ea
 
 **Main components of the architecture**
 
-**`Main`** (consisting of classes [`Main`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/Main.java) and [`MainApp`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/MainApp.java)) is in charge of the app launch and shut down.
+**`Main`** (consisting of classes [
+`Main`](https://github.com/AY2526S2-CS2103T-F10-1/tp/tree/master/src/main/java/doctorwho/Main.java) and [
+`MainApp`](https://github.com/AY2526S2-CS2103T-F10-1/tp/tree/master/src/main/java/doctorwho/MainApp.java)) is in
+charge of the app launch and shut down.
+
 * At app launch, it initializes the other components in the correct sequence, and connects them up with each other.
 * At shut down, it shuts down the other components and invokes cleanup methods where necessary.
 
@@ -68,13 +79,15 @@ The sections below give more details of each component.
 
 ### UI component
 
-The **API** of this component is specified in [`Ui.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/ui/Ui.java)
+The **API** of this component is specified in [`Ui.java`](https://github.com/AY2526S2-CS2103T-F10-1/tp/tree/master/src/main/java/doctorwho/ui/Ui.java)
 
 ![Structure of the UI Component](images/UiClassDiagram.png)
 
 The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PatientListPanel`, `StatusBarFooter` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class which captures the commonalities between classes that represent parts of the visible GUI.
 
-The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/resources/view/MainWindow.fxml)
+The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that
+are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/AY2526S2-CS2103T-F10-1/tp/tree/master/src/main/java/doctorwho/ui/MainWindow.java)
+is specified in [`MainWindow.fxml`](https://github.com/AY2526S2-CS2103T-F10-1/tp/tree/master/src/main/resources/view/MainWindow.fxml)
 
 The `UI` component,
 
@@ -85,7 +98,7 @@ The `UI` component,
 
 ### Logic component
 
-**API** : [`Logic.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/logic/Logic.java)
+**API** : [`Logic.java`](https://github.com/AY2526S2-CS2103T-F10-1/tp/tree/master/src/main/java/doctorwho/logic/Logic.java)
 
 Here's a (partial) class diagram of the `Logic` component:
 
@@ -115,7 +128,8 @@ How the parsing works:
 * All `XYZCommandParser` classes (e.g., `AddCommandParser`, `DeleteCommandParser`, ...) inherit from the `Parser` interface so that they can be treated similarly where possible e.g, during testing.
 
 ### Model component
-**API** : [`Model.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/model/Model.java)
+
+**API** : [`Model.java`](https://github.com/AY2526S2-CS2103T-F10-1/tp/tree/master/src/main/java/doctorwho/model/Model.java)
 
 <img src="images/ModelClassDiagram.png" width="450" />
 
@@ -136,7 +150,7 @@ The `Model` component,
 
 ### Storage component
 
-**API** : [`Storage.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/storage/Storage.java)
+**API** : [`Storage.java`](https://github.com/AY2526S2-CS2103T-F10-1/tp/tree/master/src/main/java/doctorwho/storage/Storage.java)
 
 <img src="images/StorageClassDiagram.png" width="550" />
 
@@ -147,7 +161,7 @@ The `Storage` component,
 
 ### Common classes
 
-Classes used by multiple components are in the `seedu.address.commons` package.
+Classes used by multiple components are in the `doctorwho.commons` package.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -298,12 +312,37 @@ The following activity diagram summarizes what happens when a user executes a ne
   * Pros: Will use less memory (e.g. for `delete`, just save the patient being deleted).
   * Cons: We must ensure that the implementation of each individual command are correct.
 
-_{more aspects and alternatives to be added}_
-
 ### \[Proposed\] Data archiving
 
-_{Explain here how the data archiving feature will be implemented}_
+The proposed data archiving feature allows doctors to move inactive or deceased patients from the active patient list to an archive. This reduces visual clutter and improves performance while retaining historical records.
 
+#### Proposed Implementation
+
+The archiving mechanism will be facilitated by adding an `ArchiveBook` to the `Model`, functioning similarly to the `AddressBook`.
+
+* An `archive PATIENT_INDEX` command will be added.
+* `Model` will be extended with `Model#archivePatient(Patient)` and `Model#unarchivePatient(Patient)`.
+* When a patient is archived, they are removed from the active `UniquePatientList` and added to the `ArchiveBook`.
+* The `Storage` component will be updated to save the `ArchiveBook` to a separate `data/archive.json` file.
+
+#### Design considerations:
+
+* **Alternative 1 (current choice):** Use a separate `ArchiveBook` and `archive.json`.
+    * Pros: Keeps the main `AddressBook` lightweight and fast. Prevents archived patients from appearing in regular search results.
+    * Cons: Requires duplicating some model and storage logic.
+* **Alternative 2:** Add an `isArchived` boolean field to the `Patient` model.
+    * Pros: Simpler to implement.
+    * Cons: The main JSON file will continue to grow indefinitely, potentially degrading performance over time.
+
+### \[Proposed\] Automated Appointment Reminders
+
+The proposed appointment reminder feature will alert the doctor of any upcoming appointments within the next 24 hours upon launching the application or while it is running.
+
+#### Proposed Implementation
+
+* A `ReminderManager` class will be added to the `Logic` component.
+* `ReminderManager` will periodically query the `Model` for patients with an `Appointment` whose start time falls within a specific threshold (e.g., next 24 hours).
+* The `UI` will be updated to include a `ReminderPanel` that observes the `ReminderManager` and displays upcoming appointments in a dedicated side panel or via visual indicators next to patient names.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -645,6 +684,47 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 2. DoctorWho closes the application
 
    Use case ends.
+
+**Use Case 07: List Appointments**
+
+**Preconditions:**
+* User has launched the DoctorWho application.
+* User is at the command prompt.
+
+**Main Success Scenario:**
+
+1. User requests to list appointments.
+2. DoctorWho displays all appointments.
+3. DoctorWho presents the appointments in ascending start date-time order.
+
+   Use case ends.
+
+**Extensions:**
+
+* 1a. User requests to list appointments for a specific date.
+    * 1a1. DoctorWho displays only appointments on the specified date.
+    * 1a2. DoctorWho presents the results in ascending start date-time order.
+
+      Use case ends.
+
+* 1b. User enters an invalid date value.
+    * 1b1. DoctorWho shows an error message.
+
+      Use case ends.
+
+* 1c. User enters an invalid date format.
+    * 1b1. DoctorWho shows an error message.
+
+      Use case ends.
+
+* 2a. There are no appointments to display.
+    * 2a1. DoctorWho shows an empty result list and a corresponding status message.
+
+      Use case ends.
+
+**Post conditions:**
+* The currently displayed list is updated to show appointment-based results.
+* If a date is provided, only appointments on that date are shown.
 
 ### Non-Functional Requirements
 
