@@ -2,6 +2,7 @@
 layout: page
 title: Developer Guide
 ---
+
 * Table of Contents
 {:toc}
 
@@ -9,7 +10,14 @@ title: Developer Guide
 
 ## **Acknowledgements**
 
-* {list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well}
+* AddressBook-Level3 (AB3): The original source code for this application was adapted from the
+[AddressBook-Level3](https://github.com/se-edu/addressbook-level3)
+ project created by the SE-EDU initiative. 
+* NRIC Checksum: Introduce documentation for NRIC checksum. [Link](https://userapps.support.sap.com/sap/support/knowledge/en/2572734)
+* JavaFX: Used for the Graphical User Interface (GUI). [Link](https://openjfx.io/)
+* JUnit5: Used for the unit testing framework. [Link](https://junit.org/junit5/)
+* PlantUML: Used to generate the diagrams in this documentation. [Link](https://plantuml.com/)
+* Icons: PNG Icons from [ICONPACKS](https://www.iconpacks.net/)
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -23,7 +31,9 @@ Refer to the guide [_Setting up and getting started_](SettingUp.md).
 
 <div markdown="span" class="alert alert-primary">
 
-:bulb: **Tip:** The `.puml` files used to create diagrams are in this document `docs/diagrams` folder. Refer to the [_PlantUML Tutorial_ at se-edu/guides](https://se-education.org/guides/tutorials/plantUml.html) to learn how to create and edit diagrams.
+:bulb: **Tip:** The `.puml` files used to create diagrams are in this document `docs/diagrams` folder. Refer to the [
+_PlantUML Tutorial_ at se-edu/guides](https://se-education.org/guides/tutorials/plantUml.html) to learn how to create
+and edit diagrams.
 </div>
 
 ### Architecture
@@ -36,7 +46,11 @@ Given below is a quick overview of main components and how they interact with ea
 
 **Main components of the architecture**
 
-**`Main`** (consisting of classes [`Main`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/Main.java) and [`MainApp`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/MainApp.java)) is in charge of the app launch and shut down.
+**`Main`** (consisting of classes [
+`Main`](https://github.com/AY2526S2-CS2103T-F10-1/tp/tree/master/src/main/java/doctorwho/Main.java) and [
+`MainApp`](https://github.com/AY2526S2-CS2103T-F10-1/tp/tree/master/src/main/java/doctorwho/MainApp.java)) is in
+charge of the app launch and shut down.
+
 * At app launch, it initializes the other components in the correct sequence, and connects them up with each other.
 * At shut down, it shuts down the other components and invokes cleanup methods where necessary.
 
@@ -51,16 +65,21 @@ The bulk of the app's work is done by the following four components:
 
 **How the architecture components interact with each other**
 
-The *Sequence Diagram* below shows how the components interact with each other for the scenario where the user issues the command `delete 1`.
+The *Sequence Diagram* below shows how the components interact with each other for the scenario where the user issues
+the command `delete 1`.
 
 <img src="images/ArchitectureSequenceDiagram.png" width="574" />
 
 Each of the four main components (also shown in the diagram above),
 
 * defines its *API* in an `interface` with the same name as the Component.
-* implements its functionality using a concrete `{Component Name}Manager` class which follows the corresponding API `interface` mentioned in the previous point.
+* implements its functionality using a concrete `{Component Name}Manager` class which follows the corresponding API
+  `interface` mentioned in the previous point.
 
-For example, the `Logic` component defines its API in the `Logic.java` interface and implements its functionality using the `LogicManager.java` class which follows the `Logic` interface. Other components interact with a given component through its interface rather than the concrete class (reason: to prevent outside component's being coupled to the implementation of a component), as illustrated in the (partial) class diagram below.
+For example, the `Logic` component defines its API in the `Logic.java` interface and implements its functionality using
+the `LogicManager.java` class which follows the `Logic` interface. Other components interact with a given component
+through its interface rather than the concrete class (reason: to prevent outside component's being coupled to the
+implementation of a component), as illustrated in the (partial) class diagram below.
 
 <img src="images/ComponentManagers.png" width="300" />
 
@@ -68,13 +87,17 @@ The sections below give more details of each component.
 
 ### UI component
 
-The **API** of this component is specified in [`Ui.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/ui/Ui.java)
+The **API** of this component is specified in [`Ui.java`](https://github.com/AY2526S2-CS2103T-F10-1/tp/tree/master/src/main/java/doctorwho/ui/Ui.java)
 
 ![Structure of the UI Component](images/UiClassDiagram.png)
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PatientListPanel`, `StatusBarFooter` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class which captures the commonalities between classes that represent parts of the visible GUI.
+The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PatientListPanel`,
+`StatusBarFooter` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class which captures
+the commonalities between classes that represent parts of the visible GUI.
 
-The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/resources/view/MainWindow.fxml)
+The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that
+are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/AY2526S2-CS2103T-F10-1/tp/tree/master/src/main/java/doctorwho/ui/MainWindow.java)
+is specified in [`MainWindow.fxml`](https://github.com/AY2526S2-CS2103T-F10-1/tp/tree/master/src/main/resources/view/MainWindow.fxml)
 
 The `UI` component,
 
@@ -85,13 +108,14 @@ The `UI` component,
 
 ### Logic component
 
-**API** : [`Logic.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/logic/Logic.java)
+**API** : [`Logic.java`](https://github.com/AY2526S2-CS2103T-F10-1/tp/tree/master/src/main/java/doctorwho/logic/Logic.java)
 
 Here's a (partial) class diagram of the `Logic` component:
 
 <img src="images/LogicClassDiagram.png" width="550"/>
 
-The sequence diagram below illustrates the interactions within the `Logic` component, taking `execute("delete 1")` API call as an example.
+The sequence diagram below illustrates the interactions within the `Logic` component, taking `execute("delete 1")` API
+call as an example.
 
 ![Interactions Inside the Logic Component for the `delete 1` Command](images/DeleteSequenceDiagram.png)
 
@@ -100,10 +124,13 @@ The sequence diagram below illustrates the interactions within the `Logic` compo
 
 How the `Logic` component works:
 
-1. When `Logic` is called upon to execute a command, it is passed to an `AddressBookParser` object which in turn creates a parser that matches the command (e.g., `DeleteCommandParser`) and uses it to parse the command.
-2. This results in a `Command` object (more precisely, an object of one of its subclasses e.g., `DeleteCommand`) which is executed by the `LogicManager`.
+1. When `Logic` is called upon to execute a command, it is passed to an `AddressBookParser` object which in turn creates
+   a parser that matches the command (e.g., `DeleteCommandParser`) and uses it to parse the command.
+2. This results in a `Command` object (more precisely, an object of one of its subclasses e.g., `DeleteCommand`) which
+   is executed by the `LogicManager`.
 3. The command can communicate with the `Model` when it is executed (e.g. to delete a patient).<br>
-   Note that although this is shown as a single step in the diagram above (for simplicity), in the code it can take several interactions (between the command object and the `Model`) to achieve.
+   Note that although this is shown as a single step in the diagram above (for simplicity), in the code it can take
+   several interactions (between the command object and the `Model`) to achieve.
 4. The result of the command execution is encapsulated as a `CommandResult` object which is returned back from `Logic`.
 
 Here are the other classes in `Logic` (omitted from the class diagram above) that are used for parsing a user command:
@@ -111,11 +138,17 @@ Here are the other classes in `Logic` (omitted from the class diagram above) tha
 <img src="images/ParserClasses.png" width="600"/>
 
 How the parsing works:
-* When called upon to parse a user command, the `AddressBookParser` class creates an `XYZCommandParser` (`XYZ` is a placeholder for the specific command name e.g., `AddCommandParser`) which uses the other classes shown above to parse the user command and create a `XYZCommand` object (e.g., `AddCommand`) which the `AddressBookParser` returns back as a `Command` object.
-* All `XYZCommandParser` classes (e.g., `AddCommandParser`, `DeleteCommandParser`, ...) inherit from the `Parser` interface so that they can be treated similarly where possible e.g, during testing.
+
+* When called upon to parse a user command, the `AddressBookParser` class creates an `XYZCommandParser` (`XYZ` is a
+  placeholder for the specific command name e.g., `AddCommandParser`) which uses the other classes shown above to parse
+  the user command and create a `XYZCommand` object (e.g., `AddCommand`) which the `AddressBookParser` returns back as a
+  `Command` object.
+* All `XYZCommandParser` classes (e.g., `AddCommandParser`, `DeleteCommandParser`, ...) inherit from the `Parser`
+  interface so that they can be treated similarly where possible e.g, during testing.
 
 ### Model component
-**API** : [`Model.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/model/Model.java)
+
+**API** : [`Model.java`](https://github.com/AY2526S2-CS2103T-F10-1/tp/tree/master/src/main/java/doctorwho/model/Model.java)
 
 <img src="images/ModelClassDiagram.png" width="450" />
 
@@ -123,16 +156,19 @@ How the parsing works:
 The `Model` component,
 
 * stores the address book data i.e., all `Patient` objects (which are contained in a `UniquePatientList` object).
-* stores the currently 'selected' `Patient` objects (e.g., results of a search query) as a separate _filtered_ list which is exposed to outsiders as an unmodifiable `ObservableList<Patient>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
-* stores a `UserPref` object that represents the user’s preferences. This is exposed to the outside as a `ReadOnlyUserPref` objects.
-* does not depend on any of the other three components (as the `Model` represents data entities of the domain, they should make sense on their own without depending on other components)
+* stores the currently 'selected' `Patient` objects (e.g., results of a search query) as a separate _filtered_ list
+  which is exposed to outsiders as an unmodifiable `ObservableList<Patient>` that can be 'observed' e.g. the UI can be
+  bound to this list so that the UI automatically updates when the data in the list change.
+* stores a `UserPref` object that represents the user’s preferences. This is exposed to the outside as a
+  `ReadOnlyUserPref` objects.
+* does not depend on any of the other three components (as the `Model` represents data entities of the domain, they
+  should make sense on their own without depending on other components)
 
 <div markdown="span" class="alert alert-info">:information_source: **Note:** An alternative (arguably, a more OOP) model is given below. It has a `Tag` list in the `AddressBook`, which `Patient` references. This allows `AddressBook` to only require one `Tag` object per unique tag, instead of each `Patient` needing their own `Tag` objects.<br>
 
 <img src="images/BetterModelClassDiagram.png" width="450" />
 
 </div>
-
 
 ### Storage component
 
@@ -141,9 +177,13 @@ The `Model` component,
 <img src="images/StorageClassDiagram.png" width="550" />
 
 The `Storage` component,
-* can save both address book data and user preference data in JSON format, and read them back into corresponding objects.
-* inherits from both `AddressBookStorage` and `UserPrefStorage`, which means it can be treated as either one (if only the functionality of only one is needed).
-* depends on some classes in the `Model` component (because the `Storage` component's job is to save/retrieve objects that belong to the `Model`)
+
+* can save both address book data and user preference data in JSON format, and read them back into corresponding
+  objects.
+* inherits from both `AddressBookStorage` and `UserPrefStorage`, which means it can be treated as either one (if only
+  the functionality of only one is needed).
+* depends on some classes in the `Model` component (because the `Storage` component's job is to save/retrieve objects
+  that belong to the `Model`)
 
 ### Common classes
 
@@ -220,25 +260,32 @@ In addition, shared test fixtures (e.g., `TypicalPatients`, `PatientBuilder`) us
 
 #### Proposed Implementation
 
-The proposed undo/redo mechanism is facilitated by `VersionedAddressBook`. It extends `AddressBook` with an undo/redo history, stored internally as an `addressBookStateList` and `currentStatePointer`. Additionally, it implements the following operations:
+The proposed undo/redo mechanism is facilitated by `VersionedAddressBook`. It extends `AddressBook` with an undo/redo
+history, stored internally as an `addressBookStateList` and `currentStatePointer`. Additionally, it implements the
+following operations:
 
-* `VersionedAddressBook#commit()` — Saves the current address book state in its history.
-* `VersionedAddressBook#undo()` — Restores the previous address book state from its history.
-* `VersionedAddressBook#redo()` — Restores a previously undone address book state from its history.
+* `VersionedAddressBook#commit()`— Saves the current address book state in its history.
+* `VersionedAddressBook#undo()`— Restores the previous address book state from its history.
+* `VersionedAddressBook#redo()`— Restores a previously undone address book state from its history.
 
-These operations are exposed in the `Model` interface as `Model#commitAddressBook()`, `Model#undoAddressBook()` and `Model#redoAddressBook()` respectively.
+These operations are exposed in the `Model` interface as `Model#commitAddressBook()`, `Model#undoAddressBook()` and
+`Model#redoAddressBook()` respectively.
 
 Given below is an example usage scenario and how the undo/redo mechanism behaves at each step.
 
-Step 1. The user launches the application for the first time. The `VersionedAddressBook` will be initialized with the initial address book state, and the `currentStatePointer` pointing to that single address book state.
+Step 1. The user launches the application for the first time. The `VersionedAddressBook` will be initialized with the
+initial address book state, and the `currentStatePointer` pointing to that single address book state.
 
 ![UndoRedoState0](images/UndoRedoState0.png)
 
-Step 2. The user executes `delete 5` command to delete the 5th patient in the address book. The `delete` command calls `Model#commitAddressBook()`, causing the modified state of the address book after the `delete 5` command executes to be saved in the `addressBookStateList`, and the `currentStatePointer` is shifted to the newly inserted address book state.
+Step 2. The user executes `delete 5` command to delete the 5th patient in the address book. The `delete` command calls
+`Model#commitAddressBook()`, causing the modified state of the address book after the `delete 5` command executes to be
+saved in the `addressBookStateList`, and the `currentStatePointer` is shifted to the newly inserted address book state.
 
 ![UndoRedoState1](images/UndoRedoState1.png)
 
-Step 3. The user executes `add n/David …​` to add a new patient. The `add` command also calls `Model#commitAddressBook()`, causing another modified address book state to be saved into the `addressBookStateList`.
+Step 3. The user executes `add n/David …​` to add a new patient. The `add` command also calls
+`Model#commitAddressBook()`, causing another modified address book state to be saved into the `addressBookStateList`.
 
 ![UndoRedoState2](images/UndoRedoState2.png)
 
@@ -246,7 +293,9 @@ Step 3. The user executes `add n/David …​` to add a new patient. The `add` c
 
 </div>
 
-Step 4. The user now decides that adding the patient was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#undoAddressBook()`, which will shift the `currentStatePointer` once to the left, pointing it to the previous address book state, and restores the address book to that state.
+Step 4. The user now decides that adding the patient was a mistake, and decides to undo that action by executing the
+`undo` command. The `undo` command will call `Model#undoAddressBook()`, which will shift the `currentStatePointer` once
+to the left, pointing it to the previous address book state, and restores the address book to that state.
 
 ![UndoRedoState3](images/UndoRedoState3.png)
 
@@ -267,17 +316,23 @@ Similarly, how an undo operation goes through the `Model` component is shown bel
 
 ![UndoSequenceDiagram](images/UndoSequenceDiagram-Model.png)
 
-The `redo` command does the opposite — it calls `Model#redoAddressBook()`, which shifts the `currentStatePointer` once to the right, pointing to the previously undone state, and restores the address book to that state.
+The `redo` command does the opposite — it calls `Model#redoAddressBook()`, which shifts the `currentStatePointer` once
+to the right, pointing to the previously undone state, and restores the address book to that state.
 
 <div markdown="span" class="alert alert-info">:information_source: **Note:** If the `currentStatePointer` is at index `addressBookStateList.size() - 1`, pointing to the latest address book state, then there are no undone AddressBook states to restore. The `redo` command uses `Model#canRedoAddressBook()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo.
 
 </div>
 
-Step 5. The user then decides to execute the command `list`. Commands that do not modify the address book, such as `list`, will usually not call `Model#commitAddressBook()`, `Model#undoAddressBook()` or `Model#redoAddressBook()`. Thus, the `addressBookStateList` remains unchanged.
+Step 5. The user then decides to execute the command `list`. Commands that do not modify the address book, such as
+`list`, will usually not call `Model#commitAddressBook()`, `Model#undoAddressBook()` or `Model#redoAddressBook()`. Thus,
+the `addressBookStateList` remains unchanged.
 
 ![UndoRedoState4](images/UndoRedoState4.png)
 
-Step 6. The user executes `clear`, which calls `Model#commitAddressBook()`. Since the `currentStatePointer` is not pointing at the end of the `addressBookStateList`, all address book states after the `currentStatePointer` will be purged. Reason: It no longer makes sense to redo the `add n/David …​` command. This is the behavior that most modern desktop applications follow.
+Step 6. The user executes `clear`, which calls `Model#commitAddressBook()`. Since the `currentStatePointer` is not
+pointing at the end of the `addressBookStateList`, all address book states after the `currentStatePointer` will be
+purged. Reason: It no longer makes sense to redo the `add n/David …​` command. This is the behavior that most modern
+desktop applications follow.
 
 ![UndoRedoState5](images/UndoRedoState5.png)
 
@@ -290,20 +345,45 @@ The following activity diagram summarizes what happens when a user executes a ne
 **Aspect: How undo & redo executes:**
 
 * **Alternative 1 (current choice):** Saves the entire address book.
-  * Pros: Easy to implement.
-  * Cons: May have performance issues in terms of memory usage.
+    * Pros: Easy to implement.
+    * Cons: May have performance issues in terms of memory usage.
 
 * **Alternative 2:** Individual command knows how to undo/redo by
   itself.
-  * Pros: Will use less memory (e.g. for `delete`, just save the patient being deleted).
-  * Cons: We must ensure that the implementation of each individual command are correct.
-
-_{more aspects and alternatives to be added}_
+    * Pros: Will use less memory (e.g. for `delete`, just save the patient being deleted).
+    * Cons: We must ensure that the implementation of each individual command are correct.
 
 ### \[Proposed\] Data archiving
 
-_{Explain here how the data archiving feature will be implemented}_
+The proposed data archiving feature allows doctors to move inactive or deceased patients from the active patient list to an archive. This reduces visual clutter and improves performance while retaining historical records.
 
+#### Proposed Implementation
+
+The archiving mechanism will be facilitated by adding an `ArchiveBook` to the `Model`, functioning similarly to the `AddressBook`.
+
+* An `archive PATIENT_NUMBER` command will be added.
+* `Model` will be extended with `Model#archivePatient(Patient)` and `Model#unarchivePatient(Patient)`.
+* When a patient is archived, they are removed from the active `UniquePatientList` and added to the `ArchiveBook`.
+* The `Storage` component will be updated to save the `ArchiveBook` to a separate `data/archive.json` file.
+
+#### Design considerations:
+
+* **Alternative 1 (current choice):** Use a separate `ArchiveBook` and `archive.json`.
+    * Pros: Keeps the main `AddressBook` lightweight and fast. Prevents archived patients from appearing in regular search results.
+    * Cons: Requires duplicating some model and storage logic.
+* **Alternative 2:** Add an `isArchived` boolean field to the `Patient` model.
+    * Pros: Simpler to implement.
+    * Cons: The main JSON file will continue to grow indefinitely, potentially degrading performance over time.
+
+### \[Proposed\] Automated Appointment Reminders
+
+The proposed appointment reminder feature will alert the doctor of any upcoming appointments within the next 24 hours upon launching the application or while it is running.
+
+#### Proposed Implementation
+
+* A `ReminderManager` class will be added to the `Logic` component.
+* `ReminderManager` will periodically query the `Model` for patients with an `Appointment` whose start time falls within a specific threshold (e.g., next 24 hours).
+* The `UI` will be updated to include a `ReminderPanel` that observes the `ReminderManager` and displays upcoming appointments in a dedicated side panel or via visual indicators next to patient names.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -330,8 +410,8 @@ _{Explain here how the data archiving feature will be implemented}_
 * is reasonably comfortable using CLI apps
 * may vary in technological confidence but prefers efficient keyboard-driven interaction
 
-**Value proposition**: manage patient details like chronic conditions, severe allergies, and appointment scheduling faster than a typical mouse/GUI driven app
-
+**Value proposition**: manage patient details like chronic conditions, severe allergies, and appointment scheduling
+faster than a typical mouse/GUI driven app
 
 ### User stories
 
@@ -646,34 +726,93 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
    Use case ends.
 
+**Use Case 07: List Appointments**
+
+**Preconditions:**
+* User has launched the DoctorWho application.
+* User is at the command prompt.
+
+**Main Success Scenario:**
+
+1. User requests to list appointments.
+2. DoctorWho displays all appointments.
+3. DoctorWho presents the appointments in ascending start date-time order.
+
+   Use case ends.
+
+**Extensions:**
+
+* 1a. User requests to list appointments for a specific date.
+    * 1a1. DoctorWho displays only appointments on the specified date.
+    * 1a2. DoctorWho presents the results in ascending start date-time order.
+
+      Use case ends.
+
+* 1b. User enters an invalid date value.
+    * 1b1. DoctorWho shows an error message.
+
+      Use case ends.
+
+* 1c. User enters an invalid date format.
+    * 1b1. DoctorWho shows an error message.
+
+      Use case ends.
+
+* 2a. There are no appointments to display.
+    * 2a1. DoctorWho shows an empty result list and a corresponding status message.
+
+      Use case ends.
+
+**Post conditions:**
+* The currently displayed list is updated to show appointment-based results.
+* If a date is provided, only appointments on that date are shown.
+
 ### Non-Functional Requirements
 
-1. Should work on any _mainstream OS_ as long as it has Java `17` or above installed. 
-2. Should be able to hold up to 1000 patient records without a noticeable sluggishness in performance for typical usage.  
-3. A user with a typing speed of at least 50 WPM should be able to complete any mandatory CRUD task (e.g., adding a patient) faster than an equivalent GUI.
-4. Data must be saved locally in a human-readable JSON format to allow for manual inspection or external backup without using the app. 
+1. Should work on any _mainstream OS_ as long as it has Java `17` or above installed.
+2. Should be able to hold up to 1000 patient records without a noticeable sluggishness in performance for typical usage.
+3. A user with a typing speed of at least 50 WPM should be able to complete any mandatory CRUD task (e.g., adding a
+   patient) faster than an equivalent GUI.
+4. Data must be saved locally in a human-readable JSON format to allow for manual inspection or external backup without
+   using the app.
 5. The system should handle corrupted data files by notifying the user and failing gracefully rather than crashing.
-6. The system should be fully functional in an offline environment with no dependency on external servers or internet connectivity.
+6. The system should be fully functional in an offline environment with no dependency on external servers or internet
+   connectivity.
 
 ### Glossary
 
 * **Mainstream OS**: Windows, Linux, Unix, macOS. (Relevant to *Setting up*)
-* **GUI (Graphical User Interface)**: A visual interface that allows users to interact with the software through graphical elements like windows, buttons, and icons. (Relevant to *Architecture/UI*)
-* **CLI (Command Line Interface)**: A text-based interface where the user provides input by typing commands. (Relevant to *Architecture/Logic*)
-* **JavaFX**: The software platform and graphical library used to build the DoctorWho desktop interface. (Relevant to *UI Component*)
-* **Prefix**: A short identifier followed by a forward slash (_e.g._ `d/` for date) used to define arguments in a command. (Relevant to *Logic Component*)
-* **Prefix-based Matching**: A parsing technique where data fields are identified by short leading characters (e.g., `n/` for Name) rather than by their position in a sequence. (Relevant to *Logic Component*)
-* **Medical Tag**: A general term encompassing both **Conditions** (_e.g._ Diabetes) and **Allergies** (_e.g._ Penicillin). (Relevant to *Model Component*)
-* **JSON**: JavaScript Object Notation, a text-based interchange data format, for storing or transmitting data. (Relevant to *Storage Component*)
-* **CRUD**: An acronym for Create, Read, Update, and Delete—the four basic functions of persistent storage. (Relevant to *Implementation*)
-* **MVP**: Minimum Viable Product; the core set of features required to make the app functional for Dr. Lee. (Relevant to *Appendix: Requirements*)
+* **GUI (Graphical User Interface)**: A visual interface that allows users to interact with the software through
+  graphical elements like windows, buttons, and icons. (Relevant to *Architecture/UI*)
+* **CLI (Command Line Interface)**: A text-based interface where the user provides input by typing commands. (Relevant
+  to *Architecture/Logic*)
+* **JavaFX**: The software platform and graphical library used to build the DoctorWho desktop interface. (Relevant to
+  *UI Component*)
+* **Prefix**: A short identifier followed by a forward slash (_e.g._ `d/` for date) used to define arguments in a
+  command. (Relevant to *Logic Component*)
+* **Prefix-based Matching**: A parsing technique where data fields are identified by short leading characters (e.g.,
+  `n/` for Name) rather than by their position in a sequence. (Relevant to *Logic Component*)
+* **Medical Tag**: A general term encompassing both **Conditions** (_e.g._ Diabetes) and **Allergies** (_e.g._
+  Penicillin). (Relevant to *Model Component*)
+* **JSON**: JavaScript Object Notation, a text-based interchange data format, for storing or transmitting data. (
+  Relevant to *Storage Component*)
+* **CRUD**: An acronym for Create, Read, Update, and Delete—the four basic functions of persistent storage. (Relevant to
+  *Implementation*)
+* **MVP**: Minimum Viable Product; the core set of features required to make the app functional for Dr. Lee. (Relevant
+  to *Appendix: Requirements*)
 * **Private contact detail**: A contact detail that is not meant to be shared with others. (Relevant to *User Stories*)
-* **Index**: A positive integer representing the position of an item in the currently displayed list in the UI. (Relevant to *Use Cases*)
-* **Overlap**: A situation where a new appointment's time interval (start time + duration) intersects with an existing appointment's interval. (Relevant to *Use Cases*)
-* **ISO 8601**: The international standard for the representation of dates and times (_e.g._ `YYYY-MM-DD`). (Relevant to *Use Cases/NFRs*)
-* **NFR (Non-Functional Requirement)**: A requirement that specifies criteria that can be used to judge the operation of a system, rather than specific behaviors (_e.g._ security, reliability). (Relevant to *NFR Section*)
-* **Scalability**: The measure of the system's ability to handle a growing amount of data (_e.g._ thousands of patients) without performance degradation. (Relevant to *NFR Section*)
-* **Orphan Schedule**: An appointment record that remains in the system after the associated patient has been deleted. DoctorWho prevents this via automated purging. (Relevant to *NFR Section*)
+* **Index**: A positive integer representing the position of an item in the currently displayed list in the UI. (
+  Relevant to *Use Cases*)
+* **Overlap**: A situation where a new appointment's time interval (start time + duration) intersects with an existing
+  appointment's interval. (Relevant to *Use Cases*)
+* **ISO 8601**: The international standard for the representation of dates and times (_e.g._ `YYYY-MM-DD`). (Relevant to
+  *Use Cases/NFRs*)
+* **NFR (Non-Functional Requirement)**: A requirement that specifies criteria that can be used to judge the operation of
+  a system, rather than specific behaviors (_e.g._ security, reliability). (Relevant to *NFR Section*)
+* **Scalability**: The measure of the system's ability to handle a growing amount of data (_e.g._ thousands of patients)
+  without performance degradation. (Relevant to *NFR Section*)
+* **Orphan Schedule**: An appointment record that remains in the system after the associated patient has been deleted.
+  DoctorWho prevents this via automated purging. (Relevant to *NFR Section*)
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -865,6 +1004,12 @@ testers are expected to do more *exploratory* testing.
    patient's name. However, this means that the stored patient name may not be a match their exact government name. We
    plan to implement apostrophe string enclosing to allow such special characters to be included in the name without
    conflicting with the special characters used for the argument prefixes.
+2. Include cross-checks between a patient's date of birth and NRIC. Currently, we don't check that the patient's birth
+   year matches their NRIC due to complexities and edge cases. Additionally, patients born before 1968 won't have their
+   birth year as the first two digits of their NRIC, making this impossible in certain cases. We plan to implement a
+   best-effort check that will flag possible mismatches.
+3. Include confirmation for the `clear` command to protect the user from unintentionally clearing all their data. We
+   plan to make it so that the user has to enter two consecutive clear commands before the data is actually cleared.
 
 ## **Appendix: Effort**
 
