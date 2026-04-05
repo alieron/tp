@@ -38,8 +38,7 @@ public class Patient {
      * Every field must be present and not null.
      */
     public Patient(Name name, Nric nric, Sex sex, DateOfBirth dob, Phone phone, Email email, Address address,
-                   Set<Tag> tags,
-                   Appointment appointment) {
+                   Set<Tag> tags, Appointment appointment) {
         requireAllNonNull(name, nric, phone, email, address, tags);
         this.name = name;
         this.nric = nric;
@@ -65,9 +64,13 @@ public class Patient {
         return phone;
     }
 
-    public Nric getNric() { return nric; }
+    public Nric getNric() {
+        return nric;
+    }
 
-    public Sex getSex() { return sex; }
+    public Sex getSex() {
+        return sex;
+    }
 
     public DateOfBirth getDateOfBirth() {
         return dob;
