@@ -703,7 +703,7 @@ testers are expected to do more *exploratory* testing.
 ### Adding a patient
 
 1. Adding a valid patient
-    1. Test case: `add n/John Doe p/98765432 e/johnd@example.com a/123 Clementi Ave`
+    1. Test case: `add n/John Doe ic/S1234567D x/M dob/01-01-2000 p/98765432 e/johnd@example.com a/123 Clementi Ave`
 
        Expected: Patient added at the bottom of the list. Success message shown with patient name.
 
@@ -713,8 +713,8 @@ testers are expected to do more *exploratory* testing.
        Expected: No patient added. Error message shown with correct command format.
 
 3. Adding a duplicate patient
-    1. Prerequisites: Patient `John Doe` with phone `98765432` already exists.
-    2. Test case: `add n/John Doe p/98765432 e/johnd@example.com a/123 Clementi Ave`
+    1. Prerequisites: Patient `John Doe` with NRIC `S1234567D` already exists.
+    2. Test case: `add n/John Doe ic/S1234567D x/M dob/01-01-2000 p/98765432 e/johnd@example.com a/123 Clementi Ave`
 
        Expected: No patient added. Error message indicating duplicate patient.
 
@@ -742,12 +742,30 @@ testers are expected to do more *exploratory* testing.
 
        Expected: First patient's phone number updated. Success message shown.
 
-2. Clearing all allergies
+2. Editing a patient's NRIC
+    1. Prerequisites: At least one patient in the list.
+    2. Test case: `edit 1 ic/T0123456H`
+
+       Expected: First patient's NRIC updated. Success message shown.
+
+3. Editing a patient's date of birth
+    1. Prerequisites: At least one patient in the list.
+    2. Test case: `edit 1 dob/15-06-1995`
+
+       Expected: First patient's date of birth updated. Success message shown.
+
+4. Editing a patient's sex
+    1. Prerequisites: At least one patient in the list.
+    2. Test case: `edit 1 x/M`
+
+       Expected: First patient's sex updated. Success message shown.
+
+5. Clearing all allergies
     1. Test case: `edit 1 al/`
 
        Expected: All allergies removed from first patient. Success message shown.
 
-3. Editing with no fields provided
+6. Editing with no fields provided
     1. Test case: `edit 1`
 
        Expected: No changes made. Error message shown.
@@ -840,7 +858,7 @@ testers are expected to do more *exploratory* testing.
     4. Re-launch the app.
 
        Expected: App starts with an empty patient list. Corrupted data file is discarded.
-
+   
 ## **Appendix: Planned Enhancements**
 
 1. Include support for slashes (/) in patient name. Currently, we ask the user to remove slashes when entering the
