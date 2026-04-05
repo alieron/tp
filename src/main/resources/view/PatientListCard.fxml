@@ -29,10 +29,6 @@
         <Label fx:id="name" text="\$first" styleClass="cell_big_label"/>
       </HBox>
 
-      <HBox spacing="5" alignment="CENTER_LEFT">
-        <Label fx:id="sex" styleClass="cell_small_label" text="\$sex"/>
-      </HBox>
-
       <FlowPane fx:id="tags" hgap="5" vgap="5">
         <padding>
           <Insets top="5" right="0" bottom="5" left="0"/>
