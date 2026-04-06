@@ -110,8 +110,6 @@ can be found in [Features](#features).
 * Extraneous parameters for commands that do not take in parameters (such as `help`, `list`, `exit` and `clear`) will be ignored.<br>
   e.g. if the command specifies `help 123`, it will be interpreted as `help`.
 
-* NRIC will be checked to ensure validity. NRIC is also how the program determines if an entry already exists.
-
 * Date format is `dd-mm-yy` for `add` and `edit` commands, `dd-mm-yy HH:mm` for appointment commands.
 
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
@@ -153,7 +151,8 @@ replacements you can use if you encounter these special characters:
 </div>
 
 **Note (NRIC validation):**
-DoctorWho prevents invalid NRIC/FIN entries. For both `add` and `edit`, the `ic/` value must use a valid prefix and checksum; otherwise the command is rejected.
+DoctorWho prevents invalid NRIC/FIN entries. For both `add` and `edit`, the `ic/` value must use a valid entry; otherwise the command is rejected. <br/>
+  NRIC is how the program checks if an entry already exists. This allows for multiple same names.
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
 A patient can have any number of allergies or medical conditions (including 0)
