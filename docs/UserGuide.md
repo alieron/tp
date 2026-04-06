@@ -76,7 +76,7 @@ can be found in [Features](#features).
 
 | Action                  | Format, Examples                                                                                                                                                                                                                             |
 |-------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **Add**                 | `add n/NAME ic/NRIC x/SEX dob/DOB p/PHONE_NUMBER e/EMAIL a/ADDRESS [al/ALLERGY] [mc/CONDITION]…​` <br> e.g., `add n/James Ho ic/S1234567D x/M dob/01-04-2003 p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 al/dust c/allergic rhinitis` |
+| **Add**                 | `add n/NAME ic/NRIC x/SEX dob/DOB p/PHONE_NUMBER e/EMAIL a/ADDRESS [al/ALLERGY] [mc/CONDITION]…​` <br> e.g., `add n/James Ho ic/S1234567D x/M dob/01-04-2003 p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 al/dust mc/allergic rhinitis` |
 | **List**                | `list`                                                                                                                                                                                                                                       |
 | **Edit**                | `edit PATIENT_NUMBER [n/NAME] [ic/NRIC] [x/SEX] [dob/DOB] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [al/ALLERGY] [mc/CONDITION]…​`<br> e.g.,`edit 2 n/James Lee ic/S1234567D x/M e/jameslee@example.com`                                                                 |
 | **Find**                | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`                                                                                                                                                                                   |
@@ -110,7 +110,7 @@ can be found in [Features](#features).
 * Extraneous parameters for commands that do not take in parameters (such as `help`, `list`, `exit` and `clear`) will be ignored.<br>
   e.g. if the command specifies `help 123`, it will be interpreted as `help`.
 
-* Date format is `dd-mm-yy` for `add` and `edit` commands, `dd-mm-yy HH:mm` for appointment commands.
+* Date format is `dd-mm-yyyy` for `add` and `edit` commands, `dd-mm-yy HH:mm` for appointment commands.
 
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
 
@@ -148,8 +148,6 @@ replacements you can use if you encounter these special characters:
 | Diacritics | Jäger           | Jager                          | Not planned                                                |
 | Slash (/)  | Ali s/o Ahmad   | Ali so Ahmad<br>Ali SO Ahmad   | [Planned](DeveloperGuide.md#appendix-planned-enhancements) |
 
-</div>
-
 **Note (NRIC validation):**<br/>
 DoctorWho prevents invalid NRIC/FIN entries. For both `add` and `edit`, the `ic/` value must use a valid entry; otherwise the command is rejected. <br/>
   NRIC is how the program checks if an entry already exists. This allows for multiple same names.
@@ -177,7 +175,7 @@ Format: `list`
 
 Edits an existing patient in DoctorWho.
 
-Format: `edit PATIENT_NUMBER [n/NAME] [ic/NRIC] [x/SEX] [dob/DOB] [p/PHONE] [e/EMAIL] [a/ADDRESS] [al/ALLERGY] [mc/CONDITION]…​`
+Format: `edit PATIENT_NUMBER [n/NAME] [ic/NRIC] [x/SEX] [dob/DOB] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [al/ALLERGY] [mc/CONDITION]…​`
 
 * Edits the patient at the specified `PATIENT_NUMBER`. The index refers to the index number shown in the displayed
   patient list. The index **must be a positive integer** 1, 2, 3, …​
