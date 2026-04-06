@@ -12,6 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.stage.Stage?>
 
+<?import javafx.scene.control.Label?>
 <fx:root type="javafx.stage.Stage" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
          title="DoctorWho" minWidth="450" minHeight="600" onCloseRequest="#handleExit">
   <icons>
@@ -30,7 +31,13 @@
             <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit" />
           </Menu>
           <Menu mnemonicParsing="false" text="Edit" />
-          <Menu mnemonicParsing="false" text="Help">
+          <Menu mnemonicParsing="false" text="">
+            <graphic>
+              <VBox alignment="CENTER" spacing="1">
+                <Label text="Help" style="-fx-font-size: 13px; -fx-text-fill: black;"/>
+                <Label text="F1" style="-fx-font-size: 9px; -fx-text-fill: grey;"/>
+              </VBox>
+            </graphic>
             <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" text="Help" />
           </Menu>
         </MenuBar>
