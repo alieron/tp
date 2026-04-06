@@ -132,9 +132,8 @@ Adds a patient to DoctorWho.
 
 Format: `add n/NAME ic/NRIC dob/DOB p/PHONE_NUMBER e/EMAIL a/ADDRESS [al/ALLERGY] [mc/CONDITION]…​`
 
-<div markdown="block" class="alert alert-info">
-
-**:information_source: Accepted name formats**<br>
+**Note (NRIC validation):**
+DoctorWho prevents invalid NRIC/FIN entries. For both `add` and `edit`, the `ic/` value must use a valid prefix and checksum; otherwise the command is rejected.
 
 DoctorWho currently accepts the following special characters in the patient's name:
 
