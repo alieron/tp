@@ -198,8 +198,6 @@ Examples:
 * `add n/Betsy Crowe ic/S2345678H dob/02-04-2003 e/bcrowe@example.com a/Newgate Prison p/1234567 al/Penicillin mc/cold`
 * `add n/Tim Chal ic/S4567890C dob/03-04-2003 e/betsycrowe@example.com a/Newgate Prison p/1234567 al/Morphine`
 
-![img.png](images/addOutput.png)
-
 ### Editing a patient: `edit`
 
 Edits an existing patient in DoctorWho.
@@ -266,7 +264,7 @@ Examples:
   top, of the patient list, scheduled for 12th March 2026, at 14:00. A note will be indicated with
   `Note | Routine Checkup`
 
-![img.png](aptOutput/img.png)
+![img.png](images/aptOutput.png)
 
 ### Deleting an appointment: `dapt`
 
@@ -303,7 +301,7 @@ Examples:
 * `lsapt` returns all appointments across all patients, sorted by date-time ascending.
 * `lsapt d/14-03-2026` returns all appointments on 14th March 2026.
 
-![img.png](lsaptOutput/img.png)
+![img.png](images/lsaptOutput.png)
 
 ### Clearing all entries: `clear`
 
