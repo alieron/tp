@@ -353,16 +353,16 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Use cases
 
-(For all use cases below, the **System** is `DoctorWho` and the **Actor** is the `Doctor`, unless specified otherwise)
+(For all use cases below, the **System** is `DoctorWho` and the **Actor** is the `Staff`, unless specified otherwise)
 
 **Use case: Schedule an appointment for an existing patient**
 
 **MSS**
 
-1. Doctor searches for a patient by name.
+1. Staff searches for a patient by name.
 2. DoctorWho displays a list of matching patients.
-3. Doctor identifies the correct patient's index.
-4. Doctor requests to add an appointment for that index with a date, time, and duration.
+3. Staff identifies the correct patient's index.
+4. Staff requests to add an appointment for that index with a date, time, and duration.
 5. DoctorWho adds the appointment and displays a success message.
    <br>Use case ends.
 
@@ -370,7 +370,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 2a. The list is empty (_i.e._ no patients found).
     * 2a1. DoctorWho shows an empty list.
-    * 2a2. Doctor uses the add command to create a new patient (Refer to Add Patient use case).
+    * 2a2. Staff uses the add command to create a new patient (Refer to Add Patient use case).
       <br>Use case resumes at step 4.
 
 * 4a. The requested time slot overlaps with an existing appointment.
@@ -386,9 +386,9 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1. Doctor requests to list all patients.
+1. Staff requests to list all patients.
 2. DoctorWho shows the list of patients.
-3. Doctor identifies the patient and uses the command to add a new allergy tag.
+3. Staff identifies the patient and uses the command to add a new allergy tag.
 4. DoctorWho updates the patient record and displays a success message.
    <br>Use case ends.
 
@@ -402,9 +402,9 @@ Extensions
 
 **MSS**
 
-1. Doctor requests to list all patients.
+1. Staff requests to list all patients.
 2. DoctorWho displays the list of patients.
-3. Doctor specifies the PATIENT_NUMBER of the patient to delete.
+3. Staff specifies the PATIENT_NUMBER of the patient to delete.
 4. DoctorWho removes the specified patient from the system.
 5. DoctorWho removes all appointments associated with that patient.
 6. DoctorWho displays a confirmation message indicating the patient has been deleted.
@@ -419,12 +419,12 @@ Extensions
 **Use Case 07: List Appointments**
 
 **Preconditions:**
-* User has launched the DoctorWho application.
-* User is at the command prompt.
+* Staff has launched the DoctorWho application.
+* Staff is at the command prompt.
 
 **Main Success Scenario:**
 
-1. User requests to list appointments.
+1. Staff requests to list appointments.
 2. DoctorWho displays all appointments.
 3. DoctorWho presents the appointments in ascending start date-time order.
 
