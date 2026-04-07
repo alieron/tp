@@ -18,6 +18,8 @@ Yes, if your clinic is still:
 
 --------------------------------------------------------------------------------------------------------------------
 
+<h2 style="margin-top: 0;">Table of Contents</h2>
+
 * Table of Contents
 {:toc}
 
