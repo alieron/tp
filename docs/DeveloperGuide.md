@@ -368,11 +368,11 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **Use Case 01: Add a Patient**
 
 **Preconditions:**
-* User has launched the DoctorWho application.
-* User is at the command prompt.
+* Staff has launched the DoctorWho application.
+* Staff is at the command prompt.
 
 **Main Success Scenario:**
-1. User requests to add a new patient with the required details.
+1. Staff requests to add a new patient with the required details.
 2. DoctorWho adds the patient to the system.
 3. DoctorWho shows a success message with the added patient's details.
 
@@ -401,12 +401,12 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **Use Case 02: Delete a Patient**
 
 **Preconditions:**
-* User has launched the DoctorWho application.
-* User is at the command prompt.
+* Staff has launched the DoctorWho application.
+* Staff is at the command prompt.
 * At least one patient exists in the list.
 
 **Main Success Scenario:**
-1. User requests to delete a specific patient using the index.
+1. Staff requests to delete a specific patient using the index.
 2. DoctorWho removes the patient from the system.
 3. DoctorWho shows a success message.
 
@@ -425,11 +425,11 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **Use Case 03: List Patients**
 
 **Preconditions:**
-* User has launched the DoctorWho application.
-* User is at the command prompt.
+* Staff has launched the DoctorWho application.
+* Staff is at the command prompt.
 
 **Main Success Scenario:**
-1. User requests to list all patients.
+1. Staff requests to list all patients.
 2. DoctorWho displays all patients in the list panel.
 3. DoctorWho shows a success message.
 
@@ -441,12 +441,12 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **Use Case 04: Edit a Patient's Information**
 
 **Preconditions:**
-* User has launched the DoctorWho application.
-* User is at the command prompt.
+* Staff has launched the DoctorWho application.
+* Staff is at the command prompt.
 * At least one patient exists in the list.
 
 **Main Success Scenario:**
-1. User requests to edit a specific patient's information using the index.
+1. Staff requests to edit a specific patient's information using the index.
 2. DoctorWho updates the patient's information.
 3. DoctorWho shows a success message with the updated details.
 
@@ -474,7 +474,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case ends.
 
-* 1e. User provides allergies or conditions field with no value.
+* 1e. Staff provides allergies or conditions field with no value.
     * 1e1. DoctorWho clears all existing conditions or allergies respectively.
 
       Use case resumes from step 3.
@@ -485,12 +485,12 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **Use Case 05: Schedule an appointment for an existing patient**
 
 **Preconditions:**
-* User has launched the DoctorWho application.
-* User is at the command prompt.
+* Staff has launched the DoctorWho application.
+* Staff is at the command prompt.
 * At least one patient exists in the list.
 
 **Main Success Scenario:**
-1. User requests to add an appointment for a specific patient using the index.
+1. Staff requests to add an appointment for a specific patient using the index.
 2. DoctorWho adds the appointment to the patient's record.
 3. DoctorWho shows a success message with the appointment details.
 
@@ -529,12 +529,12 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **Use Case 06: Delete Appointment**
 
 **Preconditions:**
-* User has launched the DoctorWho application.
-* User is at the command prompt.
+* Staff has launched the DoctorWho application.
+* Staff is at the command prompt.
 * At least one patient exists in the list.
 
 **Main Success Scenario:**
-1. User requests to delete the appointment of a specific patient using the index.
+1. Staff requests to delete the appointment of a specific patient using the index.
 2. DoctorWho removes the appointment from the patient's record.
 3. DoctorWho shows a success message.
 
@@ -571,18 +571,18 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **Extensions:**
 
-* 1a. User requests to list appointments for a specific date.
+* 1a. Staff requests to list appointments for a specific date.
     * 1a1. DoctorWho displays only appointments on the specified date.
     * 1a2. DoctorWho presents the results in ascending start date-time order.
 
       Use case ends.
 
-* 1b. User enters an invalid date value.
+* 1b. Staff enters an invalid date value.
     * 1b1. DoctorWho shows an error message.
 
       Use case ends.
 
-* 1c. User enters an invalid date format.
+* 1c. Staff enters an invalid date format.
     * 1c1. DoctorWho shows an error message.
 
       Use case ends.
@@ -599,11 +599,11 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **Use Case 08: Find Patients**
 
 **Preconditions:**
-* User has launched the DoctorWho application.
-* User is at the command prompt.
+* Staff has launched the DoctorWho application.
+* Staff is at the command prompt.
 
 **Main Success Scenario:**
-1. User requests to find patients by specifying a name keyword.
+1. Staff requests to find patients by specifying a name keyword.
 2. DoctorWho displays all patients whose names contain the input keyword.
 3. DoctorWho shows a success message with the number of patients found.
 
@@ -627,11 +627,11 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **Use Case 09: Clear All Patients**
 
 **Preconditions:**
-* User has launched the DoctorWho application.
-* User is at the command prompt.
+* Staff has launched the DoctorWho application.
+* Staff is at the command prompt.
 
 **Main Success Scenario:**
-1. User requests to clear all patient records.
+1. Staff requests to clear all patient records.
 2. DoctorWho removes all patients and their appointments from the system.
 3. DoctorWho shows a success message.
 
@@ -643,25 +643,25 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **Use Case 10: View Help**
 
 **Preconditions:**
-* User has launched the DoctorWho application.
-* User is at the command prompt.
+* Staff has launched the DoctorWho application.
+* Staff is at the command prompt.
 
 **Main Success Scenario:**
-1. User requests to view help.
+1. Staff requests to view help.
 2. DoctorWho opens a help window with a link to the User Guide.
 
    Use case ends.
 
 **Post conditions:**
-* Help window is displayed to the user.
+* Help window is displayed to the staff.
 
 **Use Case 11: Exit Application**
 
 **Preconditions:**
-* User has launched the DoctorWho application.
+* Staff has launched the DoctorWho application.
 
 **Main Success Scenario:**
-1. User requests to exit the application.
+1. Staff requests to exit the application.
 2. DoctorWho closes the application.
 
    Use case ends.
