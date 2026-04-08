@@ -50,7 +50,7 @@ Don't worry if you're not tech-savvy — just follow these steps one by one and 
     ```
     cd Desktop/DoctorWho
     ```
-   - Finally, run the app with:
+   Finally, run the app with:
     ```
     java -jar doctorwho.jar
     ```
