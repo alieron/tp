@@ -47,13 +47,13 @@ Don't worry if you're not tech-savvy — just follow these steps one by one and 
    - **Mac/Linux:** Search for **Terminal** in Spotlight or your app menu.
 
    Then, navigate to your folder. For example, if you placed it on your Desktop in a folder called `DoctorWho`, type:
-  ```
-   cd Desktop/DoctorWho
-  ```
+    ```
+    cd Desktop/DoctorWho
+    ```
    - Finally, run the app with:
-  ```
-   java -jar doctorwho.jar
-  ```
+    ```
+    java -jar doctorwho.jar
+    ```
 
    ![Opening the app via terminal](images/OpeningJarFile.png)
 
@@ -63,8 +63,8 @@ Don't worry if you're not tech-savvy — just follow these steps one by one and 
 
 6. Type a command in the command box at the top and press **Enter** to run it. Here are a few to try out:
 
-  * `list` — Lists all patients.
-  * `add n/John Doe ic/S1234567D x/M dob/01-04-2003 p/98765432 e/johnd@example.com a/John street, block 123, #01-01` — Adds a patient named `John Doe`.
+   * `list` — Lists all patients.
+   * `add n/John Doe ic/S1234567D x/M dob/01-04-2003 p/98765432 e/johnd@example.com a/John street, block 123, #01-01` — Adds a patient named `John Doe`.
    * `delete 3` — Deletes the 3rd patient in the current list.
    * `apt 3 d/01-04-2026 09:00 dur/60 note/Follow-up for diabetes review` — Schedules an appointment for the 3rd patient.
    * `lsapt d/12-03-2026` — List appointments for 12th March 2026.
@@ -83,7 +83,7 @@ can be found in [Features](#features).
 |----------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | [**Add**](#adding-a-patient-add)                         | `add n/NAME ic/NRIC x/SEX dob/DOB p/PHONE_NUMBER e/EMAIL a/ADDRESS [al/ALLERGY] [mc/CONDITION]…​` <br> e.g., `add n/James Ho ic/S1234567D dob/01-04-2003 p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 al/dust c/allergic rhinitis` |
 | [**List**](#listing-all-patients-list)                   | `list`                                                                                                                                                                                                                                             |
-| [**Edit**](#editing-a-patient-edit)                      | `edit PATIENT_NUMBER [n/NAME] [ic/NRIC] [x/SEX] [dob/DOB] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [al/ALLERGY] [mc/CONDITION]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`                                                                       |
+| [**Edit**](#editing-a-patient-edit)                      | `edit PATIENT_NUMBER [n/NAME] [ic/NRIC] [x/SEX] [dob/DOB] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [al/ALLERGY] [mc/CONDITION]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`                                                               |
 | [**Find**](#locating-patients-by-name-find)              | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`                                                                                                                                                                                         |
 | [**Delete**](#deleting-a-patient-delete)                 | `delete PATIENT_NUMBER`<br> e.g., `delete 3`                                                                                                                                                                                                       |
 | [**Add appointment**](#adding-an-appointment-apt)        | `apt PATIENT_NUMBER d/DATETIME dur/DURATION [note/NOTE]`<br> e.g., `apt 2 d/01-04-2026 09:00 dur/60 note/Follow-up for diabetes review `                                                                                                           |
