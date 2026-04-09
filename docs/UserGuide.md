@@ -3,7 +3,7 @@ layout: page
 title: User Guide
 ---
 
-DoctorWho is designed for clinic receptionists and administrative staff at small to mid-sized GP clinics. 
+DoctorWho is designed for clinic receptionists and administrative staff at small to mid-sized General Practitioners (GP) clinics. 
 This guide assumes you are comfortable using a computer for everyday tasks, but no programming or technical experience is required.
 
 Do you prefer typing information to having to click on multiple things? DoctorWho is for you!
