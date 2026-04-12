@@ -17,7 +17,7 @@ import java.util.Objects;
 public class Appointment {
 
     public static final String STARTTIME_CONSTRAINTS =
-            "Appointments should be a valid date have a start time in 'dd-MM-yyyy HH:mm' format";
+            "Appointments should be a valid date and have a start time in 'dd-MM-yyyy HH:mm' format";
 
     public static final String DURATION_CONSTRAINTS =
             "Appointments should have a finite positive integer for duration (minutes).";
