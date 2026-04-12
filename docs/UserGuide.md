@@ -79,19 +79,19 @@ Don't worry if you're not tech-savvy — just follow these steps one by one and 
 Here is a quick reference list for the commands DoctorWho provides, more detailed information about all of the commands
 can be found in [Features](#features).
 
-| Action                                                   | Format, Examples                                                                                                                                                                                                                                       |
-|----------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| [**Add**](#adding-a-patient-add)                         | `add n/NAME ic/NRIC x/SEX dob/DOB p/PHONE_NUMBER e/EMAIL a/ADDRESS [al/ALLERGY] [mc/CONDITION]…​` <br> e.g., `add n/James Ho ic/S1234567D x/M dob/01-04-2003 p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 al/dust c/allergic rhinitis` |
-| [**List**](#listing-all-patients-list)                   | `list`                                                                                                                                                                                                                                                 |
-| [**Edit**](#editing-a-patient-edit)                      | `edit PATIENT_NUMBER [n/NAME] [ic/NRIC] [x/SEX] [dob/DOB] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [al/ALLERGY] [mc/CONDITION]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`                                                                   |
-| [**Find**](#locating-patients-by-name-find)              | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`                                                                                                                                                                                             |
-| [**Delete**](#deleting-a-patient-delete)                 | `delete PATIENT_NUMBER`<br> e.g., `delete 3`                                                                                                                                                                                                           |
-| [**Add appointment**](#adding-an-appointment-apt)        | `apt PATIENT_NUMBER d/DATETIME dur/DURATION [note/NOTE]`<br> e.g., `apt 2 d/01-04-2026 09:00 dur/60 note/Follow-up for diabetes review `                                                                                                               |
-| [**Delete appointment**](#deleting-an-appointment-dapt)  | `dapt PATIENT_NUMBER`<br> e.g., `dapt 1`                                                                                                                                                                                                               |
-| [**List appointments**](#listing-all-appointments-lsapt) | `lsapt [d/DATE]`<br> e.g., `lsapt`, `lsapt d/14-03-2026`                                                                                                                                                                                               |
-| [**Clear**](#clearing-all-entries-clear)                 | `clear`                                                                                                                                                                                                                                                |
-| [**Help**](#viewing-help-help)                           | `help`                                                                                                                                                                                                                                                 |
-| [**Exit**](#exiting-the-program-exit)                    | `exit`                                                                                                                                                                                                                                                 |
+| Action                                                   | Format, Examples                                                                                                                                                                                                                                           |
+|----------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| [**Add**](#adding-a-patient-add)                         | `add n/NAME ic/NRIC x/SEX dob/DOB p/PHONE_NUMBER e/EMAIL a/ADDRESS [al/ALLERGY]…​ [mc/CONDITION]…​` <br> e.g., `add n/James Ho ic/S1234567D x/M dob/01-04-2003 p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 al/dust mc/allergic rhinitis` |
+| [**List**](#listing-all-patients-list)                   | `list`                                                                                                                                                                                                                                                     |
+| [**Edit**](#editing-a-patient-edit)                      | `edit PATIENT_NUMBER [n/NAME] [ic/NRIC] [x/SEX] [dob/DOB] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [al/ALLERGY]…​ [mc/CONDITION]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`                                                                    |
+| [**Find**](#locating-patients-by-name-find)              | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`                                                                                                                                                                                                 |
+| [**Delete**](#deleting-a-patient-delete)                 | `delete PATIENT_NUMBER`<br> e.g., `delete 3`                                                                                                                                                                                                               |
+| [**Add appointment**](#adding-an-appointment-apt)        | `apt PATIENT_NUMBER d/DATETIME dur/DURATION [note/NOTE]`<br> e.g., `apt 2 d/01-04-2026 09:00 dur/60 note/Follow-up for diabetes review `                                                                                                                   |
+| [**Delete appointment**](#deleting-an-appointment-dapt)  | `dapt PATIENT_NUMBER`<br> e.g., `dapt 1`                                                                                                                                                                                                                   |
+| [**List appointments**](#listing-all-appointments-lsapt) | `lsapt [d/DATE]`<br> e.g., `lsapt`, `lsapt d/14-03-2026`                                                                                                                                                                                                   |
+| [**Clear**](#clearing-all-entries-clear)                 | `clear`                                                                                                                                                                                                                                                    |
+| [**Help**](#viewing-help-help)                           | `help`                                                                                                                                                                                                                                                     |
+| [**Exit**](#exiting-the-program-exit)                    | `exit`                                                                                                                                                                                                                                                     |
 
 ## Features
 
@@ -180,6 +180,12 @@ The domain name must:
 
 Examples of valid values: `e/alex.tan+clinic@example.com`, `e/a_b-c@sub-domain.example`.<br/>
 Examples of invalid values: `e/.alex@example.com`, `e/alex@-example.com`, `e/alex@example.c`.
+
+**Drug Allergies (`al/`) and Medical Conditions (`mc/`):**<br/>
+Allergy and condition names do not support consecutive spaces and/or hyphens.
+
+Examples of valid values: `Beta-lactam`, `Type 2 diabetes`, `Post-traumatic stress disorder`.<br/>
+Examples of invalid values: `Beta- lactam`, `Type ​ 2 ​ diabetes`, `Post--traumatic stress disorder`.
 
 </div>
 
