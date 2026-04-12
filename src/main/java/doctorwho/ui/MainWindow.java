@@ -123,11 +123,7 @@ public class MainWindow extends UiPart<Stage> {
         patientListPanelPlaceholder.getChildren().add(patientListPanel.getRoot());
 
         patientListPanel.getPatientListView().getSelectionModel().selectedItemProperty()
-                .addListener((observable, oldValue, newValue) -> {
-                    if (newValue != null) {
-                        patientDetailPanel.setPatient(newValue);
-                    }
-                });
+                .addListener((obs, oldV, newV) -> patientDetailPanel.setPatient(newV));
 
         patientDetailPanel = new PatientDetailPanel();
         patientDetailPanelPlaceholder.getChildren().add(patientDetailPanel.getRoot());
@@ -197,6 +193,7 @@ public class MainWindow extends UiPart<Stage> {
      * @see Logic#execute(String)
      */
     private CommandResult executeCommand(String commandText) throws CommandException, ParseException {
+        Patient prev = patientListPanel.getPatientListView().getSelectionModel().getSelectedItem();
         try {
             CommandResult commandResult = logic.execute(commandText);
             logger.info("Result: " + commandResult.getFeedbackToUser());
@@ -206,6 +203,7 @@ public class MainWindow extends UiPart<Stage> {
             if (selected != null) {
                 patientDetailPanel.setPatient(selected);
             }
+            refreshPatientDetailPanel(prev);
 
             if (commandResult.isShowHelp()) {
                 handleHelp();
@@ -221,5 +219,37 @@ public class MainWindow extends UiPart<Stage> {
             resultDisplay.setFeedbackToUser(e.getMessage());
             throw e;
         }
+    }
+
+    /**
+     * Re-syncs detail pane with the currently displayed patient list after each command.
+     * If the previously selected patient no longer exists in the displayed list, the pane is cleared.
+     */
+    private void refreshPatientDetailPanel(Patient previouslySelectedPatient) {
+        var selectionModel = patientListPanel.getPatientListView().getSelectionModel();
+        ObservableList<Patient> currentDisplayedPatients = logic.getFilteredPatientList();
+        int refreshedPatientIndex = findPatientIndex(currentDisplayedPatients, previouslySelectedPatient);
+
+        if (refreshedPatientIndex == -1 || previouslySelectedPatient == null) {
+            selectionModel.clearSelection();
+            return;
+        }
+
+        selectionModel.select(refreshedPatientIndex);
+        patientDetailPanel.setPatient(currentDisplayedPatients.get(refreshedPatientIndex));
+    }
+
+
+    /**
+     * Re-syncs detail pane with the currently displayed patient list after each command.
+     * If the previously selected patient no longer exists in the displayed list, the pane is cleared.
+     */
+    private int findPatientIndex(ObservableList<Patient> patients, Patient targetPatient) {
+        for (int i = 0; i < patients.size(); i++) {
+            if (patients.get(i).isSamePatient(targetPatient)) {
+                return i;
+            }
+        }
+        return -1;
     }
 }
