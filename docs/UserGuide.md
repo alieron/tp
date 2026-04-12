@@ -446,6 +446,25 @@ DoctorWho folder, located at `[JAR file location]/data/doctorwho.json`.
 
 --------------------------------------------------------------------------------------------------------------------
 
+## Glossary
+
+* Allergy: A hypersensitivity to a substance that causes the body to react with an immune response.
+* CLI: Command Line Interface. A text-based interface where users interact with a program by typing commands.
+* Command: An instruction given to a computer program to perform a specific task.
+* GUI: Graphical User Interface. A visual-based interface where users interact with a program by interacting with
+  windows, icons and menus.
+* Index: A number that refers to the position of a patient in the displayed list.
+* Java: The programming language used to implement this application.
+* JSON: JavaScript Object Notation. A lightweight, text-based data interchange format, easily parsable by machines.
+* Keyword: A word or a phrase that is used to search for a patient.
+* Medical Condition: A health problem that requires ongoing management.
+* NRIC: National Registration Identity Card. A unique identification number assigned to citizens and permanent residents.
+* Parameters: Inputs provided to a command. A command may have zero or more parameters depending on its functionality.
+* Patient: A person receiving medical care whose information and appointments are managed within DoctorWho.
+* UTF-8: The standard for how Unicode numbers are translated into binary numbers to be stored in the computer.
+
+--------------------------------------------------------------------------------------------------------------------
+
 ## Known issues
 
 1. **When using multiple screens**, if you move the application to a secondary screen, and later switch to using only
