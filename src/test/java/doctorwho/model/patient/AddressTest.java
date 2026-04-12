@@ -35,7 +35,7 @@ public class AddressTest {
         // valid addresses
         assertTrue(Address.isValidAddress("Blk 456, Den Road, #01-355"));
         assertTrue(Address.isValidAddress("-")); // one character
-        assertTrue(Address.isValidAddress("#.,()-"));
+        assertTrue(Address.isValidAddress("#.,()\\-")); // special characters
         assertTrue(Address.isValidAddress("Blk123AngMoKioAve6#12-345SunshineGardensSingapore560123Blk123AngMoKioAv"
                 + "e6#12-345SunshineGardensSingapore560123Blk123AngMoKioAve6#12-345SunshineGardens(Singapore)560123Blk1"
                 + "23AngMoKioAve6#12-345Sunshine")); // 200 characters
