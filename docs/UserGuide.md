@@ -122,7 +122,7 @@ can be found in [Features](#features).
 
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application. 
 
-* Also take note that the zero-width space(ZWSP) character is used in some examples showing consecutive spaces in an effort to fix HTML collapsing the whitespace. Therefore, you may face some issues directly copying those examples as the ZWSP is considered an invalid character for most parameters.
+* Also take note that the zero-width space(ZWSP) character is used in some examples showing consecutive spaces in an effort to fix HTML collapsing the whitespace. Therefore, you may face some issues directly copying those examples as the ZWSP is considered an invalid character for most parameters, we recommend typing out those examples.
 
 </div>
 
@@ -140,13 +140,18 @@ Format: `help`
 
 Adds a patient to DoctorWho.
 
-Format: `add n/NAME ic/NRIC x/SEX dob/DOB p/PHONE_NUMBER e/EMAIL a/ADDRESS [al/ALLERGY] [mc/CONDITION]…​`
+Format: `add n/NAME ic/NRIC x/SEX dob/DOB p/PHONE_NUMBER e/EMAIL a/ADDRESS [al/ALLERGY]… [mc/CONDITION]…​`
+
+* Will fail if there is an existing patient with the same NRIC, however other fields allow duplicates ie., two patients may have the same name.
+* The date of birth(dob) must be in the format `dd-MM-yyyy` and must be either the current date or earlier e.g., `12-03-2026` refers to 12th March 2026.
+* All parameters are compulsory.
 
 <div markdown="block" class="alert alert-info">
 
-**:information_source: Accepted name formats**<br>
+**:information_source: Note on accepted parameter values:**<br>
 
-DoctorWho currently accepts the following special characters in the patient's name:
+**Name (`n/`):**<br>
+DoctorWho currently accepts the following special characters in the patient's name:<br>
 
 | Character       | Valid example |
 |-----------------|---------------|
@@ -162,20 +167,20 @@ replacements you can use if you encounter these special characters:
 | Diacritics | Jäger           | Jager                          | Not planned                                                |
 | Slash (/)  | Ali s/o Ahmad   | Ali so Ahmad<br>Ali SO Ahmad   | [Planned](DeveloperGuide.md#appendix-planned-enhancements) |
 
-**Note (NRIC validation):**<br>
-DoctorWho prevents invalid NRIC/FIN entries. For both `add` and `edit`, the `ic/` value must contain a valid NRIC/FIN in the required format; otherwise, the command is rejected. <br/>
-  DoctorWho uses the NRIC/FIN to check whether an entry already exists, so duplicate NRIC/FIN values are rejected, while multiple patients may share the same name.
+**NRIC (`ic/`):**<br>
+DoctorWho prevents invalid NRIC/FIN entries. For both `add` and `edit`, the `ic/` value must contain a valid NRIC/FIN in the required format; otherwise, the command is rejected.<br>
+* More information on the NRIC/FIN validation can be found in the [Developer Guide](DeveloperGuide.md#nric-validation-feature).
 
-**Sex:**<br/>
+**Sex (`x/`):**<br>
 Limited to male or female values only; `x/` accepts `M` or `F` case-insensitively (for example, `x/M`, `x/F`, `x/m`, and `x/f` are valid), though edits are allowed.
 
-**Phone number (`p/`):**<br/>
+**Phone number (`p/`):**<br>
 For both `add` and `edit`, must contain only digits and be between **3 and 15 digits** long (inclusive).<br/>
-Examples of valid values: `p/123`, `p/98765432`, `p/651234567890123`.<br/>
+Examples of valid values: `p/123`, `p/98765432`, `p/651234567890123`.<br>
 Examples of invalid values: `p/+6598765432`, `p/12`, `p/123-4567`.
 
-**Email (`e/`):**<br/>
-For both `add` and `edit`, emails should be of the format local-part@domain and adhere to the following constraints:
+**Email (`e/`):**<br>
+For both `add` and `edit`, emails should be of the format `local-part@domain` and adhere to the following constraints:
 1. The local-part should only contain alphanumeric characters and these special characters, excluding the parentheses, (+_.-). The local-part may not start or end with any special characters.
 2. This is followed by a '@' and then a domain name. The domain name is made up of domain labels separated by periods.
 The domain name must:
@@ -183,13 +188,15 @@ The domain name must:
   * have each domain label start and end with alphanumeric characters
   * have each domain label consist of alphanumeric characters, separated only by hyphens, if any.
 
-Examples of valid values: `e/alex.tan+clinic@example.com`, `e/a_b-c@sub-domain.example`.<br/>
+Examples of valid values: `e/alex.tan+clinic@example.com`, `e/a_b-c@sub-domain.example`.<br>
 Examples of invalid values: `e/.alex@example.com`, `e/alex@-example.com`, `e/alex@example.c`.
 
-**Drug Allergies (`al/`) and Medical Conditions (`mc/`):**<br/>
+In the case that the user is unable to provide an email address, DoctorWho accepts a dead-end email address such as, `user@example.com`.
+
+**Drug Allergies (`al/`) and Medical Conditions (`mc/`):**<br>
 Allergy and condition names do not support consecutive spaces and/or hyphens.
 
-Examples of valid values: `Beta-lactam`, `Type 2 diabetes`, `Post-traumatic stress disorder`.<br/>
+Examples of valid values: `Beta-lactam`, `Type 2 diabetes`, `Post-traumatic stress disorder`.<br>
 Examples of invalid values: `Beta- lactam`, `Type ​ 2 ​ diabetes`, `Post--traumatic stress disorder`.
 
 </div>
@@ -222,7 +229,8 @@ Format: `edit PATIENT_NUMBER [n/NAME] [ic/NRIC] [x/SEX] [dob/DOB] [p/PHONE_NUMBE
 * Existing values will be updated to the input values.
 * When editing conditions and allergies, the existing ones of the patient will be removed i.e., adding is not cumulative.
 * You can remove all the patient’s allergies or medical conditions by typing `al/` or `mc/` respectively, without
-  specifying anything after it.
+  any other entries.<br>
+  e.g., `al/ al/Ibuprofen` and `mc/IBS mc/` will not work.
 
 Examples:
 
