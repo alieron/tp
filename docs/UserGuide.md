@@ -144,7 +144,7 @@ Format: `add n/NAME ic/NRIC x/SEX dob/DOB p/PHONE_NUMBER e/EMAIL a/ADDRESS [al/A
 For both `add` and `edit`, names are limited to **1 to 100 characters**.
 Names must start and end with an alphanumeric character.
 DoctorWho accepts the following separators only **between** alphanumeric name parts:
-only one separator is allowed at a time (i.e., no consecutive separators such as `- `, `''`, or double spaces).
+single space, hyphen (-), apostrophe ('), or comma (optionally followed by one space).
 
 | Character       | Valid example |
 |-----------------|---------------|
