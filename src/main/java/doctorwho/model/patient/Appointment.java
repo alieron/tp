@@ -7,6 +7,7 @@ import static java.util.Objects.requireNonNull;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.time.format.ResolverStyle;
 import java.util.Objects;
 
 /**
@@ -14,18 +15,20 @@ import java.util.Objects;
  * Guarantees: immutable; is valid as declared in {@link #isValidDateTime(String)}
  */
 public class Appointment {
+    public static final int MAX_DUR = 10 * 60; // 10 hours
 
     public static final String STARTTIME_CONSTRAINTS =
-            "Appointments should have a start time in 'dd-MM-yyyy HH:mm' format";
+            "Appointments should be a valid date and have a start time in 'dd-MM-yyyy HH:mm' format";
 
     public static final String DURATION_CONSTRAINTS =
-            "Appointments should have a finite positive integer for duration (minutes).";
+            "Appointments should have a duration of more than 0 and less than or equal to " + MAX_DUR + " (minutes).";
 
     public static final String NOTE_CONSTRAINTS =
-            "Appointments should have a start time in 'dd-MM-yyyy HH:mm' format, "
+            STARTTIME_CONSTRAINTS + ", "
                     + "a positive integer for duration (minutes), and a note.";
 
-    public static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+    public static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd-MM-uuuu HH:mm")
+            .withResolverStyle(ResolverStyle.STRICT);
 
     public static final String VALIDATION_REGEX = "[^\\x00-\\x1F]*";
     public static final int MAX_LENGTH = 500;
@@ -44,7 +47,7 @@ public class Appointment {
     public Appointment(String startTimeStr, int duration, String note) {
         requireAllNonNull(startTimeStr, duration);
         checkArgument(isValidDateTime(startTimeStr), STARTTIME_CONSTRAINTS);
-        checkArgument(duration > 0 && duration < Integer.MAX_VALUE, DURATION_CONSTRAINTS);
+        checkArgument(duration > 0 && duration <= MAX_DUR, DURATION_CONSTRAINTS);
         checkArgument(isValidNote(note), NOTE_CONSTRAINTS);
 
         this.startTime = LocalDateTime.parse(startTimeStr, FORMATTER);
@@ -56,6 +59,9 @@ public class Appointment {
      * Returns true if a given string is in the correct date-time format.
      */
     public static boolean isValidDateTime(String test) {
+        if (!test.matches("\\d{2}-\\d{2}-\\d{4} \\d{2}:\\d{2}")) {
+            return false;
+        }
         try {
             LocalDateTime.parse(test, FORMATTER);
             return true;
@@ -68,7 +74,7 @@ public class Appointment {
      * Returns true if the duration is a positive integer.
      */
     public static boolean isValidDuration(int duration) {
-        return duration > 0 & duration <= Integer.MAX_VALUE;
+        return duration > 0 & duration <= MAX_DUR;
     }
 
     /**
@@ -112,7 +118,7 @@ public class Appointment {
     @Override
     public String toString() {
         return String.format("At: %s (%d mins) | Note: %s",
-                startTime.format(FORMATTER), duration, note.isEmpty() ? "NA" : note);
+                startTime.format(FORMATTER), duration, note.isEmpty() ? "N/A" : note);
     }
 
     @Override

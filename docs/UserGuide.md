@@ -64,7 +64,7 @@ Don't worry if you're not tech-savvy — just follow these steps one by one and 
 6. Type a command in the command box at the top and press **Enter** to run it. Here are a few to try out:
 
    * `list` — Lists all patients.
-   * `add n/John Doe ic/S1234567D x/M dob/01-04-2003 p/98765432 e/johnd@example.com a/John street, block 123, #01-01` — Adds a patient named `John Doe`.
+   * `add n/John Doe ic/S0843959A x/M dob/01-04-2003 p/98765432 e/johnd@example.com a/John street, block 123, #01-01` — Adds a patient named `John Doe`.
    * `delete 3` — Deletes the 3rd patient in the current list.
    * `apt 3 d/01-04-2026 09:00 dur/60 note/Follow-up for diabetes review` — Schedules an appointment for the 3rd patient.
    * `lsapt d/12-03-2026` — List appointments for 12th March 2026.
@@ -79,19 +79,19 @@ Don't worry if you're not tech-savvy — just follow these steps one by one and 
 Here is a quick reference list for the commands DoctorWho provides, more detailed information about all of the commands
 can be found in [Features](#features).
 
-| Action                                                   | Format, Examples                                                                                                                                                                                                                                       |
-|----------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| [**Add**](#adding-a-patient-add)                         | `add n/NAME ic/NRIC x/SEX dob/DOB p/PHONE_NUMBER e/EMAIL a/ADDRESS [al/ALLERGY] [mc/CONDITION]…​` <br> e.g., `add n/James Ho ic/S1234567D x/M dob/01-04-2003 p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 al/dust c/allergic rhinitis` |
-| [**List**](#listing-all-patients-list)                   | `list`                                                                                                                                                                                                                                                 |
-| [**Edit**](#editing-a-patient-edit)                      | `edit PATIENT_NUMBER [n/NAME] [ic/NRIC] [x/SEX] [dob/DOB] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [al/ALLERGY] [mc/CONDITION]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`                                                                   |
-| [**Find**](#locating-patients-by-name-find)              | `find KEYWORD [MORE_KEYWORDS]…​`<br> e.g., `find James Jake`                                                                                                                                                                                           |
-| [**Delete**](#deleting-a-patient-delete)                 | `delete PATIENT_NUMBER`<br> e.g., `delete 3`                                                                                                                                                                                                           |
-| [**Add appointment**](#adding-an-appointment-apt)        | `apt PATIENT_NUMBER d/DATETIME dur/DURATION [note/NOTE]`<br> e.g., `apt 2 d/01-04-2026 09:00 dur/60 note/Follow-up for diabetes review `                                                                                                               |
-| [**Delete appointment**](#deleting-an-appointment-dapt)  | `dapt PATIENT_NUMBER`<br> e.g., `dapt 1`                                                                                                                                                                                                               |
-| [**List appointments**](#listing-all-appointments-lsapt) | `lsapt [d/DATE]`<br> e.g., `lsapt`, `lsapt d/14-03-2026`                                                                                                                                                                                               |
-| [**Clear**](#clearing-all-entries-clear)                 | `clear`                                                                                                                                                                                                                                                |
-| [**Help**](#viewing-help-help)                           | `help`                                                                                                                                                                                                                                                 |
-| [**Exit**](#exiting-the-program-exit)                    | `exit`                                                                                                                                                                                                                                                 |
+| Action                                                   | Format, Examples                                                                                                                                                                                                                                         |
+|----------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| [**Add**](#adding-a-patient-add)                         | `add n/NAME ic/NRIC x/SEX dob/DOB p/PHONE_NUMBER e/EMAIL a/ADDRESS [al/ALLERGY]…​ [mc/CONDITION]…​`<br> e.g., `add n/James Ho ic/S5844149Z x/M dob/01-04-2003 p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 al/dust mc/allergic rhinitis` |
+| [**List**](#listing-all-patients-list)                   | `list`                                                                                                                                                                                                                                                   |
+| [**Edit**](#editing-a-patient-edit)                      | `edit PATIENT_NUMBER [n/NAME] [ic/NRIC] [x/SEX] [dob/DOB] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [al/ALLERGY]…​ [mc/CONDITION]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`                                                                   |
+| [**Find**](#locating-patients-by-name-find)              | `find KEYWORD [MORE_KEYWORDS]…​`<br> e.g., `find James Jake`                                                                                                                                                                                             |
+| [**Delete**](#deleting-a-patient-delete)                 | `delete PATIENT_NUMBER`<br> e.g., `delete 3`                                                                                                                                                                                                             |
+| [**Add appointment**](#adding-an-appointment-apt)        | `apt PATIENT_NUMBER d/DATETIME dur/DURATION [note/NOTE]`<br> e.g., `apt 2 d/01-04-2026 09:00 dur/60 note/Follow-up for diabetes review `                                                                                                                 |
+| [**Delete appointment**](#deleting-an-appointment-dapt)  | `dapt PATIENT_NUMBER`<br> e.g., `dapt 1`                                                                                                                                                                                                                 |
+| [**List appointments**](#listing-all-appointments-lsapt) | `lsapt [d/DATE]`<br> e.g., `lsapt`, `lsapt d/14-03-2026`                                                                                                                                                                                                 |
+| [**Clear**](#clearing-all-entries-clear)                 | `clear`                                                                                                                                                                                                                                                  |
+| [**Help**](#viewing-help-help)                           | `help`                                                                                                                                                                                                                                                   |
+| [**Exit**](#exiting-the-program-exit)                    | `exit`                                                                                                                                                                                                                                                   |
 
 ## Features
 
@@ -141,7 +141,7 @@ Format: `add n/NAME ic/NRIC x/SEX dob/DOB p/PHONE_NUMBER e/EMAIL a/ADDRESS [al/A
 
 **:information_source: Accepted name formats**<br>
 
-DoctorWho currently accepts the following special characters in the patient's name:
+Names are limited to 100 characters. DoctorWho currently accepts the following special characters in the patient's name:
 
 | Character       | Valid example |
 |-----------------|---------------|
@@ -181,6 +181,15 @@ The domain name must:
 Examples of valid values: `e/alex.tan+clinic@example.com`, `e/a_b-c@sub-domain.example`.<br/>
 Examples of invalid values: `e/.alex@example.com`, `e/alex@-example.com`, `e/alex@example.c`.
 
+**Address (`a/`):**<br/>
+Is limited to 200 characters and can include alphabets, numbers, spaces and the following special characters `#.,()\-`.
+
+**Drug Allergies (`al/`) and Medical Conditions (`mc/`):**<br/>
+Allergy and condition names do not support consecutive spaces and/or hyphens.
+
+Examples of valid values: `Beta-lactam`, `Type 2 diabetes`, `Post-traumatic stress disorder`.<br/>
+Examples of invalid values: `Beta- lactam`, `Type ​ 2 ​ diabetes`, `Post--traumatic stress disorder`.
+
 </div>
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
@@ -189,9 +198,9 @@ A patient can have any number of allergies or medical conditions (including 0)
 
 Examples:
 
-* `add n/John Doe ic/S1234567D x/M dob/01-04-2003 p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe ic/S2345678H x/F dob/02-04-2003 e/bcrowe@example.com a/Newgate Prison p/1234567 al/Penicillin mc/cold`
-* `add n/Tim Chal ic/S4567890C x/M dob/03-04-2003 e/betsycrowe@example.com a/Newgate Prison p/1234567 al/Morphine`
+* `add n/John Doe ic/S5730374C x/M dob/01-04-2003 p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
+* `add n/Betsy Crowe ic/T1799192I x/F dob/02-04-2003 e/bcrowe@example.com a/Newgate Prison p/1234567 al/Penicillin mc/cold`
+* `add n/Tim Chal ic/T4920802I x/M dob/03-04-2003 e/betsycrowe@example.com a/Newgate Prison p/1234567 al/Morphine`
 
 ### Listing all patients: `list`
 
@@ -274,7 +283,7 @@ Format: `apt PATIENT_NUMBER d/DATETIME dur/DURATION [note/NOTE]`
 * Creates and adds an appointment for the patient at the specified `PATIENT_NUMBER`.
 * The `PATIENT_NUMBER` **must be a positive integer** 1, 2, 3, …​
 * The date and time must be in the format `dd-MM-yyyy HH:mm` e.g., `12-03-2026 14:00` refers to 12th March 2026, 14:00.
-* The duration **must be a positive integer** in **minutes**.
+* The duration **must be between 1 and 600 minutes inclusive**.
 * The note is optional.
 * If provided, `NOTE` must be at most **500 characters**.
 
@@ -355,7 +364,37 @@ manually.
 ### Editing the data file
 
 DoctorWho data is saved automatically as a JSON file `[JAR file location]/data/doctorwho.json`. Advanced users are
-welcome to update data directly by editing that data file.
+welcome to update data directly by editing that data file, which follows the following format.
+
+```json
+{
+  "patients" : [ {
+    "name" : "Alex Yeoh",
+    "nric" : "S1234567D",
+    "sex" : "F",
+    "dob" : "01-04-2003",
+    "phone" : "87438807",
+    "email" : "alexyeoh@example.com",
+    "address" : "Blk 30 Geylang Street 29, #06-40",
+    "tags" : [ "allergy:Penicillin", "condition:Diabetes" ],
+    "appointmentStart" : "12-03-2026 14:00",
+    "appointmentDuration" : 30,
+    "appointmentNote" : "Initial Consultation"
+  }, {
+    "name" : "Bernice Yu",
+    "nric" : "S2345678H",
+    "sex" : "F",
+    "dob" : "02-04-2003",
+    "phone" : "99272758",
+    "email" : "berniceyu@example.com",
+    "address" : "Blk 30 Lorong 3 Serangoon Gardens, #07-18",
+    "tags" : [ "condition:Hypertension", "allergy:Aspirin" ],
+    "appointmentStart" : null,
+    "appointmentDuration" : null,
+    "appointmentNote" : null
+  } ]
+}
+```
 
 <div markdown="span" class="alert alert-warning">:exclamation: **Caution:**
 If your changes to the data file makes its format invalid, DoctorWho will discard all data and start with an empty data file at the next run. Hence, it is recommended to take a backup of the file before editing it.<br>

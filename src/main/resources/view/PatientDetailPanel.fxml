@@ -9,13 +9,13 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:id="detailPane" styleClass="patient-detail-panel" prefWidth="600">
+<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:id="detailPane" styleClass="patient-detail-panel" prefWidth="600" minHeight="0">
     <padding>
         <Insets top="20" right="20" bottom="20" left="20" />
     </padding>
 
     <VBox spacing="2" VBox.vgrow="NEVER" styleClass="detail-header-section">
-        <Label fx:id="name" styleClass="cell_big_label" text="\$patientName" minWidth="0" minHeight="-Infinity" wrapText="true" maxWidth="1.7976931348623157E308"/>
+        <Label fx:id="name" styleClass="cell_big_label" text="\$patientName" minWidth="0" wrapText="true" minHeight="-Infinity" maxWidth="1.7976931348623157E308"/>
         <HBox spacing="10" alignment="CENTER_LEFT">
             <Label fx:id="sex" styleClass="cell_small_label" text="\$sex" />
             <Label styleClass="cell_small_label" text="/" />
@@ -23,7 +23,7 @@
         </HBox>
     </VBox>
 
-    <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS" styleClass="detail-scroll-pane">
+    <ScrollPane fitToWidth="true" fitToHeight="true" minHeight="0" VBox.vgrow="ALWAYS" styleClass="detail-scroll-pane">
         <content>
             <VBox spacing="15">
                 <padding>
