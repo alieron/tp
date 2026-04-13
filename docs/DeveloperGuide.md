@@ -678,34 +678,10 @@ The use cases operate with the following implicit preconditions, in addition to 
 ### Glossary
 
 * **Mainstream OS**: Windows, Linux, Unix, macOS. (Relevant to *Setting up*)
-* **GUI (Graphical User Interface)**: A visual interface that allows users to interact with the software through
-  graphical elements like windows, buttons, and icons. (Relevant to *Architecture/UI*)
-* **CLI (Command Line Interface)**: A text-based interface where the user provides input by typing commands. (Relevant
-  to *Architecture/Logic*)
-* **JavaFX**: The software platform and graphical library used to build the DoctorWho desktop interface. (Relevant to
-  *UI Component*)
-* **Prefix**: A short identifier followed by a forward slash (_e.g._ `n/` for name, `ic/` for NRIC) used to define arguments in a command.
-* **Prefix-based Matching**: A parsing technique where data fields are identified by short leading characters (e.g.,
-  `n/` for Name) rather than by their position in a sequence. (Relevant to *Logic Component*)
-* **Medical Tag**: A general term encompassing both **Conditions** (_e.g._ Diabetes) and **Allergies** (_e.g._
+* **Medical Tag**: A general term encompassing both **Medical Conditions** (_e.g._ Diabetes) and **Drug Allergies** (_e.g._
   Penicillin). (Relevant to *Model Component*)
-* **JSON**: JavaScript Object Notation, a text-based interchange data format, for storing or transmitting data. (
-  Relevant to *Storage Component*)
-* **CRUD**: An acronym for Create, Read, Update, and Delete—the four basic functions of persistent storage. (Relevant to
-  *Implementation*)
-* **MVP**: Minimum Viable Product; the core set of features required to make the app functional for Dr. Lee. (Relevant
-  to *Appendix: Requirements*)
-* **Private contact detail**: A contact detail that is not meant to be shared with others. (Relevant to *User Stories*)
-* **Index**: A positive integer representing the position of an item in the currently displayed list in the UI. (
-  Relevant to *Use Cases*)
 * **Overlap**: A situation where a new appointment's time interval (start time + duration) intersects with an existing
   appointment's interval. (Relevant to *Use Cases*)
-* **ISO 8601**: The international standard for the representation of dates and times (_e.g._ `YYYY-MM-DD`). (Relevant to
-  *Use Cases/NFRs*)
-* **NFR (Non-Functional Requirement)**: A requirement that specifies criteria that can be used to judge the operation of
-  a system, rather than specific behaviors (_e.g._ security, reliability). (Relevant to *NFR Section*)
-* **Scalability**: The measure of the system's ability to handle a growing amount of data (_e.g._ thousands of patients)
-  without performance degradation. (Relevant to *NFR Section*)
 * **Orphan Schedule**: An appointment record that remains in the system after the associated patient has been deleted.
   DoctorWho prevents this via automated purging. (Relevant to *NFR Section*)
 
