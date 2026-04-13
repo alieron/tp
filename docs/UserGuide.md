@@ -376,7 +376,7 @@ The parser also conducts a case-sensitive duplicate check so, `al/diabetes al/di
 #### For the `apt` command:
 
 **Note (`note/`):**<br>
-Is limited to 500 characters and can include any character that you can type on your keyboard except the `/` character.
+Is limited to 500 characters and can include any character that you can type on your keyboard except the `/` character, we recommend replacing it with the `\` or `|` characters.
 
 </div>
 
