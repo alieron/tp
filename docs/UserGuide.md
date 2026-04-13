@@ -299,7 +299,7 @@ This action is irreversible and will delete all patient data.
 
 Opens a window that provides a summary of available commands and explains how to access the help page. (Pressing the `F1` key will also open this window)
 
-![help message](images/helpMessage.png)
+<img src="images/helpMessage.png" width="750" alt="Help Window">
 
 Format: `help`
 
