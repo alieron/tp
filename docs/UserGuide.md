@@ -67,7 +67,7 @@ Don't worry if you're not tech-savvy — just follow these steps one by one, and
    * `add n/John Doe ic/T0300001F x/M dob/01-04-2003 p/98765432 e/johnd@example.com a/John street, block 123, #01-01` — Adds a patient named `John Doe`.
    * `delete 3` — Deletes the 3rd patient in the current list.
    * `apt 3 d/01-04-2026 09:00 dur/60 note/Follow-up for diabetes review` — Schedules an appointment for the 3rd patient.
-   * `lsapt d/12-03-2026` — List appointments for 12th March 2026.
+   * `lsapt d/12-03-2026` — Lists appointments for 12th March 2026.
    * `dapt 1` — Removes the appointment from the 1st patient.
 
 7. When you're ready to explore more, check out the [Features](#features) section for the full command details, or jump to the [Command Summary](#command-summary) for a quick cheatsheet!
@@ -112,7 +112,7 @@ can be found in [Features](#features).
 * Parameters can be in any order.<br>
   e.g., if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 
-* Prefixes can be surrounded by any number of spaces, these excess spaces will be trimmed from the .<br>
+* Prefixes can be surrounded by any number of spaces, these excess spaces will be trimmed from the input.<br>
   e.g., `add     n/NAME    ic/NRIC` and `add n/     NAME ic/NRIC`, will be interpreted as `add n/NAME ic/NRIC`.
 
 * Extraneous parameters for commands that do not take in parameters (such as `help`, `list`, `exit`, and `clear`) will be ignored.<br>
@@ -136,7 +136,7 @@ Format: `add n/NAME ic/NRIC x/SEX dob/DOB p/PHONE_NUMBER e/EMAIL a/ADDRESS [al/A
 
 * Will fail if there is an existing patient with the same NRIC, however other fields allow duplicates i.e., two patients may have the same name.
 * The date of birth(dob) must be in the format `dd-MM-yyyy` and must be either the current date or earlier e.g., `12-03-2026` refers to 12th March 2026.
-* All parameters are compulsory.
+* All parameters are compulsory, except for those in square brackets.
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
 A patient can have any number of allergies or medical conditions (including 0)
@@ -313,7 +313,7 @@ Format: `exit`
 
 <div markdown="block" class="alert alert-info">
 
-**:information_source: Additional details for on accepted parameter values:**<br>
+**:information_source: Additional details on accepted parameter values:**<br>
 
 #### For the `add` and `edit` commands:
 
@@ -424,7 +424,7 @@ welcome to update data directly by editing that data file, which follows the fol
 
 <div markdown="span" class="alert alert-warning">:exclamation: **Caution:**
 If your changes to the data file makes its format invalid, DoctorWho will discard all data and start with an empty data file at the next run. Hence, it is recommended to take a backup of the file before editing it.<br>
-Furthermore, certain edits can cause the DoctorWho to behave in unexpected ways (e.g., if a value entered is outside of the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
+Furthermore, certain edits can cause DoctorWho to behave in unexpected ways (e.g., if a value entered is outside of the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
 </div>
 
 --------------------------------------------------------------------------------------------------------------------
